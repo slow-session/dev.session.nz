@@ -1,0 +1,20 @@
+- title: "home"
+  href: "/"
+
+- title: "Slow Session"
+  href: "/slowsession/"
+
+- title: "Tunes"
+  href: "/tunes_archive/"
+
+- title: "Sets"
+  href: "/build_a_set/"
+
+- title: "Learn by Ear"
+  href: "/learn_by_ear/"
+
+- title: "Other Sources"
+  href: "/other_sources/"
+
+- title: "Toolbox"
+  href: "/toolbox/"

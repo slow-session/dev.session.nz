@@ -1,0 +1,109 @@
+# Site settings
+name: Wellington Irish Sessions - DEV
+email: admin@session.nz
+author: admin@session.nz
+keywords: irish, traditional, music, jigs, reels, polkas, craic
+description: Irish trad tune archive
+
+# Parameters embedded in site
+slowsession_time: "7:30 to 8:30"
+#slowsession_time: "Please check back when the world is normal!"
+session_time: "8:45 to late"
+#session_time: "Please check back when the world is normal!"
+defaultABCplayer: 'piano'
+# no of tunes to show in latest.md etc
+latest_tunes_max: 20
+slow_tunes_max: 20
+reg_tunes_max: 20
+
+# Only use this if you are serving your site via Github Pages
+github:
+  url: "https://dev.session.nz"
+
+header: yes
+header_sm: images/banner-small.jpg
+header_med: images/banner-med.jpg
+header_large: images/banner-large.jpg
+header_xl: images/banner-xl.jpg
+
+# Exclude our ruby stuff and other dirs
+exclude: [.bundle, bin, vendor, Gemfile, Gemfile.lock, Rakefile, s3_website.yml, .last_optimized, _scripts, documentation, archive]
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+
+destination: _site
+
+#plugins:
+#  - jekyll-feed
+#  - jekyll-seo-tag
+
+feed:
+  path: atom.xml
+
+# Compress our Css
+#sass:
+#    style: :compressed
+
+permalink: /blog/:year/:title
+
+#### SEO Stuff
+# Google Analytics
+google_universal_analytics: UA-77351761-1
+google_universal_analytics_cookiedomain: auto
+
+# Facebook Opengraph
+facebook_user: WellingtonSession
+# default FB id
+facebook_app_id: 966242223397117
+facebook_locale: en_US
+facebook_page: https://www.facebook.com/groups/WellingtonSession/
+facebook_image: /images/pubscene-small.jpg
+
+# Twitter Cards
+twitter_user:
+twitter_card: false
+twitter_image:                        #enter a default image (at least 200x200px) to use here for posts/pages that don't have one.
+
+#
+# Additions for session.nz
+#
+mp3_host: # https://wellington.session.nz # leave blank if mp3 files are served from THIS SERVER
+js_host:  # leave blank if js files are served from THIS SERVER
+
+collections:
+  tunes:
+    output: true
+
+  obrientunes:
+    output: true
+
+  pottstunes:
+    output: true
+
+  sets:
+    output: true
+
+defaults:
+  - scope:
+        path: "_tunes"
+    values:
+        layout: "tunepage"
+        permalink: /tunes/:title:output_ext
+  - scope:
+        path: "_obrientunes"
+    values:
+        layout: "tunepage-obrien"
+        permalink: /obrientunes/:title:output_ext
+  - scope:
+        path: "_pottstunes"
+    values:
+        layout: "tunepage-potts"
+        permalink: /pottstunes/:title:output_ext
+  - scope:
+        path: "_sets"
+    values:
+        layout: "setpage"
+        permalink: /sets/:title:output_ext
