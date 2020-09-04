@@ -1,5 +1,5 @@
 current directory: /home/asjl/GitHub/dev.session.nz/vendor/bundle/ruby/2.7.0/gems/json-2.3.1/ext/json
-/usr/bin/ruby2.7 -I /usr/lib/ruby/2.7.0 -r ./siteconf20200904-344689-73555f.rb extconf.rb
+/usr/bin/ruby2.7 -I /usr/lib/ruby/2.7.0 -r ./siteconf20200904-361629-10vp6gh.rb extconf.rb
 creating Makefile
 
 current directory: /home/asjl/GitHub/dev.session.nz/vendor/bundle/ruby/2.7.0/gems/json-2.3.1/ext/json

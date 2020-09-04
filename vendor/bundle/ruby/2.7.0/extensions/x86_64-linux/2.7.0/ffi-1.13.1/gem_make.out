@@ -1,5 +1,5 @@
 current directory: /home/asjl/GitHub/dev.session.nz/vendor/bundle/ruby/2.7.0/gems/ffi-1.13.1/ext/ffi_c
-/usr/bin/ruby2.7 -I /usr/lib/ruby/2.7.0 -r ./siteconf20200904-344689-6zkb2s.rb extconf.rb
+/usr/bin/ruby2.7 -I /usr/lib/ruby/2.7.0 -r ./siteconf20200904-361629-1y7cj2h.rb extconf.rb
 checking for ffi.h... no
 checking for ffi.h in /usr/local/include,/usr/include/ffi,/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/ffi,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/ffi... no
 creating extconf.h
@@ -160,4 +160,4 @@ compiling Types.c
 compiling Variadic.c
 compiling ffi.c
 linking shared-object ffi_c.so
-/usr/bin/install -c -m 0755 ffi_c.so ./.gem.20200904-344689-7z0663
+/usr/bin/install -c -m 0755 ffi_c.so ./.gem.20200904-361629-f8c2t3
