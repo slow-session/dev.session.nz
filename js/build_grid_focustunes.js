@@ -15,21 +15,23 @@
 
 
     function displayFocusTunesGrid(divID, storeID) {
-        var tunesGrid = document.getElementById(divID);
-        
+        alert(divID, storeID);
+
         // create table headers
         if (testForMobile()) {
-            var appendString = `<div id="tunes${divID}" class="tunesArchiveLayout mobileScrolling">`;
+            var appendString = `<div id="${divID}" class="tunesArchiveLayout mobileScrolling">`;
         } else {
-            var appendString = `<div id="tunes${divID}" class="tunesArchiveLayout">`;
+            var appendString = `<div id="${divID}" class="tunesArchiveLayout">`;
         }
-
+        
+        var tunesGrid = document.getElementById(divID);
+        
         for (var key in storeID) { // Iterate over the original data
             var item = storeID[key];
-                //appendString += createFocusGridRow(item);
+                appendString += createFocusGridRow(item);
                 
         }
-        appendString += 'XXX</div>';
+        appendString += '</div>';
         tunesGrid.innerHTML = appendString;
     }
 

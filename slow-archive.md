@@ -32,7 +32,6 @@ these at some point during the first hour.
 {% assign tune = sortedtunes.first %}
 {% if tune.slowtuneoftheweek %}
 
-{% include focustunes.html divID="currentFocusTunes" storeID="window.currentFocusTunes" %}
 
 <script>
 window.currentFocusTunes = {
@@ -52,14 +51,16 @@ window.currentFocusTunes = {
 
 </script>
 
+{% include focustunes.html divID="gridCurrentFocusTunes" storeID="window.currentFocusTunes" %}
+
 {% endif %}
 
 ## Recent Slow Session Focus Tunes
 
-These are the <span id="tunesCount"></span> tunes we've been focussing on over the last few months.
+These are the {{ site.slow_tunes_max }} tunes we've been focussing on over the last few months.
 
 <script>
-window.store = {
+window.currentTunes = {
 {% assign sortedtunes = site.tunes | sort: 'slowtuneoftheweek' | reverse %}
 {% assign tune_count = 0 %}
 {% assign tuneID = 200 %}
@@ -87,15 +88,12 @@ window.store = {
 
 </script>
 
-{% include tunesArchiveGrid.html%}
+{% include focustunes.html divID="gridCurrentTunes" storeID="window.currentTunes" %}
 
-Latest Tunes
-------------
-
-We add new tunes to the archive reasonably often. 
-You can check those out in our <a href="/latest/"><button class="filterButton"> Latest Tunes</button></a> page.
 
 {% include tuneModal.html%}
+
+<div id="audioPlayer"></div>
 
 <script>
 $(document).ready(function() {
