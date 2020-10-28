@@ -17,20 +17,25 @@ melody instruments.
 
 See our <a href="/slowguidelines/"><button class="filterButton">Guidelines for the Slow Session</button></a> if you need more information.
 
-## Tune of the Week
+<script src="/js/build_grid_focustunes.js"></script>
 
-We pick one tune for homework each week, and we’ll play it sometime during the first hour.
+## Current Focus Tunes
 
-{% assign legend="Tune of the week" %}
+We have a number of tunes we're currently focusing on. These might be new tunes
+or tunes we've decided to reprise. These will change at some stage. We'll play
+these at some point during the first hour.
+
+{% assign focustunecount = 4 %}
+{% assign legend="Current Focus Tunes" %}
 {% assign tuneID = 100 %}
 {% assign sortedtunes = site.tunes | sort: 'slowtuneoftheweek' | reverse %}
 {% assign tune = sortedtunes.first %}
 {% if tune.slowtuneoftheweek %}
 
-{% include tuneoftheweek.html %}
+{% include focustunes.html divID="currentFocusTunes" storeID="window.currentFocusTunes" %}
 
 <script>
-tuneOfTheWeek = {
+window.currentFocusTunes = {
     "{{ tuneID }}": {
         "title": "{{ tune.title | xml_escape }}",
         "tuneID": "{{ tuneID }}",
@@ -49,9 +54,9 @@ tuneOfTheWeek = {
 
 {% endif %}
 
-## Recent slow session tunes of the week
+## Recent Slow Session Focus Tunes
 
-These are the <span id="tunesCount"></span> tunes we've been learning over the last few months.
+These are the <span id="tunesCount"></span> tunes we've been focussing on over the last few months.
 
 <script>
 window.store = {
@@ -80,8 +85,6 @@ window.store = {
 {% endfor %}
 };
 
-// Add tune of the week into the window.store
-$.extend(window.store, tuneOfTheWeek);
 </script>
 
 {% include tunesArchiveGrid.html%}
