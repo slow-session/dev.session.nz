@@ -26,10 +26,10 @@
 
         for (var key in storeID) { // Iterate over the original data
             var item = storeID[key];
-                appendString += createFocusGridRow(item);
+                //appendString += createFocusGridRow(item);
                 
         }
-        appendString += '</div>';
+        appendString += 'XXX</div>';
         tunesGrid.innerHTML = appendString;
     }
 
