@@ -470,7 +470,7 @@ tr#no_hover:hover {
 // if the height is 320px we show 10 tunes in the table 
 .tunesArchiveLayout{
     display: grid;
-    height: 320px;
+    max-height: 320px;
     grid-template-columns: minmax(100px, 350px) 2fr minmax(50px, 90px);
     grid-auto-rows: fit-content(1em);
     overflow-x: hidden;
@@ -519,7 +519,7 @@ tr#no_hover:hover {
 // if the height is 320px we show 10 tunes in the table
 .tunesObrienLayout{
     display: grid;
-    height: 320px;
+    max-height: 320px;
     max-width: 600px;
     grid-template-columns: minmax(200px, 300px) minmax(60px, 90px);
     grid-auto-rows: fit-content(1em);
@@ -543,7 +543,7 @@ tr#no_hover:hover {
 // if the height is 320px we show 10 tunes in the table
 .tunesPottsLayout{
     display: grid;
-    height: 320px;
+    max-height: 320px;
     max-width: 600px;
     grid-template-columns: minmax(300px, 600px);
     grid-auto-rows: fit-content(1em);
