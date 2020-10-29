@@ -14,34 +14,25 @@
  */
 
 
-    function displayFocusTunesGrid(divID, storeID) {
-        alert(divID, storeID);
-
-        // create table headers
-        if (testForMobile()) {
-            var appendString = `<div id="${divID}" class="tunesArchiveLayout mobileScrolling">`;
-        } else {
-            var appendString = `<div id="${divID}" class="tunesArchiveLayout">`;
-        }
-        
-        var tunesGrid = document.getElementById(divID);
-        
-        for (var key in storeID) { // Iterate over the original data
-            var item = storeID[key];
-                appendString += createFocusGridRow(item);
-                
-        }
-        appendString += '</div>';
-        tunesGrid.innerHTML = appendString;
+function displayFocusTunesGrid(divID, storeName, storeObject) {
+    
+    // create div for tunes grid
+    if (testForMobile()) {
+        var appendString = `<div id="${divID}" class="tunesArchiveLayout mobileScrolling">`;
+    } else {
+        var appendString = `<div id="${divID}" class="tunesArchiveLayout">`;
     }
 
-    function createFocusGridRow(item) {
-        var gridRow = '';
+    for (var key in storeObject) { // Iterate over the original data
+        var item = storeObject[key];
 
-        // build the three columns
-        gridRow += '<span><a href="' + item.url + '">' + item.title + '</a></span>';
-        gridRow += '<span><input class="filterButton" type="button" onclick="changeTune(' + item.tuneID + ');" value="Play Now" /></span>';
-        gridRow += '<span>' + item.key + ' ' + item.rhythm + '</span>';
-
-        return gridRow;
+        appendString += `<span><a href="${item.url}">${item.title}</a></span>
+            <span><input class="filterButton" type="button" 
+            onclick="changeTune(${storeName}, ${item.tuneID});" value="Play Now">
+            </span>
+            <span>${item.key} ${item.rhythm}</span>`;
+    
     }
+    appendString += '</div>';
+    document.getElementById(divID).innerHTML = appendString;
+}

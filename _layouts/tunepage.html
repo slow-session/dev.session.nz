@@ -191,7 +191,7 @@ function toggle(button) {
 $(document).ready(function() {
     audioPlayer.innerHTML = createAudioPlayer();
 
-    changeTune(tuneID);
+    changeTune(window.store, tuneID);
 
     // Initialise text area
     var textAreaID = 'ABC' + tuneID;

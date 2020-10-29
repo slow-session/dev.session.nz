@@ -51,7 +51,7 @@ window.currentFocusTunes = {
 
 </script>
 
-{% include focustunes.html divID="gridCurrentFocusTunes" storeID="window.currentFocusTunes" %}
+{% include focustunes.html divID="gridCurrentFocusTunes" storeName="window.currentFocusTunes" %}
 
 {% endif %}
 
@@ -88,12 +88,10 @@ window.currentTunes = {
 
 </script>
 
-{% include focustunes.html divID="gridCurrentTunes" storeID="window.currentTunes" %}
+{% include focustunes.html divID="gridCurrentTunes" storeName="window.currentTunes" %}
 
 
 {% include tuneModal.html%}
-
-<div id="audioPlayer"></div>
 
 <script>
 $(document).ready(function() {
