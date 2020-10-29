@@ -89,10 +89,9 @@ window.store = {
 
 {% include tunesArchiveGrid.html%}
 
-Latest Tunes
-------------
+## Latest Tunes
 
-We add new tunes to the archive reasonably often. 
+We add new tunes to the archive reasonably often.
 You can check those out in our <a href="/latest/"><button class="filterButton"> Latest Tunes</button></a> page.
 
 {% include tuneModal.html%}
