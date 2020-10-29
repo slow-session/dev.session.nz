@@ -7,7 +7,7 @@ mode:
 date: 2016-10-27
 location: Raglan Wellington Dunedin
 notes:
-tags: slow-favourite vicfolk slowsession
+tags: slow-favourite vicfolk slowsession slow-popular
 repeats: 2
 parts: AABB
 regtuneoftheweek:

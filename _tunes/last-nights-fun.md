@@ -6,7 +6,7 @@ rhythm: reel
 date: 2019-06-02
 location: Wellington
 notes:
-tags: ca-fiddle-2019
+tags: ca-fiddle-2019 slow-popular
 repeats: 3
 parts: AB
 regtuneoftheweek:
@@ -20,15 +20,15 @@ source: Wellington
 abc_source: Eileen O'Brien @ Ceol Aneas 2019
 abc_url:
 abc: |
-  X: 1
-  T: Last Night's Fun
-  R: reel
-  M: 4/4
-  L: 1/8
-  %Z: Modified by Megan Ward    
-  K: Dmaj
-  AD~ED A3B|ADFD EFGB|AD~ED A2Bd|egfe dB~B2|
-  AD~ED A3B|ADFD EFGB|AD~ED A2Bd|egfe dBAB|
-  df~f2 af~f2|defd egfe|df~f2 af~f2|egfe dBAB|
-  df~f2 af~f2|defd e2fg|afbf afeg|fedc BcdB|
+    X: 1
+    T: Last Night's Fun
+    R: reel
+    M: 4/4
+    L: 1/8
+    %Z: Modified by Megan Ward    
+    K: Dmaj
+    AD~ED A3B|ADFD EFGB|AD~ED A2Bd|egfe dB~B2|
+    AD~ED A3B|ADFD EFGB|AD~ED A2Bd|egfe dBAB|
+    df~f2 af~f2|defd egfe|df~f2 af~f2|egfe dBAB|
+    df~f2 af~f2|defd e2fg|afbf afeg|fedc BcdB|
 ---

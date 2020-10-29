@@ -6,9 +6,9 @@ rhythm: jig
 date: 2016-1-26
 location: Raglan Auckland Arrowtown Wellington Christchurch
 notes:
-tags: slow-favourite slowsession wellyfest
-repeats: 2 
-parts: AABB 
+tags: slow-favourite slowsession wellyfest slow-popular
+repeats: 2
+parts: AABB
 regtuneoftheweek:
 slowtuneoftheweek:
 mp3_file: /mp3/out-on-the-ocean.mp3

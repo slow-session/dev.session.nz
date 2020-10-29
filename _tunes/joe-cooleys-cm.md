@@ -6,7 +6,7 @@ rhythm: reel
 notes:
 date: 2019-09-13
 location: Prebbleton Raglan Auckland Arrowtown Wellington
-tags: cm slow-favourite vicfolk slowsession wellyfest-learn
+tags: cm slow-favourite vicfolk slowsession wellyfest-learn slow-popular
 repeats: 2
 parts: AABB
 regtuneoftheweek:

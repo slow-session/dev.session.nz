@@ -6,9 +6,9 @@ rhythm: jig
 date: 2018-03-13
 location: Wellington
 notes:
-tags: slow-favourite vicfolk
-repeats: 
-parts: 
+tags: slow-favourite vicfolk slow-popular
+repeats:
+parts:
 regtuneoftheweek:
 slowtuneoftheweek:
 mp3_file:
@@ -29,6 +29,4 @@ abc: |
     eAA eAA|BAB GAB|def ged|BAG A3:|
     |:eaa aga|bab ged|eaa aga|bag a3|
     eaa aga|bab ged|def ged|BAG A3:|
-
-
 ---

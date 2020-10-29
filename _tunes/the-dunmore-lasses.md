@@ -7,9 +7,9 @@ mode:
 date: 2016-1-26
 location: Raglan Arrowtown Wellington
 notes:
-tags: slow-favourite vicfolk slowsession
-repeats: 2 
-parts: AABB 
+tags: slow-favourite vicfolk slowsession slow-popular
+repeats: 2
+parts: AABB
 regtuneoftheweek:
 slowtuneoftheweek:
 mp3_file: /mp3/the-dunmore-lasses.mp3
