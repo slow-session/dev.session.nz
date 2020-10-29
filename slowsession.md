@@ -24,6 +24,41 @@ See our <a href="/slowguidelines/"><button class="filterButton">Guidelines for t
 
 <script src="/js/build_grid_focustunes.js"></script>
 
+## Short list of straightforward tunes
+
+Here is a list of 20 tunes that are played frequently at the slow session. If you are not sure which tunes to start with, learn some of these tunes. We'll also be happy to take requests if there is a tune you've been working on.
+
+<script>
+window.currentTunes = {
+{% assign sortedtunes = site.tunes | sort: 'rhythm' %}
+
+{% assign tuneID = 300 %}
+{% for tune in sortedtunes %}
+    {% if tune.tags contains 'slow-popular' %}
+
+        "{{ tuneID }}": {
+            "title": "{{ tune.title | xml_escape }}",
+            "tuneID": "{{ tuneID }}",
+            "key": "{{ tune.key | xml_escape }}",
+            "rhythm": "{{ tune.rhythm | xml_escape }}",
+            "url": "{{ tune.url | xml_escape }}",
+            "mp3": "{{ site.mp3_host | append: tune.mp3_file | xml_escape }}",
+            "mp3_source": "{{ tune.mp3_source | strip_html | xml_escape }}",
+            "repeats": "{{ tune.repeats }}",
+            "parts": "{{ tune.parts }}",
+            "abc": {{ tune.abc | jsonify }}
+        }{% if tune.tags contains 'slow-popular' %},{% else %}{% break %}{% endif %}
+        
+    {% endif %}
+
+    {% assign tuneID = tuneID | plus: 1 %}
+{% endfor %}
+};
+
+</script>
+
+{% include focustunes.html divID="gridCurrentTunes" storeName="window.currentTunes" %}
+
 ## Current Focus Tunes
 
 We have a number of tunes we're currently focusing on. We'll play
@@ -62,49 +97,12 @@ window.currentFocusTunes =  {
 
 {% include focustunes.html divID="gridCurrentFocusTunes" storeName="window.currentFocusTunes" %}
 
-## Short list of popular tunes
-
-Here is a list of 20 tunes that are played frequently at the slow session, it is a good place to start if you are keen to learn some tunes. We'll also be happy to take requests if there is a tune you've been working on.
-
-<script>
-window.currentTunes = {
-{% assign sortedtunes = site.tunes %}
-
-{% assign tuneID = 200 %}
-{% for tune in sortedtunes %}
-    {% if tune.tags contains 'slow-popular' %}
-
-        "{{ tuneID }}": {
-            "title": "{{ tune.title | xml_escape }}",
-            "tuneID": "{{ tuneID }}",
-            "key": "{{ tune.key | xml_escape }}",
-            "rhythm": "{{ tune.rhythm | xml_escape }}",
-            "url": "{{ tune.url | xml_escape }}",
-            "mp3": "{{ site.mp3_host | append: tune.mp3_file | xml_escape }}",
-            "mp3_source": "{{ tune.mp3_source | strip_html | xml_escape }}",
-            "repeats": "{{ tune.repeats }}",
-            "parts": "{{ tune.parts }}",
-            "abc": {{ tune.abc | jsonify }}
-        }{% if tune_count < site.slow_tunes_max %},{% else %}{% break %}{% endif %}
-        
-    {% endif %}
-
-    {% assign tuneID = tuneID | plus: 1 %}
-{% endfor %}
-};
-
-</script>
-
-{% include focustunes.html divID="gridCurrentTunes" storeName="window.currentTunes" %}
-
 {% include tuneModal.html%}
 
 ## Latest Tunes
 
 We add new tunes to the archive reasonably often.
 You can check those out in our <a href="/latest/"><button class="filterButton"> Latest Tunes</button></a> page.
-
-{% include tuneModal.html%}
 
 <script>
 $(document).ready(function() {
