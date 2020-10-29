@@ -4,6 +4,8 @@ title: Wellington Slow Session
 permalink: /slowsession/
 ---
 
+## Introduction to the slow session
+
 We meet on Tuesday nights from {{ site.slowsession_time }} at the <a href="/dragon/">
 Welsh Dragon Bar</a>, 10/12 Cambridge Terrace, Wellington 6011, New Zealand.
 Players who want to play traditional Irish music at a relaxed pace are welcome.
@@ -11,9 +13,12 @@ Players who want to play traditional Irish music at a relaxed pace are welcome.
 The slow session is an opportunity for players who are starting out with Irish
 traditional music and want an opportunity to play tunes that they're learning
 or have already learnt with others in a supportive environment.
-We don't teach tunes directly in this session but it's a great chance to practice
-playing with others. There's some scope for accompaniment but the focus is on the
-melody instruments.
+
+We don't teach tunes in this session but it's a great chance to practice
+playing with others. The focus is on melody instruments, but there is some scope for
+accompaniment. Accompanists should read the "Advice to accompanists" section (Rewrite section in learn_by_ear page) INSTERT LINK!]
+
+Learning by ear, and playing tunes from memory is strongly encouraged. Please read the "Learn by ear" page. INSERT LINK!
 
 See our <a href="/slowguidelines/"><button class="filterButton">Guidelines for the Slow Session</button></a> if you need more information.
 
@@ -21,9 +26,8 @@ See our <a href="/slowguidelines/"><button class="filterButton">Guidelines for t
 
 ## Current Focus Tunes
 
-We have a number of tunes we're currently focusing on. These might be new tunes
-or tunes we've decided to reprise. These will change at some stage. We'll play
-these at some point during the first hour.
+We have a number of tunes we're currently focusing on. We'll play
+these at some point during the first hour each week. The list will change regularly.
 
 {% assign focustunecount = 4 %}
 {% assign legend="Current Focus Tunes" %}
@@ -54,9 +58,9 @@ window.currentFocusTunes = {
 
 {% endif %}
 
-## Recent Slow Session Focus Tunes
+## Short list of popular tunes
 
-These are the <span id="tunesCount"></span> tunes we've been focussing on over the last few months.
+Here is a list of 20 tunes that are played frequently at the slow session, it is a good place to start if you are keen to learn some tunes. We'll also be happy to take requests if there is a tune you've been working on.
 
 <script>
 window.store = {
