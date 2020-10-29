@@ -6,11 +6,11 @@ rhythm: jig
 date: 2018-09-18
 location: Wellington
 notes:
-tags: slow-popular
+tags:
 repeats: 2
 parts: AABB
 regtuneoftheweek: 2018-11-10
-slowtuneoftheweek: 2020-05-27
+slowtuneoftheweek: 2020-10-30 2020-05-27
 mp3_file: /mp3/an-buachaill-dreoite.mp3
 mp3_source: Richard Tait
 mp3_licence: <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a>

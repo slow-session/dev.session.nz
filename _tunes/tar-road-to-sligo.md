@@ -7,15 +7,15 @@ date: 2016-1-27
 location: Arrowtown Wellington
 notes:
 tags: slow-favourite vicfolk slowsession
-repeats: 2 
-parts: AABB 
+repeats: 2
+parts: AABB
 regtuneoftheweek:
 slowtuneoftheweek:
 mp3_file: /mp3/tar-road-to-sligo.mp3
 mp3_licence: <a href="https://creativecommons.org/licenses/by-nc/2.5/">CC-BY-NC-2.5</a>
 mp3_source: Comhaltas Ceoltóirí Éireann
 mp3_url: https://comhaltas.ie/music/detail/tar_road_to_sligo/
-abc_url: 
+abc_url:
 source: Wellington
 abc: |
     X: 1
