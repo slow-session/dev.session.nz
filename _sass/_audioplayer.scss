@@ -1,14 +1,13 @@
-
 // START: controls for audio and ABC players
 .audioParentOuter {
     display: inline-flex;
     border-style: solid;
     border-radius: 8px;
     border-color: $brand-color;
-    padding: .5rem;
+    padding: 0.5rem;
     max-width: 650px;
     width: 100%;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
 }
 
 .audioParentInner {
@@ -70,7 +69,7 @@
     height: 2.5rem;
     width: 2.5rem;
     border: none;
-    background: url("/images/play.png");
+    background: url('/images/play.png');
     background-size: contain;
     background-repeat: no-repeat;
     outline: none;
@@ -81,10 +80,10 @@
     height: 2.5rem;
     width: 2.5rem;
     border: none;
-    background: url("/images/pause.png");
+    background: url('/images/pause.png');
     background-size: contain;
     background-repeat: no-repeat;
-    outline:none;
+    outline: none;
     margin-top: 0.5rem;
 }
 
@@ -92,7 +91,7 @@
     height: 2.5rem;
     width: 2.5rem;
     border: none;
-    background: url("/images/stop.png");
+    background: url('/images/stop.png');
     background-size: contain;
     background-repeat: no-repeat;
     outline: none;
@@ -129,11 +128,11 @@ p.attribution {
 
 .abcText {
     background-color: darken($complimentary-color, 6%);
-    font-size:small; 
-    max-width:100%;
+    font-size: small;
+    max-width: 100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    box-sizing: border-box;     
+    box-sizing: border-box;
     width: 100%;
 }
 
@@ -204,7 +203,7 @@ p.attribution {
     font-size: 75%;
     border-style: solid;
     border-width: 2px;
-    border-color: darken($brand-color, 10%)
+    border-color: darken($brand-color, 10%);
 }
 
 .filterButton.filterDisabled {
@@ -221,13 +220,13 @@ p.attribution {
 }
 
 h2 span {
-    display:inline;
-    font-size:16px;
+    display: inline;
+    font-size: 16px;
 }
 
 fieldset {
     max-width: 565px;
-    float:left;
+    float: left;
     margin: 0 auto 5px auto;
     text-align: left;
     border-radius: 8px;
@@ -269,7 +268,7 @@ textarea {
     border-radius: 8px;
 }
 
-input[type=number] {
+input[type='number'] {
     text-align: right;
 }
 
@@ -377,42 +376,42 @@ tr#no_hover:hover {
 
 // START: tooltip is used on the Help button in the Search box in Tunes Archive
 .tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
 }
 
 .tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  margin-left: -60px;
-  opacity: 0;
-  transition: opacity 0.3s;
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
 .tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
+    visibility: visible;
+    opacity: 1;
 }
 // END: tooltip is used on the Help button in the Search box in Tunes Archive
 
@@ -467,8 +466,8 @@ tr#no_hover:hover {
     padding: 0rem;
 }
 
-// if the height is 320px we show 10 tunes in the table 
-.tunesArchiveLayout{
+// if the height is 320px we show 10 tunes in the table
+.tunesArchiveLayout {
     display: grid;
     max-height: 320px;
     grid-template-columns: minmax(100px, 350px) 2fr minmax(50px, 90px);
@@ -485,9 +484,9 @@ tr#no_hover:hover {
     align-items: center;
 }
 
-.tunesArchiveLayout > span:nth-child(6n+1),
-.tunesArchiveLayout > span:nth-child(6n+2),
-.tunesArchiveLayout > span:nth-child(6n+3) {
+.tunesArchiveLayout > span:nth-child(6n + 1),
+.tunesArchiveLayout > span:nth-child(6n + 2),
+.tunesArchiveLayout > span:nth-child(6n + 3) {
     background-color: darken($complimentary-color, 6%);
 }
 
@@ -517,7 +516,7 @@ tr#no_hover:hover {
 }
 
 // if the height is 320px we show 10 tunes in the table
-.tunesObrienLayout{
+.tunesObrienLayout {
     display: grid;
     max-height: 320px;
     max-width: 600px;
@@ -535,13 +534,13 @@ tr#no_hover:hover {
     align-items: center;
 }
 
-.tunesObrienLayout > span:nth-child(4n+1),
-.tunesObrienLayout > span:nth-child(4n+2) {
+.tunesObrienLayout > span:nth-child(4n + 1),
+.tunesObrienLayout > span:nth-child(4n + 2) {
     background-color: darken($complimentary-color, 6%);
 }
 
 // if the height is 320px we show 10 tunes in the table
-.tunesPottsLayout{
+.tunesPottsLayout {
     display: grid;
     max-height: 320px;
     max-width: 600px;
@@ -559,8 +558,8 @@ tr#no_hover:hover {
     align-items: center;
 }
 
-.tunesPottsLayout > span:nth-child(4n+1),
-.tunesPottsLayout > span:nth-child(4n+2) {
+.tunesPottsLayout > span:nth-child(4n + 1),
+.tunesPottsLayout > span:nth-child(4n + 2) {
     background-color: darken($complimentary-color, 6%);
 }
 
@@ -573,7 +572,6 @@ tr#no_hover:hover {
 .titleSpan {
     background-color: $brand-color;
     color: darken($complimentary-color, 10%);
-    
 }
 
 .titleSpanRight {
@@ -582,18 +580,17 @@ tr#no_hover:hover {
     border-top-right-radius: 8px;
 }
 
-
 ::-webkit-scrollbar {
     /* style scrollbar for WebKit */
     width: 15px;
 }
 
-::-webkit-scrollbar-track {    
+::-webkit-scrollbar-track {
     /* style scrollbar track for WebKit */
-    background: $complimentary-color ;
+    background: $complimentary-color;
 }
 
-::-webkit-scrollbar-thumb {    
+::-webkit-scrollbar-thumb {
     /* style scrollbar thumb for WebKit */
     background-color: darken($brand-color, 20%);
     /* border color matches track background */
