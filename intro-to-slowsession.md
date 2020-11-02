@@ -3,6 +3,7 @@ layout: page
 title: Introduction to Wellington Slow Session
 permalink: /intro-to-slowsession/
 ---
+
 {% include slowsession/details.html %}
 
 The slow session is an opportunity for players who are starting out with Irish
@@ -10,9 +11,9 @@ traditional music and want an opportunity to play tunes that they're learning
 or have already learnt with others in a supportive environment.
 
 We don't teach tunes in this session but it's a great chance to practice
-playing with others. Learning by ear, and playing tunes from memory is strongly encouraged. Please read the <a href="/learn_by_ear/"> Learn by Ear</a> page. The focus is on melody instruments, but there is some scope for accompaniment. 
+playing with others. Learning by ear, and playing tunes from memory is strongly encouraged. Please read the <a href="/learn_by_ear/"> Learn by Ear</a> page. The focus is on melody instruments, but there is some scope for accompaniment.
 
-See our <a href="/slowguidelines/">Guidelines for the Slow Session</a> if you need more information. In particular, accompanists should read the <b>Advice to accompanists </b> section on that page
+See our <a href="/slowguidelines/">Guidelines for the Slow Session</a> if you need more information. In particular, accompanists should read the <b><a href="/learn_by_ear/#accompanist-advice">Advice to accompanists</a> </b> section on that page
 
 <script src="/js/build_grid_focustunes.js"></script>
 
