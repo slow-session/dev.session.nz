@@ -10,11 +10,9 @@ The evening is split into two parts with a slow session early on for those who a
 
  * Slow Session - {{ site.slowsession_time }}
     * See our <a href="/slowsession/">Slow Session</a> page for more information
+    * If you're new to playing at our session, see our <a href="/intro-to-slowsession">Intro</a> page
  * Regular Session - {{ site.session_time }}
     * See our <a href="/regularsession/">Regular Session</a> page for more information
- * Other NZ Sessions
-    * See our <a href="/nz_sessions">NZ Sessions</a> page for more information.
-
 
 ## Tunes Archives
 
