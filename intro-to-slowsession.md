@@ -11,7 +11,7 @@ traditional music and want an opportunity to play tunes that they're learning
 or have already learnt with others in a supportive environment.
 
 We don't teach tunes in this session but it's a great chance to practice
-playing with others. Learning by ear, and playing tunes from memory is strongly encouraged. Please read the <a href="/learn_by_ear/"> Learn by Ear</a> page. The focus is on melody instruments, but there is some scope for accompaniment.
+playing with others. The focus is on melody instruments, but there is some scope for accompaniment. Learning by ear, and playing tunes from memory is strongly encouraged. Please read the <a href="/learn_by_ear/"> Learn by Ear</a> page. 
 
 See our <a href="/slowguidelines/">Guidelines for the Slow Session</a> if you need more information. In particular, accompanists should read the <a href="/learn_by_ear/#accompanist-advice">Advice to accompanists</a> section on that page.
 
