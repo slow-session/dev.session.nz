@@ -4,20 +4,20 @@
 - title: 'Slow Session'
   href: '/slowsession/'
 
-- title: 'Slow Session Archive'
-  href: '/slow-archive/'
+- title: 'Regular Session'
+  href: '/regularsession/'
 
-- title: 'Tunes'
+- title: 'Tunes Archive'
   href: '/tunes_archive/'
 
-- title: 'Sets'
-  href: '/build_a_set/'
+- title: 'Other Sources'
+  href: '/other_sources/'
 
 - title: 'Learn by Ear'
   href: '/learn_by_ear/'
 
-- title: 'Other Sources'
-  href: '/other_sources/'
+- title: 'Sets'
+  href: '/build_a_set/'
 
 - title: 'Toolbox'
   href: '/toolbox/'
