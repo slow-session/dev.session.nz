@@ -84,7 +84,7 @@ window.currentTunes = {
 ## Latest Tunes
 
 We add new tunes to the main Tunes Archive reasonably often.
-You can check those out in our <a href="/latest/"><button class="filterButton"> Latest Tunes</button></a> page.
+You can check those out in our <a href="/latest/">Latest Tunes</a> page.
 
 <script>
 $(document).ready(function() {

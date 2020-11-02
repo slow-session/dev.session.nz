@@ -8,9 +8,9 @@ We meet on Tuesday nights from {{ site.session_time }} at the <a href="/dragon/"
 
 We believe that Irish traditional music played in a session can be a fantastic musical and social experience. We think that when there’s a very strong focus on traditional melody instruments playing traditional tunes we set the scene for great sessions.
 
-Getting a great session humming requires some attention to certain ground rules. See our <a href="/regularguidelines/"><button class="filterButton">Guidelines for the Wellington Irish Session</button></a> if you need more information.
+Getting a great session humming requires some attention to certain ground rules. See our <a href="/regularguidelines/">Guidelines for the Wellington Irish Session</a> if you need more information.
 
-Many of the tunes that get played at the session are in the <a href="/tunes_archive/"><button class="filterButton">Tunes Archive</button></a> page but other tunes that are firmly in the traditional mould are very welcome.
+Many of the tunes that get played at the session are in the <a href="/tunes_archive/">Tunes Archive</a> page but other tunes that are firmly in the traditional mould are very welcome.
 
 Regular session tune of the week
 --------
@@ -85,7 +85,7 @@ $.extend(window.store, tuneOfTheWeek);
 Latest Tunes
 ------------
 
-We add new tunes to the archive reasonably often. You can check those out in our <a href="/latest/"><button class="filterButton"> Latest Tunes</button></a> page.
+We add new tunes to the archive reasonably often. You can check those out in our <a href="/latest/">Latest Tunes</a> page.
 
 {% include tuneModal.html%}
 

@@ -1,11 +1,12 @@
 - title: 'home'
   href: '/'
 
-- title: 'Slow Session'
-  href: '/slowsession/'
-
-- title: 'Regular Session'
-  href: '/regularsession/'
+- title: "Sessions"
+  subcategories:
+    - subtitle: "Slow Session"
+      subhref: "/slowsession/"
+    - subtitle: "Regular Session"
+      subhref: "/regularsession/"
 
 - title: 'Tunes Archive'
   href: '/tunes_archive/'
@@ -21,3 +22,5 @@
 
 - title: 'Toolbox'
   href: '/toolbox/'
+
+
