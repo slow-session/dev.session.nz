@@ -474,6 +474,9 @@ tr#no_hover:hover {
     grid-auto-rows: fit-content(1em);
     overflow-x: hidden;
     overflow-y: auto;
+    border-color: $brand-color;
+    border-style: solid;
+    border-radius: 8px;
 }
 
 .tunesArchiveLayout > span {
