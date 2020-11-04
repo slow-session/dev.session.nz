@@ -1,3 +1,9 @@
+// Pad the header image in from the sides
+.header-image {
+    padding-left: 2rem;
+    padding-right: 2rem
+}
+
 // START: controls for audio and ABC players
 .audioParentOuter {
     display: inline-flex;
