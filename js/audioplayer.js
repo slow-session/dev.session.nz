@@ -256,7 +256,7 @@ function changeTune(storeID, tuneID) {
             //myDebug("OneAudioPlayer.duration: " + OneAudioPlayer.duration);
             if (item.repeats && item.parts) {
                 //myDebug('setupPresetLoops: ' + OneAudioPlayer.duration);
-                buildSegments(storeID, tuneID);
+                buildSegments(item);
                 if (presetLoopSegments.length) {
                     document.getElementById('loopPresetControls').innerHTML = createLoopControlsContainer();
                 }
@@ -359,8 +359,7 @@ function restartLoop() {
     OneAudioPlayer.play();
 }
 
-function buildSegments(storeID, tuneID) {
-    var item = storeID[tuneID];
+function buildSegments(item) {
     var parts = item.parts;
     var repeats = item.repeats;
     var mySegment;
