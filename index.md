@@ -6,13 +6,13 @@ title: Wellington Irish Sessions
 
 Two sessions happen on Tuesday nights starting at 7:30 pm at the <a href="/dragon/">Welsh Dragon Bar</a>, 10/12 Cambridge Terrace, Wellington 6011, New Zealand. Players of traditional Irish music are welcome. 
 
-The evening is split into two parts with a slow session early on for those who are relatively new to Irish session music and a regular session for experienced players who are familiar with playing this music at a high standard.
+The evening is split into two parts:
 
- * Slow Session - {{ site.slowsession_time }}
-    * See our <a href="/slowsession/">Slow Session</a> page for more information
+ * <a href="/slowsession/">Slow Session - {{ site.slowsession_time }}</a>
+    * For those who want to play at a relaxed pace
     * If you're new to playing at our session, see our <a href="/intro-to-slowsession">Intro</a> page
- * Regular Session - {{ site.session_time }}
-    * See our <a href="/regularsession/">Regular Session</a> page for more information
+ * <a href="/regularsession/">Regular Session - {{ site.session_time }}</a>
+    * For more experienced players who are familiar with playing this music at a high standard
 
 ## Tunes Archives
 
@@ -26,11 +26,6 @@ We've accumulated a number of resources which you may find useful:
     * Tunes from a Fermanagh fiddle player who has lived in NZ for over 60 years
  * <a href="/other_sources/">Other Sources</a>
     * Recordings and tunebooks in ABC or PDF format
+ * <a href="/northernfiddler">The Northern Fiddler</a>
+    * Transcriptions of tunes from the book...
 
-{% include tuneModal.html%}
-
-<script>
-$(document).ready(function() {
-    audioPlayer.innerHTML = createAudioPlayer();
-});
-</script>

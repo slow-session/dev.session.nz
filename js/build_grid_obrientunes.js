@@ -35,12 +35,6 @@
          } else {
              for (var key in store) { // Iterate over the original data
                  var item = store[key];
-                 // We assume generated tables start at ID 200 - this lets us have
-                 // singleTune items in the window.store for mixed pages like the
-                 // slowsession page
-                 if (item.tuneID < 200) {
-                     continue;
-                 }
                  appendString += createGridRow(item);
                  tunesCounter++;
              }
