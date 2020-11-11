@@ -33,6 +33,16 @@ There's a PDF of the book on this site at <a href="/tunebooks/The_Northern_Fiddl
                     {% endfor %}
                 </select>
             </div>
+            <div class="formChild">
+                <select id="musician-box" name="musician"  onChange="enable_button()">
+                    <option value="">All musicians</option>
+                    {% for musician in musicians %}
+                    {% if musician != '' %}
+                    <option value="{{ musician }}">{{ musician }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
         </div>
         <div class="formParent">
             <div class="formChild">

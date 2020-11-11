@@ -3,8 +3,6 @@ layout: page
 title: Jukebox
 permalink: /jukebox/
 ---
-
-
 <script>
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
@@ -36,11 +34,11 @@ window.store = {
 
 {% include tuneModal.html%}
 
-Pick a random tune from the archive
+Pick a random tune from the archive:
 
-<span>
+<div>
     <input class="filterButton" type="button" onclick="changeTune(store, getRandomInt(1, {{ tuneID }}));" value="Play Now">
-</span>
+</div>
 
 <script>
 $(document).ready(function() {
