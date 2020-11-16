@@ -39,7 +39,7 @@ If you want to add a new tune to the archive you can use the
 <div class="row">
     <h3>Or edit this sample ABC:</h3>
     <!-- Read the modified ABC and play if requested -->
-    <textarea name='abc' id="abc" class="abcText" rows="13" spellcheck="false">
+    <textarea name='abc' id="textAreaABCedit" class="abcText" rows="13" spellcheck="false">
 X: 1
 T: Kilglass Lakes
 R: jig
@@ -62,7 +62,7 @@ DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
     <form>
         <span title="Download the ABC you've entered. Don't lose your work!">
             <input value='Download ABC' type='button' class='filterButton'
-                onclick='downloadFile(document.getElementById("filename").value, document.getElementById("abc").value)' />
+                onclick='downloadFile(document.getElementById("filename").value, document.getElementById("textAreaABCedit").value)' />
         </span>
     </form>
     <p />
@@ -79,13 +79,13 @@ DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
         }
 
         // Create the ABC player
-        ABCplayer.innerHTML = createABCplayer('processed', '{{ site.defaultABCplayer }}');
+        ABCplayer.innerHTML = createABCplayer('edit', '{{ site.defaultABCplayer }}');
 
-        processABCchange(abc);
+        processABCchange(textAreaABCedit);
 
         // If the ABC changes get ready to play the revised ABC
-        $('#abc').change(function () {
-            processABCchange(abc);
+        $('#textAreaABCedit').change(function () {
+            processABCchange(textAreaABCedit);
         });
     });
 
@@ -108,32 +108,30 @@ DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
                     return (1);
                 }
                 // stop tune currently playing if needed
-                var playButton = document.getElementById("playABCprocessed");
+                var playButton = document.getElementById("textAreaABCedit");
                 if (typeof playButton !== 'undefined' &&
                     playButton.className == "stopButton") {
-                    stopABC("ABCprocessed");
+                    stopABC("textAreaABCedit");
                     playButton.className = "";
                     playButton.className = "playButton";
                 }
 
                 // Load the new dots
-                abc.value = this.result;
+                textAreaABCedit.value = this.result;
 
-                processABCchange(abc);
+                processABCchange(textAreaABCedit);
             };
             reader.readAsText(f);
         }
     }
 
-    function processABCchange(abc) {
-        // Unroll the ABC to make repeats work properly
-        ABCprocessed.value = preProcessABC(abc.value);
-
+    function processABCchange(textAreaABCedit) {
+        
         // Reset the filename for downloading
-        document.getElementById("filename").innerHTML = slugify(getABCtitle(abc.value)) + '.abc';
+        document.getElementById("filename").innerHTML = slugify(getABCtitle(textAreaABCedit.value)) + '.abc';
 
         // Display the ABC in the textbox as dots
-        abc_editor = new window.ABCJS.Editor("abc", {
+        abc_editor = new window.ABCJS.Editor("textAreaABCedit", {
             paper_id: "paper0",
             warnings_id: "warnings",
             render_options: {
