@@ -51,7 +51,7 @@ function createABCplayer(tuneID, timbre) {
                 <!-- Col 3 -->
                 <div class="audioChildInner">
                     <span title="Adjust playback speed with slider">
-                        <input name="flevel" id="speedSliderABC${tuneID}" class="abcSpeedControl slider" type="range" min="50" max="120" value="100" onchange="changeABCspeed(ABC${tuneID}, playABC${tuneID}, value)">
+                        <input name="flevel" id="speedSliderABC${tuneID}" class="abcSpeedControl slider" type="range" min="50" max="120" value="100" onchange="changeABCspeed(textAreaABC${tuneID}, playABC${tuneID}, value)">
                         <p class="audioLabel">Speed - <strong><output name="level">100</output>%</strong></p>
                     </span>
                 </div>
@@ -110,7 +110,9 @@ function playABC(textArea, playButton, playPosition, bpm) {
     }
 }
 
-function changeABCspeed(tuneABC, playButton, bpm) {
+function changeABCspeed(textArea, playButton, bpm) {
+    var tuneABC = preProcessABC(textArea.value);
+
     // Change the speed of playback
     ABCduration = calculateTuneDuration(tuneABC, bpm);
 
