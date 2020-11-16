@@ -111,6 +111,7 @@ function playABC(textArea, playButton, playPosition, bpm) {
 }
 
 function changeABCspeed(textArea, playButton, bpm) {
+    
     var tuneABC = preProcessABC(textArea.value);
 
     // Change the speed of playback
