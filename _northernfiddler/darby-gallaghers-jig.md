@@ -22,7 +22,7 @@ abc: |
     K: Dmaj
     d2 A|:{d}BAF ADD|{G}FEF DFA|{d}BAF AFD|AFE EFA|
     {Bd}BAF AFE|DFA d2 g|fed Bcd|AFD DFA:|
-    |:def d2 B|AFA ABC|def def|ede fdB|
+    |:def d2 B|AFA ABc|def def|ede fdB|
     def d2 B|AFA AFA|{a}gfe fdB|AFD DFA:|
 
 ---

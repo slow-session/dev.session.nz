@@ -23,7 +23,7 @@
                 <div class="formChild">
                     <span title="Download the ABC file details. Don't lose your work!">
                         <input value='Download ABC' type='button' class="filterButton"
-                            onclick='downloadFile(document.getElementById("filename").value, document.getElementById("ABCraw").value)' />
+                            onclick='downloadFile(document.getElementById("filename").value, document.getElementById("textAreaABCset").value)' />
                     </span>
                 </div>
                 <div class="formChild">
@@ -54,11 +54,10 @@
 
     // When the user clicks on <span> (x), close the setModal
     span.onclick = function () {
-        console.log('Click X');
-        var playerClass = document.getElementById("playABCprocessed").className;
+        var playerClass = document.getElementById("playABCset").className;
         if (playerClass == 'stopButton') { // audio is currently playing.
-            document.getElementById("playABCprocessed").className = "playButton";
-            stopABC("playABCprocessed");
+            document.getElementById("playABCset").className = "playButton";
+            stopABC("playABCset");
         }
         setModal.style.display = "none";
     }
@@ -66,11 +65,10 @@
     // When the user clicks anywhere outside of the setModal, close it
     window.onclick = function (event) {
         if (event.target == setModal) {
-            console.log('Click outside Modal');
-            var playerClass = document.getElementById("playABCprocessed").className;
+            var playerClass = document.getElementById("playABCset").className;
             if (playerClass == 'stopButton') { // audio is currently playing.
-                document.getElementById("playABCprocessed").className = "playButton";
-                stopABC("playABCprocessed");
+                document.getElementById("playABCset").className = "playButton";
+                stopABC("playABCset");
             }
             setModal.style.display = "none";
         }

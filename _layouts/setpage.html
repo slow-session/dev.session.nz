@@ -11,7 +11,7 @@ Type: {{ page.rhythm }}, added
 <br />
 
 <!-- Area to store unrolled ABC (style="display:none;")-->
-<textarea id="ABCprocessed" style="display:none;">X: 1
+<textarea id="textAreaABCset" style="display:none;">X: 1
 </textarea>
 
 <script>
@@ -48,7 +48,7 @@ var regex = new RegExp('X:.*\n');
         abcSource = {{ tune.abc | jsonify }};
         abcSource = abcSource.replace(regex, '');
 
-        document.getElementById('ABCprocessed').innerHTML += preProcessABC(abcSource) + "\n";
+        document.getElementById('textAreaABCset').innerHTML += abcSource + "\n";
     </script>
     {% assign tuneId = tuneId | plus: 1 %}
 {% endfor %}
@@ -69,6 +69,6 @@ var regex = new RegExp('X:.*\n');
 $(document).ready(function() {
     tunelist.innerHTML = tuneList.slice(0, -2);
 
-    ABCplayer.innerHTML = createABCplayer('processed', '{{ site.defaultABCplayer }}');
+    ABCplayer.innerHTML = createABCplayer('set', '{{ site.defaultABCplayer }}');
 });
 </script>

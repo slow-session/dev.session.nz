@@ -20,10 +20,8 @@ function addABCtune(tuneID) {
 
     var regex = new RegExp('X:.*\n');
     var abcSource = item.abc.replace(regex, 'X: ' + tuneID + '\n');
-    document.getElementById('ABCraw').innerHTML += abcSource + "\n";
+    document.getElementById('textAreaABCset').innerHTML += abcSource + "\n";
 
-    abcSource = item.abc.replace(regex, '');
-    document.getElementById('ABCprocessed').innerHTML += preProcessABC(abcSource) + "\n";
     document.getElementById("filename").innerHTML = slugify(item.title) + '-set.abc';
 
     document.getElementById('modalControls').style.display = 'block';
@@ -44,7 +42,7 @@ function addABCtune(tuneID) {
         document.getElementById('output').appendChild(divPaper);
     }
 
-    abc_editor = new window.ABCJS.Editor("ABCraw", {
+    abc_editor = new window.ABCJS.Editor("textAreaABCset", {
         paper_id: 'paper0',
         midi_id: "midi",
         warnings_id: "warnings",
@@ -57,8 +55,7 @@ function addABCtune(tuneID) {
 
 function Reset() {
     document.getElementById('paperHeader').style.display = "block";
-    document.getElementById('ABCraw').innerHTML = '';
-    document.getElementById('ABCprocessed').innerHTML = '';
+    document.getElementById('textAreaABCset').innerHTML = '';
     document.getElementById('filename').innerHTML = '';
     document.getElementById('setTuneTitles').innerHTML = '';
     //document.getElementById('modalControls').style.display = 'none';

@@ -206,10 +206,10 @@ function playAudio(tuneID, audioSource) {
 function changeTune(storeID, tuneID) {
     var item = storeID[tuneID];
     
-    var abcText = document.getElementById('abcText');
+    var abcText = document.getElementById(`textAreaABC`);
     if (abcText) {
         abcText.innerHTML = item.abc;
-    }
+    };
     
     // Clear the loop preset display
     var loopPresetControls = document.getElementById('loopPresetControls');
@@ -274,7 +274,7 @@ function changeTune(storeID, tuneID) {
         document.getElementById('paper0').style.display = "block";
         if (item.abc) {
             // Draw the dots
-            abc_editor = new window.ABCJS.Editor('abcText', {
+            abc_editor = new window.ABCJS.Editor('textAreaABC', {
                 paper_id: "paper0",
                 warnings_id: "warnings",
                 render_options: {
