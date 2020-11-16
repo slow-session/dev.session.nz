@@ -156,8 +156,6 @@ function calculateTuneDuration(tuneABC, bpm) {
 }
 
 function calculateTicks (tuneABC, bpm) {
-    let ticks;
-    
     // The ABC L: value scales the ticks value!
     var noteLenStr = getABCheaderValue("L:", tuneABC);
     if (!noteLenStr) {
