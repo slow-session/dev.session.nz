@@ -42,37 +42,35 @@ layout: page
 </form>
 <div id="loopPresetControls" style="display: none;"></div>
 
-<div class="outputABC">
+{% if page.abc contains "K:" %}
+<!-- *** If there's ABC for the tune, display the dots, an ABC player and an ABC editor *** -->
+<div>
     <div id="paper0" style="display: block;"></div>
-    {% if page.abc contains "K:" %}
-    <!--<h2>Play the ABC version</h2>-->
-
     <div style="overflow-x:auto;">
-    <div id="ABCplayer"></div>
+        <div id="ABCplayer"></div>
+
+        <div id='abcSource' class="abcSource">
+            <textarea id="textAreaABC" class="abcText" rows="16" spellcheck="false"></textarea>
+            <p>You can edit the ABC source, and see your changes. This will <b>NOT</b> change the website directly. A brief set of instructions is found    <a href="/editingABC/">here.</a>
+            </p>
+
+            <div title="Download the ABC you've entered. Don't lose your work!">
+                <input value='Download ABC' type='button' class="filterButton" onclick='downloadFile(document.getElementById("filename").value, document.getElementById("textAreaABC1").value)' />
+            </div>
+            <br />        
+            <p>If you feel that your changes are a closer match to the recording on the website, please save your changes (<b>Download ABC</b> button), send them to us at <a href="mailto:{{ site.email }}">{{ site.email }}</a>, and we will review the proposed changes.
+            </p>            
+        </div>
     </div>
-    {% endif %}
-    <div id='abcSource' class="abcSource">
-        <div class="row"></div>
-        <div id="textAreas"></div>
-        <p>You can edit the ABC source, and see your changes. This will <b>NOT</b> change the website directly. A brief set of instructions is found    <a href="/editingABC/">here.</a></p>
-        <span title="Download the ABC you've entered. Don't lose your work!">
-            <input value='Download ABC' type='button' class="filterButton"
-                onclick='downloadFile(document.getElementById("filename").value, document.getElementById("textAreaABC1").value)' />
-        </span>
-        
-        <p>If you feel that your changes are a closer match to the recording on the website, please save
-        your changes (<b>Download ABC</b> button), send them to us at <a href="mailto:{{ site.email }}">{{ site.email }}</a>, and
-        we will review the proposed changes.</p>            
-    </div>
+
+    <!-- Area to store filename for download -->
+    <textarea id="filename" style="display:none;"></textarea>
+
+    <form id="showABCform">
+        <input type="button" class="filterButton" value="Show ABC Source" onclick="toggleABC(this);">
+    </form>
 </div>
-
-<!-- Area to store filename for download -->
-<textarea id="filename" style="display:none;"></textarea>
-
-<form id="showABCform">
-    <input type="button" class="filterButton" value="Show ABC Source" onclick="toggle(this);">
-</form>
-
+{% endif %}
 
 <div>
     <br />
@@ -140,39 +138,17 @@ window.store = {
     },
 };
 
-function toggle(button) {
-    switch (button.value) {
-        case "Show ABC Source":
-            button.value = "Hide ABC Source";
-            document.getElementById('abcSource').style.display= "block" ;
-            break;
-        case "Hide ABC Source":
-            button.value = "Show ABC Source";
-            document.getElementById('abcSource').style.display= "none" ;
-            break;
-    }
-}
-
 $(document).ready(function() {
     audioPlayer.innerHTML = createAudioPlayer();
 
     let tuneID = "1";
-    let textAreaID = "textAreaABC" + tuneID;
-    
+
     {% if page.abc contains "K:" %}   
-                
-        ABCplayer.innerHTML = createABCplayer(tuneID, '{{ site.defaultABCplayer }}');
+    // Set the filename for downloading
+    document.getElementById("filename").innerHTML =
+      slugify(getABCheaderValue("T:", store[tuneID].abc)) + '.abc';
 
-        document.getElementById('textAreas').innerHTML =
-            `<textarea id="${textAreaID}" class="abcText" rows="16" 
-                spellcheck="false">${store[tuneID].abc}</textarea>`;
-    
-        // Set the filename for downloading
-        document.getElementById("filename").innerHTML =
-            slugify(getABCheaderValue("T:", store[tuneID].abc)) + '.abc';
-
-        abc_editor = new window.ABCJS.Editor(textAreaID, { paper_id: "paper0", warnings_id:"warnings", 
-                    render_options: {responsive: 'resize'}, indicate_changed: "true" });
+    ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
     {% endif %}
 
     changeTune(window.store, tuneID);

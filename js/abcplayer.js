@@ -26,7 +26,7 @@ var IntervalHandle;
 var instrument;
 
 
-function createABCplayer(tuneID, timbre) {
+function createABCplayer(textArea, tuneID, timbre) {
     /*
      * Generate the HTML needed to play ABC tunes
      */
@@ -38,7 +38,7 @@ function createABCplayer(tuneID, timbre) {
     <div class="audioParentOuter" id="ABC${tuneID}">
         <!-- Col 1 -->
         <div class="playpauseButton">
-            <button id="playABC${tuneID}" class="playButton" onclick="playABC(textAreaABC${tuneID}, playABC${tuneID}, positionABC${tuneID}, speedSliderABC${tuneID}.value)"></button>
+            <button id="playABC${tuneID}" class="playButton" onclick="playABC(${textArea}, playABC${tuneID}, positionABC${tuneID}, speedSliderABC${tuneID}.value)"></button>
         </div>
         <!-- Nested row in second column -->
         <div class="audioChildOuter">
@@ -51,7 +51,7 @@ function createABCplayer(tuneID, timbre) {
                 <!-- Col 3 -->
                 <div class="audioChildInner">
                     <span title="Adjust playback speed with slider">
-                        <input name="flevel" id="speedSliderABC${tuneID}" class="abcSpeedControl slider" type="range" min="50" max="120" value="100" onchange="changeABCspeed(textAreaABC${tuneID}, playABC${tuneID}, value)">
+                        <input name="flevel" id="speedSliderABC${tuneID}" class="abcSpeedControl slider" type="range" min="50" max="120" value="100" onchange="changeABCspeed(${textArea}, playABC${tuneID}, value)">
                         <p class="audioLabel">Speed - <strong><output name="level">100</output>%</strong></p>
                     </span>
                 </div>
