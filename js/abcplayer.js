@@ -32,7 +32,7 @@ function createABCplayer(textArea, tuneID, timbre) {
      */
     instrument = makeInstrument(timbre);
     console.log("createABC");
-    
+
     var abcPlayer = `
 <form onsubmit="return false" oninput="level.value=flevel.valueAsNumber">
     <div class="audioParentOuter" id="ABC${tuneID}">
@@ -82,11 +82,11 @@ function playABC(textArea, playButton, playPosition, bpm) {
      * This function unrolls the ABC so that things play better.
      */
     var tuneABC = preProcessABC(textArea.value);
-    
+
     // calculate tune length
     ABCduration = calculateTuneDuration(tuneABC, bpm);
 
-    let ticks = calculateTicks (tuneABC, bpm);
+    let ticks = calculateTicks(tuneABC, bpm);
 
     // If we have multiple ABC tunes on a page and we start a second one,
     // close the previous one cleanly
@@ -111,13 +111,13 @@ function playABC(textArea, playButton, playPosition, bpm) {
 }
 
 function changeABCspeed(textArea, playButton, bpm) {
-    
+
     var tuneABC = preProcessABC(textArea.value);
 
     // Change the speed of playback
     ABCduration = calculateTuneDuration(tuneABC, bpm);
 
-    let ticks = calculateTicks (tuneABC, bpm);
+    let ticks = calculateTicks(tuneABC, bpm);
 
     if (playButton.className == "stopButton") {
         stopABC(tuneABC);
@@ -156,7 +156,7 @@ function calculateTuneDuration(tuneABC, bpm) {
     return (bars * eval(meterStr) * 16 * eval(noteLenStr) * 60 / bpm);
 }
 
-function calculateTicks (tuneABC, bpm) {
+function calculateTicks(tuneABC, bpm) {
     // The ABC L: value scales the ticks value!
     var noteLenStr = getABCheaderValue("L:", tuneABC);
     if (!noteLenStr) {
@@ -423,7 +423,7 @@ function unRollABC(ABCNotes) {
         }
         newBigABCNotes = newBigABCNotes.substring(0, newBigABCNotes.length - 3); //undo hack
     }
-   
+
     /*
      * Clean up the ABC repeat markers - the above code should clean this up...
      * But...

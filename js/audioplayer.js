@@ -205,12 +205,12 @@ function playAudio(tuneID, audioSource) {
 
 function changeTune(storeID, tuneID) {
     let item = storeID[tuneID];
-    
+
     let tuneInfo = document.getElementById("tuneInfo");
     if (tuneInfo) {
         tuneInfo.innerHTML = '';
     }
-    
+
     // Clear the loop preset display
     let loopPresetControls = document.getElementById('loopPresetControls');
     if (loopPresetControls) {
@@ -240,7 +240,7 @@ function changeTune(storeID, tuneID) {
     if (tuneTitle) {
         tuneTitle.innerHTML = '<h2>' + item.title + '<span> - ' + item.key + ' ' + item.rhythm + '</span></h2>';
     }
-    
+
     if (item.mp3.includes('mp3')) {
         let tuneInfo = document.getElementById("tuneInfo");
         if (tuneInfo && item.mp3_source) {
@@ -248,7 +248,7 @@ function changeTune(storeID, tuneID) {
         }
 
         // make the MP3 player
-        document.getElementById('showPlayer').innerHTML = 
+        document.getElementById('showPlayer').innerHTML =
             createMP3player(tuneID, item.mp3);
         createSliders(tuneID);
 
@@ -293,12 +293,12 @@ function changeTune(storeID, tuneID) {
         if (abcText) {
             abcText.innerHTML = item.abc;
         };
-                
+
         // Get the current paper state
         var currentPaperState = document.getElementById('paper0').style.display;
         // Set the paper state to 'block'
         document.getElementById('paper0').style.display = "block";
-        
+
         // Draw the dots
         abc_editor = new window.ABCJS.Editor('textAreaABC', {
             paper_id: "paper0",
@@ -639,11 +639,11 @@ function toggleABC(button) {
     switch (button.value) {
         case "Show ABC Source":
             button.value = "Hide ABC Source";
-            document.getElementById('abcSource').style.display= "block" ;
+            document.getElementById('abcSource').style.display = "block";
             break;
         case "Hide ABC Source":
             button.value = "Show ABC Source";
-            document.getElementById('abcSource').style.display= "none" ;
+            document.getElementById('abcSource').style.display = "none";
             break;
     }
 }
