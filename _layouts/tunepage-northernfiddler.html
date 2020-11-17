@@ -1,6 +1,10 @@
 ---
 layout: page
 ---
+Musician: {{ page.musician }}
+<br />
+Page: {{ page.page }}
+
 <div class="outputABC">
     {% if page.abc contains "K:" %}
     <div id="paper0" style="display: block;"></div>
@@ -9,11 +13,10 @@ layout: page
     <div id="ABCplayer"></div>
     </div>
     <form>
-        <input type="button" class="filterButton" value="Show ABC Source" onclick="toggle(this);">
+        <input type="button" class="filterButton" value="Show ABC Source" onclick="toggleABC(this);">
     </form>
     <div id='abcSource' class="abcSource">
-        <div class="row"></div>
-        <div id="textAreas"></div>
+        <textarea id="textAreaABC" class="abcText" rows="16" spellcheck="false"></textarea>
         <p>You can edit the ABC source, and see your changes. This will <b>NOT</b> 
             change the website directly. A brief set of instructions is found 
             <a href="/editingABC/">here.</a></p>
@@ -40,21 +43,6 @@ layout: page
 </div>
 
 
-<script>        
-function toggle(button) {
-    switch (button.value) {
-        case "Show ABC Source":
-            button.value = "Hide ABC Source";
-            document.getElementById('abcSource').style.display= "block" ;
-            break;
-        case "Hide ABC Source":
-            button.value = "Show ABC Source";
-            document.getElementById('abcSource').style.display= "none" ;
-            break;
-    }
-}
-</script>
-
 <!-- Show errors -->
 <div id='warnings'></div>
 
@@ -63,21 +51,19 @@ function toggle(button) {
         
         {% if page.abc contains "K:" %}
         let tuneID = '1';
-        let textAreaID = "textAreaABC" + tuneID;
         let tuneABC = `{{ page.abc | br_to_newline }}`;
         
-        ABCplayer.innerHTML = createABCplayer(tuneID, '{{ site.defaultABCplayer }}');
+        document.getElementById('textAreaABC').innerHTML = `${tuneABC}`;
 
-        document.getElementById('textAreas').innerHTML =
-            `<textarea id="${textAreaID}" class="abcText" rows="16" 
-                spellcheck="false">${tuneABC}</textarea>`;
-    
         // Set the filename for downloading
         document.getElementById("filename").innerHTML =
             slugify(getABCheaderValue("T:", tuneABC)) + '.abc';
+        
+        ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
 
-        abc_editor = new window.ABCJS.Editor(textAreaID, { paper_id: "paper0", warnings_id:"warnings", 
+        abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "paper0", warnings_id:"warnings", 
                     render_options: {responsive: 'resize'}, indicate_changed: "true" });
+
         {% endif %}
     });
 </script>
