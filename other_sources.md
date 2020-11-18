@@ -19,7 +19,7 @@ Sets of tunes put together by Paddy O'Brien:
 
  * [Tune Sets Arranged by Paddy O'Brien, Co. Tipperary](http://www.ceolas.org/pub/tunes/tunes.pdf/POB.pdf)
   * [Local copy of obrien.pdf](/tunebooks/obrien.pdf "PDF")
-  * [O'Brien sets on line](/obrientunes/)
+  * [O'Brien Tunes - Online](/obrientunes/)
 
 Tommy Potts:
 
