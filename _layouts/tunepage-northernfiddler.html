@@ -1,9 +1,6 @@
 ---
 layout: page
 ---
-Musician: {{ page.musician }}
-<br />
-Page: {{ page.page }}
 
 <div class="outputABC">
     {% if page.abc contains "K:" %}
@@ -23,47 +20,40 @@ Page: {{ page.page }}
         <span title="Download the ABC you've entered. Don't lose your work!">
        	<input value='Download ABC' type='button' class="filterButton"
             onclick='downloadFile(document.getElementById("filename").value, 
-                     document.getElementById("textAreaABC1").value)' />
+                     document.getElementById("textAreaABC").value)' />
         </span>
     </div>
     
     <!-- Area to store filename for download -->
     <textarea id="filename" style="display:none;"></textarea>
-
-    <div id="debug"></div>
-
-    <br />
-    <p>You can print the music notation using this button. Please think of the trees!</p>
-
-    <input type="button" class="filterButton" value="Print" 
-        onclick="printDotsImage(document.getElementById('paper0').innerHTML)" />
-    {% else %}
-    <h2>No ABC found for this page!</h2>
     {% endif %}
 </div>
-
 
 <!-- Show errors -->
 <div id='warnings'></div>
 
+<div>
+    <br />
+    {% if page.musician != null and page.page != null %}
+    <p>The music notation was derived from the playing of {{ page.musician }}. See <a href="/tunebooks/The_Northern_Fiddler.pdf">The Northern Fiddler</a>, Page {{ page.page }}.
+    {% endif %}
+</div>
+
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
+    {% if page.abc contains "K:" %}
+    let tuneID = '1';
+    let tuneABC = `{{ page.abc | br_to_newline }}`;
         
-        {% if page.abc contains "K:" %}
-        let tuneID = '1';
-        let tuneABC = `{{ page.abc | br_to_newline }}`;
+    document.getElementById('textAreaABC').innerHTML = `${tuneABC}`;
+
+    // Set the filename for downloading
+    document.getElementById("filename").innerHTML =
+     slugify(getABCheaderValue("T:", tuneABC)) + '.abc';
         
-        document.getElementById('textAreaABC').innerHTML = `${tuneABC}`;
+    ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
 
-        // Set the filename for downloading
-        document.getElementById("filename").innerHTML =
-            slugify(getABCheaderValue("T:", tuneABC)) + '.abc';
-        
-        ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
-
-        abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "paper0", warnings_id:"warnings", 
-                    render_options: {responsive: 'resize'}, indicate_changed: "true" });
-
-        {% endif %}
-    });
+    abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "paper0", warnings_id:"warnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
+    {% endif %}
+});
 </script>

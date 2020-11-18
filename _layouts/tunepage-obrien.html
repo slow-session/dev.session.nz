@@ -5,85 +5,55 @@ layout: page
     <div id="paper0" style="display: block;"></div>
     {% if page.abc contains "K:" %}
     <!--<h2>Play the ABC version</h2>-->
-    <div id="textAreas"></div>
     <div style="overflow-x:auto;">
     <div id="ABCplayer"></div>
     </div>
     <form>
-        <input type="button" class="filterButton" value="Show ABC Source" onclick="toggle(this);">
+        <input type="button" class="filterButton" value="Show ABC Source" onclick="toggleABC(this);">
     </form>
     <div id='abcSource' class="abcSource">
         <div class="row"></div>
-        <textarea name='abcText' id="abcText" class="abcText"
-            rows="16" spellcheck="false">{{ page.abc | br_to_newline }}
-        </textarea>
+        <textarea id="textAreaABC" class="abcText" rows="16" spellcheck="false"></textarea>
         <p>You can edit the ABC source, and see your changes. This will <b>NOT</b> change the website directly. A brief set of instructions is found <a href="/editingABC/">here.</a></p>
         <span title="Download the ABC you've entered. Don't lose your work!">
-       	<input value='Download ABC' type='button' class="filterButton"
-            onclick='downloadFile(document.getElementById("filename").value,
-                document.getElementById("abcText").value)' />
+       	<input value='Download ABC' type='button' class="filterButton" onclick='downloadFile(document.getElementById("filename").value,    document.getElementById("textAreaABC").value)' />
         </span>
     </div>
+    <!-- Area to store filename for download -->
+    <textarea id="filename" style="display:none;"></textarea>
     {% endif %}
 </div>
-
-<!-- Area to store filename for download -->
-<textarea id="filename" style="display:none;"></textarea>
-<div id="textAreas"></div>
 
 <div>
     <br />
     {% if page.abc_source %}
-        <p>The music notation was derived from
-        {% if page.abc_url %}
-            <a href="{{ page.abc_url }}">{{ page.abc_source }}</a>.</p>
-        {% else %}
-            {{ page.abc_source }}
-        {% endif %}
+    <p>The music notation was derived from
+    {% if page.abc_url %}
+    <a href="{{ page.abc_url }}">{{ page.abc_source }}</a>.</p>
+    {% else %}
+    {{ page.abc_source }}
+    {% endif %}
     {% endif %}
 </div>
-
-<div id="debug"></div>
-
-<script>        
-function toggle(button) {
-    switch (button.value) {
-        case "Show ABC Source":
-            button.value = "Hide ABC Source";
-            document.getElementById('abcSource').style.display= "block" ;
-            break;
-        case "Hide ABC Source":
-            button.value = "Show ABC Source";
-            document.getElementById('abcSource').style.display= "none" ;
-            break;
-    }
-}
-</script>
 
 <!-- Show errors -->
 <div id='warnings'></div>
 
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
+    {% if page.abc contains "K:" %}
+    let tuneID = '1';
+    let tuneABC = `{{ page.abc | br_to_newline }}`;
         
-        {% if page.abc contains "K:" %}
-        var tuneID = '100';
-        var textAreaID = 'ABC' + tuneID;
-        
-        document.getElementById('textAreas').innerHTML = '<textarea id="' + textAreaID + '" style="display:none;">' + preProcessABC(abcText.value) + '</textarea>';
-        ABCplayer.innerHTML = createABCplayer(tuneID, '{{ site.defaultABCplayer }}');
-        
-        // Set the filename for downloading
-        document.getElementById("filename").innerHTML = slugify(getABCtitle(abcText.value)) + '.abc';
+    document.getElementById('textAreaABC').innerHTML = `${tuneABC}`;
 
-        // If the ABC changes get ready to play the revised ABC
-        $('#abcText').bind('input propertychange', function() {
-            textAreas.innerHTML = '<textarea id="' + textAreaID + '" style="display:none;">' + preProcessABC(abcText.value) + '</textarea>';
-            // Reset the filename for downloading
-            document.getElementById("filename").innerHTML = slugify(getABCtitle(abcText.value)) + '.abc';
-        });
+    // Set the filename for downloading
+    document.getElementById("filename").innerHTML =
+        slugify(getABCheaderValue("T:", tuneABC)) + '.abc';
+        
+    ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
 
-        abc_editor = new window.ABCJS.Editor('abcText', { paper_id: "paper0", warnings_id:"warnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
-        {% endif %}
-    });
+    abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "paper0",warnings_id:"warnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
+    {% endif %}
+});
 </script>

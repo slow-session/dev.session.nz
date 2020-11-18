@@ -27,7 +27,8 @@ Tommy Potts:
 
  The Northern Fiddler - Music and Musicians of Donegal and Tyrone:
 
- * [The Northern Fiddler](/tunebooks/The_Northern_Fiddler.pdf) 
+ * [The Northern Fiddler - PDF](/tunebooks/The_Northern_Fiddler.pdf)
+ * [The Northern Fiddler - Online](/northernfiddler/)
 
 Dunedin Fiddle Orchestra:
 
