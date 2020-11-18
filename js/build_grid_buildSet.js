@@ -20,7 +20,7 @@ function addABCtune(tuneID) {
 
     var regex = new RegExp('X:.*\n');
     var abcSource = item.abc.replace(regex, 'X: ' + tuneID + '\n');
-    document.getElementById('textAreaABCset').innerHTML += abcSource + "\n";
+    document.getElementById('textAreaABC').innerHTML += abcSource + "\n";
 
     document.getElementById("filename").innerHTML = slugify(item.title) + '-set.abc';
 
@@ -42,7 +42,7 @@ function addABCtune(tuneID) {
         document.getElementById('output').appendChild(divPaper);
     }
 
-    abc_editor = new window.ABCJS.Editor("textAreaABCset", {
+    abc_editor = new window.ABCJS.Editor("textAreaABC", {
         paper_id: 'paper0',
         midi_id: "midi",
         warnings_id: "warnings",
@@ -55,7 +55,7 @@ function addABCtune(tuneID) {
 
 function Reset() {
     document.getElementById('paperHeader').style.display = "block";
-    document.getElementById('textAreaABCset').innerHTML = '';
+    document.getElementById('textAreaABC').innerHTML = '';
     document.getElementById('filename').innerHTML = '';
     document.getElementById('setTuneTitles').innerHTML = '';
     //document.getElementById('modalControls').style.display = 'none';

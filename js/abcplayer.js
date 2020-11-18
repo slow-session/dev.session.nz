@@ -31,7 +31,6 @@ function createABCplayer(textArea, tuneID, timbre) {
      * Generate the HTML needed to play ABC tunes
      */
     instrument = makeInstrument(timbre);
-    console.log("createABC");
 
     var abcPlayer = `
 <form onsubmit="return false" oninput="level.value=flevel.valueAsNumber">

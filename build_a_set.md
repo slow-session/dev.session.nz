@@ -100,10 +100,12 @@ page.
 
 <!-- Area to store ABC -->
 
-<textarea id="textAreaABCset" style="display:none;"></textarea>
+<textarea id="textAreaABC" style="display:none;"></textarea>
 
 <script>
 $(document).ready(function() {
-    ABCplayer.innerHTML = createABCplayer('set', '{{ site.defaultABCplayer }}');
+    let tuneID = 1;
+    
+    ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
 });
 </script>

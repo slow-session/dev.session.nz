@@ -11,7 +11,7 @@ Type: {{ page.rhythm }}, added
 <br />
 
 <!-- Area to store unrolled ABC (style="display:none;")-->
-<textarea id="textAreaABCset" style="display:none;">X: 1
+<textarea id="textAreaABC" style="display:none;">X: 1
 </textarea>
 
 <script>
@@ -48,7 +48,7 @@ var regex = new RegExp('X:.*\n');
         abcSource = {{ tune.abc | jsonify }};
         abcSource = abcSource.replace(regex, '');
 
-        document.getElementById('textAreaABCset').innerHTML += abcSource + "\n";
+        document.getElementById('textAreaABC').innerHTML += abcSource + "\n";
     </script>
     {% assign tuneId = tuneId | plus: 1 %}
 {% endfor %}
@@ -63,12 +63,13 @@ var regex = new RegExp('X:.*\n');
 <hr>
 <p>You can print your set using this button. Please think of the trees!</p>
 
-<input class="button" type="button" class="loopButton" value="Print this Set" onclick="printDotsImage(document.getElementById('paper0').innerHTML)" />
+<input class="button" type="button" class="filterButton" value="Print this Set" onclick="printDotsImage(document.getElementById('paper0').innerHTML)" />
 
 <script>
 $(document).ready(function() {
+    let tuneID = 1;
     tunelist.innerHTML = tuneList.slice(0, -2);
 
-    ABCplayer.innerHTML = createABCplayer('set', '{{ site.defaultABCplayer }}');
+    ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
 });
 </script>
