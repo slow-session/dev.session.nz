@@ -203,8 +203,10 @@ function playAudio(tuneID, audioSource) {
 
 }
 
-function changeTune(storeID, tuneID) {
+function selectTune(storeID, tuneID) {
     let item = storeID[tuneID];
+
+    let showPlayer = document.getElementById("showPlayer");
 
     let tuneInfo = document.getElementById("tuneInfo");
     if (tuneInfo) {
@@ -241,14 +243,14 @@ function changeTune(storeID, tuneID) {
         tuneTitle.innerHTML = '<h2>' + item.title + '<span> - ' + item.key + ' ' + item.rhythm + '</span></h2>';
     }
 
-    if (item.mp3.includes('mp3')) {
+    if (item.mp3.includes('mp3') && showPlayer) {
         let tuneInfo = document.getElementById("tuneInfo");
         if (tuneInfo && item.mp3_source) {
             tuneInfo.innerHTML = 'Source: ' + item.mp3_source;
         }
 
         // make the MP3 player
-        document.getElementById('showPlayer').innerHTML =
+        showPlayer.innerHTML =
             createMP3player(tuneID, item.mp3);
         createSliders(tuneID);
 
@@ -272,20 +274,26 @@ function changeTune(storeID, tuneID) {
         };
     } else {
         // no recording available
-        document.getElementById('loopForm').style.display = "none";
-
-        var recordingMessage = '<fieldset><strong> \
-        A recording for this tune is not available.';
-        if (modal) {
-            recordingMessage += '<br /><input class="filterButton" type="button" onclick="location.href=\'' + item.url + '\';" value="Go to Tune Page" />'
-            if (dotsForm) {
-                dotsForm.style.display = "none";
+        if (showPlayer) {
+            var recordingMessage = '<fieldset><strong> \
+            A recording for this tune is not available.';
+            if (modal) {
+                recordingMessage += '<br /><input class="filterButton" type="button" onclick="location.href=\'' + item.url + '\';" value="Go to Tune Page" />'
+                if (dotsForm) {
+                    dotsForm.style.display = "none";
+                }
             }
-        }
-        recordingMessage += '</strong></fieldset>';
+            recordingMessage += '</strong></fieldset>';
 
-        document.getElementById('showPlayer').style.overflow = 'auto';
-        document.getElementById('showPlayer').innerHTML = recordingMessage;
+            showPlayer.style.overflow = 'auto';
+            showPlayer.innerHTML = recordingMessage;
+        }
+
+        if (loopForm) {
+            loopForm.style.display = "none";
+        }
+
+
     }
 
     if (item.abc) {
@@ -295,13 +303,13 @@ function changeTune(storeID, tuneID) {
         };
 
         // Get the current paper state
-        var currentPaperState = document.getElementById('paper0').style.display;
+        var currentPaperState = document.getElementById('abcPaper').style.display;
         // Set the paper state to 'block'
-        document.getElementById('paper0').style.display = "block";
+        document.getElementById('abcPaper').style.display = "block";
 
         // Draw the dots
         abc_editor = new window.ABCJS.Editor('textAreaABC', {
-            paper_id: "paper0",
+            paper_id: "abcPaper",
             warnings_id: "warnings",
             render_options: {
                 responsive: 'resize'
@@ -309,10 +317,10 @@ function changeTune(storeID, tuneID) {
             indicate_changed: "true"
         });
     } else {
-        document.getElementById('paper0').style.paddingBottom = '0px';
-        document.getElementById('paper0').style.overflow = 'auto';
+        document.getElementById('abcPaper').style.paddingBottom = '0px';
+        document.getElementById('abcPaper').style.overflow = 'auto';
         var urlSessionSearch = 'https://thesession.org/tunes/search?type=' + item.rhythm + '&q=' + item.title.replace(/\s+/g, '+');
-        document.getElementById('paper0').innerHTML = '<fieldset><strong> \
+        document.getElementById('abcPaper').innerHTML = '<fieldset><strong> \
         <p>We don\'t have dots for this tune. If you find a version of the tune that\'s a good match, send \
         us a copy of the ABC and we\'ll get it added to the site. You might find it on The Session \
         at this link:</p>\
@@ -320,7 +328,7 @@ function changeTune(storeID, tuneID) {
         </strong></fieldset>';
     }
     // Reset paper state to original value
-    document.getElementById('paper0').style.display = currentPaperState;
+    document.getElementById('abcPaper').style.display = currentPaperState;
 }
 
 function LoadAudio(audioSource, playPosition) {
@@ -626,11 +634,11 @@ function toggleTheDots(button) {
     switch (button.value) {
         case "Show the Dots":
             button.value = "Hide the Dots";
-            document.getElementById('paper0').style.display = "block";
+            document.getElementById('abcPaper').style.display = "block";
             break;
         case "Hide the Dots":
             button.value = "Show the Dots";
-            document.getElementById('paper0').style.display = "none";
+            document.getElementById('abcPaper').style.display = "none";
             break;
     }
 }

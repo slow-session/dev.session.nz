@@ -34,16 +34,16 @@ function addABCtune(tuneID) {
 
     // create the paper for the tune dots each time the user selects tunes
     // This makes sure there's no extra white space after a reset
-    if (!document.getElementById('paper0')) {
+    if (!document.getElementById('abcPaper')) {
         var divPaper = document.createElement("div");
-        divPaper.id = 'paper0';
+        divPaper.id = 'abcPaper';
         divPaper.setAttribute('class', 'paper');
         divPaper.style.maxWidth = '650px';
         document.getElementById('output').appendChild(divPaper);
     }
 
     abc_editor = new window.ABCJS.Editor("textAreaABC", {
-        paper_id: 'paper0',
+        paper_id: 'abcPaper',
         midi_id: "midi",
         warnings_id: "warnings",
         render_options: {
@@ -62,7 +62,7 @@ function Reset() {
 
     // delete the paper for the tune dots after a reset
     // selecting new tunes will then create new paper
-    if (elem = document.getElementById('paper0')) {
+    if (elem = document.getElementById('abcPaper')) {
         document.getElementById('output').removeChild(elem);
     }
 

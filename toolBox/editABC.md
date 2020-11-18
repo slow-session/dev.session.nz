@@ -23,7 +23,7 @@ If you want to add a new tune to the archive you can use the
 <div class="row">
     <!-- Draw the dots -->
     <div class="output">
-        <div id="paper0" class="paper"></div>
+        <div id="abcPaper" class="abcPaper"></div>
     </div>
 
     <!-- Controls for ABC player -->
@@ -132,7 +132,7 @@ DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
 
         // Display the ABC in the textbox as dots
         abc_editor = new window.ABCJS.Editor("textAreaABCedit", {
-            paper_id: "paper0",
+            paper_id: "abcPaper",
             warnings_id: "warnings",
             render_options: {
                 responsive: 'resize'

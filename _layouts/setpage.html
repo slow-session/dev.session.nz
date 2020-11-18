@@ -33,7 +33,7 @@ var abcSource = '';
 var regex = new RegExp('X:.*\n');
 </script>
 
-<div id="paper0" class="paper" style="max-width: 650px;">
+<div id="abcPaper" class="abcPaper">
 {% assign tuneId = 100 %}
 {% for setTune in page.tunes %}
 {% assign siteTunes = site.tunes | where: 'titleID', setTune %}
@@ -63,7 +63,7 @@ var regex = new RegExp('X:.*\n');
 <hr>
 <p>You can print your set using this button. Please think of the trees!</p>
 
-<input class="button" type="button" class="filterButton" value="Print this Set" onclick="printDotsImage(document.getElementById('paper0').innerHTML)" />
+<input class="button" type="button" class="filterButton" value="Print this Set" onclick="printDotsImage(document.getElementById('abcPaper').innerHTML)" />
 
 <script>
 $(document).ready(function() {

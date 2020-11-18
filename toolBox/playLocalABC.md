@@ -10,7 +10,7 @@ You can use this page to play an ABC file you've stored locally.
 <!-- Area to store unrolled ABC -->
 <textarea id="ABCprocessed" style="display:none;"></textarea>
 <div class="output" style="max-width: 650px;">
-    <div id="paper0" class="paper"></div>
+    <div id="abcPaper" class="abcPaper"></div>
 </div>
 
 <div class="player">
@@ -61,7 +61,7 @@ function handleFileSelect(evt) {
             ABCprocessed.value = preProcessABC(this.result);
 
             // Display the ABC in the textbox as dots
-            abc_editor = new window.ABCJS.Editor("abc", { paper_id: "paper0", warnings_id:"warnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
+            abc_editor = new window.ABCJS.Editor("abc", { paper_id: "abcPaper", warnings_id:"warnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
             
             // stop tune currently playing if needed
             var playButton = document.getElementById("playABCprocessed");

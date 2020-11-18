@@ -1,59 +1,77 @@
 ---
 layout: page
 ---
-
 <div class="outputABC">
     {% if page.abc contains "K:" %}
-    <div id="paper0" style="display: block;"></div>
-    <!--<h2>Play the ABC version</h2>-->
+    
+    <!-- display the dots -->
+    <div id="abcPaper" class="abcPaper"></div>
+    
+    <!-- play the ABC version -->
     <div style="overflow-x:auto;">
     <div id="ABCplayer"></div>
     </div>
+
+    <!-- show/edit the ABC -->
     <form>
         <input type="button" class="filterButton" value="Show ABC Source" onclick="toggleABC(this);">
     </form>
     <div id='abcSource' class="abcSource">
-        <textarea id="textAreaABC" class="abcText" rows="16" spellcheck="false"></textarea>
-        <p>You can edit the ABC source, and see your changes. This will <b>NOT</b> 
-            change the website directly. A brief set of instructions is found 
-            <a href="/editingABC/">here.</a></p>
-        <span title="Download the ABC you've entered. Don't lose your work!">
+        <textarea id="textAreaABC" class="abcText" rows="14" spellcheck="false"></textarea>
+        <!-- show ABC errors -->
+        <div id='abcWarnings'></div>
+
+        <p>You can edit the ABC source, and see your changes. This will <b>NOT</b> change the website directly. A brief set of instructions is found <a href="/editingABC/">here.</a></p>
+        <div title="Download the ABC you've entered. Don't lose your work!">
        	<input value='Download ABC' type='button' class="filterButton"
             onclick='downloadFile(document.getElementById("filename").value, 
                      document.getElementById("textAreaABC").value)' />
-        </span>
+        </div>
+    </div>
+
+    <!-- attribution details-->
+    <div>
+        <br />
+        {% if page.musician != null and page.page != null %}
+        <p>The music notation was derived from the playing of {{ page.musician }}. See <a href="/tunebooks/The_Northern_Fiddler.pdf">The Northern Fiddler</a>, Page {{ page.page }}.
+        {% endif %}
     </div>
     
-    <!-- Area to store filename for download -->
+    <!-- textarea to store filename for download -->
     <textarea id="filename" style="display:none;"></textarea>
     {% endif %}
 </div>
 
-<!-- Show errors -->
-<div id='warnings'></div>
 
-<div>
-    <br />
-    {% if page.musician != null and page.page != null %}
-    <p>The music notation was derived from the playing of {{ page.musician }}. See <a href="/tunebooks/The_Northern_Fiddler.pdf">The Northern Fiddler</a>, Page {{ page.page }}.
-    {% endif %}
-</div>
-
+{% assign tuneID = 1 %}
 <script>
+
+window.store = {
+    "{{ tuneID }}": {
+        "title": "{{ page.title | xml_escape }}",
+        "tuneID": "{{ tuneID }}",
+        "key": "{{ page.key | xml_escape }}",
+        "rhythm": "{{ page.rhythm | xml_escape }}",
+        "mp3": "{{ site.mp3_host | append: page.mp3_file | xml_escape }}",
+        "musician": "{{ page.musician | xml_escape }}",
+        "page": "{{ page.page | xml_escape }}",
+        "abc": {{ page.abc | jsonify }}
+    },
+};
+
 $(document).ready(function() {
-    {% if page.abc contains "K:" %}
-    let tuneID = '1';
-    let tuneABC = `{{ page.abc | br_to_newline }}`;
-        
-    document.getElementById('textAreaABC').innerHTML = `${tuneABC}`;
-
-    // Set the filename for downloading
-    document.getElementById("filename").innerHTML =
-     slugify(getABCheaderValue("T:", tuneABC)) + '.abc';
-        
-    ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
-
-    abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "paper0", warnings_id:"warnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
+    let tuneID = "{{ tuneID }}";
+    
+    {% if page.abc contains "K:" %}    
+    // create the ABC player
+    document.getElementById('ABCplayer').innerHTML = 
+        createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
+    
+    // set the filename for downloading
+    document.getElementById("filename").innerHTML = 
+        slugify(getABCheaderValue("T:", store[tuneID].abc)) + '.abc';      
     {% endif %}
+
+    selectTune(window.store, tuneID);
 });
 </script>

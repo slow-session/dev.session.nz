@@ -9,11 +9,13 @@ Added <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: 
 </div>
 <br />
 
+<!-- audio player for MP3 files-->
 <div id="audioPlayer"></div>
 <div style="overflow-x:auto;">
-<div id="showPlayer"></div>
+    <div id="showPlayer"></div>
 </div>
 
+<!-- attribution -->
 <div>
     <br />
     {% if page.mp3_file %}
@@ -28,7 +30,7 @@ Added <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: 
 
     {% if page.mp3_url %}
     <p>Original audio: <a href="{{ page.mp3_url }}">{{ page.mp3_url }}</a></p>
-    <!-- If the mp3_url is one from YouTube or Facebook, embed a copy here -->
+    <!-- If the mp3_url is one from YouTube or Facebook etc, embed a copy here -->
     <p><script>
     show_iframe("{{ page.mp3_url }}");
     </script>
@@ -37,14 +39,8 @@ Added <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: 
     {% endif %}
 </div>
 
-<div id="debug"></div>
-
-<!-- Show errors -->
-<div id='warnings'></div>
-
 {% assign tuneID = 1 %}
 <script>
-var tuneID = "{{ tuneID }}";
 
 window.store = {
     "{{ tuneID }}": {
@@ -62,9 +58,12 @@ window.store = {
 };
 
 $(document).ready(function() {
+    let tuneID = "{{ tuneID }}";
+
+    // create the ABC player
     audioPlayer.innerHTML = createAudioPlayer();
 
-    changeTune(window.store, tuneID);
+    selectTune(window.store, tuneID);
 
 });
 </script>

@@ -37,7 +37,7 @@ window.store = {
 Pick a random tune from the archive:
 
 <div>
-    <input class="filterButton" type="button" onclick="changeTune(store, getRandomInt(1, {{ tuneID }}));" value="Play Now">
+    <input class="filterButton" type="button" onclick="selectTune(store, getRandomInt(1, {{ tuneID }}));" value="Play Now">
 </div>
 
 <script>
