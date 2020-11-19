@@ -12,22 +12,20 @@ Getting a great session humming requires some attention to certain ground rules.
 
 Many of the tunes that get played at the session are in the <a href="/tunes_archive/">Tunes Archive</a> page but other tunes that are firmly in the traditional mould are very welcome.
 
-Regular session tune of the week
---------
+<script src="/js/build_grid_focustunes.js"></script>
 
-We often pick a tune for homework, and we'll play it sometime during the evening.
+## Current Focus Tunes
 
-{% assign legend="Tune of the week" %}
-{% assign tuneID = 100 %}
-{% assign sortedtunes = site.tunes | sort: 'regtuneoftheweek' | reverse %}
-{% assign tune = sortedtunes.first %}
-{% if tune.regtuneoftheweek %}
-
-{% include tuneoftheweek.html %}
-
+We often pick some tunes to focus on, and we'll probably play them sometime during the evening.
 
 <script>
-tuneOfTheWeek = {
+window.currentFocusTunes =  {
+    {% assign focustunecount = 4 %}
+    {% assign sortedtunes = site.tunes | sort: 'regtuneoftheweek' | reverse %}
+    {% assign tune_count = 0 %}
+    {% assign tuneID = 1 %}
+    {% for tune in sortedtunes %}
+    {% if tune_count < focustunecount %}
     "{{ tuneID }}": {
         "title": "{{ tune.title | xml_escape }}",
         "tuneID": "{{ tuneID }}",
@@ -40,23 +38,25 @@ tuneOfTheWeek = {
         "parts": "{{ tune.parts }}",
         "abc": {{ tune.abc | jsonify }}
     },
+    {% endif %}
+    {% assign tune_count = tune_count | plus: 1 %}
+    {% assign tuneID = tuneID | plus: 1 %}
+    {% endfor %}
 };
 </script>
-{% endif %}
 
-Recent regular session tunes of the week
---------
+{% include focustunes.html divID="gridCurrentFocusTunes" storeName="window.currentFocusTunes" %}
 
-These are the <span id="tunesCount"></span> tunes we've learned over the last few months.
+## Previous Focus Tunes
+
+Here are the tunes we've focussed on recently.
 
 <script>
-window.store = {
-{% assign sortedtunes = site.tunes | sort: 'regtuneoftheweek' | reverse %}
-{% assign tune_count = 0 %}
-{% assign tuneID = 200 %}
-{% for tune in sortedtunes %}
-    {% if tune_count > 0 %}
-        {% if tune.regtuneoftheweek %}
+window.currentTunes = {
+    {% assign sortedtunes = site.tunes | sort: 'regtuneoftheweek' | reverse %}
+    {% assign tuneID = 1 %}
+    {% for tune in sortedtunes %}
+    {% if tune.regtuneoftheweek %}
         "{{ tuneID }}": {
             "title": "{{ tune.title | xml_escape }}",
             "tuneID": "{{ tuneID }}",
@@ -68,19 +68,15 @@ window.store = {
             "repeats": "{{ tune.repeats }}",
             "parts": "{{ tune.parts }}",
             "abc": {{ tune.abc | jsonify }}
-        }{% if tune_count < site.reg_tunes_max %},{% else %}{% break %}{% endif %}
-        {% endif %}
+        },
     {% endif %}
-    {% assign tune_count = tune_count | plus: 1 %}
     {% assign tuneID = tuneID | plus: 1 %}
-{% endfor %}
+    {% endfor %}
 };
 
-// Add tune of the week into the window.store
-$.extend(window.store, tuneOfTheWeek);
 </script>
 
-{% include tunesArchiveGrid.html%} 
+{% include focustunes.html divID="gridCurrentTunes" storeName="window.currentTunes" %}
 
 Latest Tunes
 ------------

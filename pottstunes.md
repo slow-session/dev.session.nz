@@ -37,7 +37,7 @@ We've added audio of versions of the recordings (with some clean up of the audio
     };
 </script>
 
-{% include tunesPottsGrid.html%}
+{% include tunesPottsGrid.html %}
 
 <script>
 $(document).ready(function() {
