@@ -23,7 +23,14 @@ You can use tools like <a href="https://www.mediahuman.com/youtube-to-mp3-conver
 </div>
 
 <script>
-function handleFileSelect(evt) {
+// Check for the various File API support.
+if (window.File && window.FileReader && window.FileList && window.Blob) {
+    document.getElementById('files').addEventListener('change', handleAudioFileSelect, false);
+} else {
+    alert('The File APIs are not fully supported in this browser.');
+}
+
+function handleAudioFileSelect(evt) {
     evt.stopPropagation();
     evt.preventDefault();
 
@@ -46,18 +53,10 @@ function handleFileSelect(evt) {
         }       
         var reader = new FileReader();
         reader.onload = function(e) {
-            //showPlayer.src = this.result;
-            showPlayer.innerHTML = createMP3player('100', this.result);
-            createSliders('100');
+            showPlayer.innerHTML = createMP3player('1', this.result);
+            createSliders('1');
         };
         reader.readAsDataURL(f);
     }
-}
-
-// Check for the various File API support.
-if (window.File && window.FileReader && window.FileList && window.Blob) {
-    document.getElementById('files').addEventListener('change', handleFileSelect, false);
-} else {
-    alert('The File APIs are not fully supported in this browser.');
 }
 </script>

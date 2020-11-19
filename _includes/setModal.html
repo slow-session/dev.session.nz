@@ -23,7 +23,7 @@
                 <div class="formChild">
                     <span title="Download the ABC file details. Don't lose your work!">
                         <input value='Download ABC' type='button' class="filterButton"
-                            onclick='downloadFile(document.getElementById("filename").value, document.getElementById("textAreaABCset").value)' />
+                            onclick='downloadABCFile(document.getElementById("textAreaABC").value)' />
                     </span>
                 </div>
                 <div class="formChild">
@@ -37,9 +37,6 @@
         </form>
     </div>
 </div>
-
-<!-- Area to store filename for download -->
-<textarea id="filename" style="display:none;"></textarea>
 
 <script>
     // Get the modal

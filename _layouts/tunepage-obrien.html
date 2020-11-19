@@ -24,8 +24,7 @@ layout: page
         <p>You can edit the ABC source, and see your changes. This will <b>NOT</b> change the website directly. A brief set of instructions is found <a href="/editingABC/">here.</a></p>
         <div title="Download the ABC you've entered. Don't lose your work!">
        	<input value='Download ABC' type='button' class="filterButton"
-            onclick='downloadFile(document.getElementById("filename").value, 
-                     document.getElementById("textAreaABC").value)' />
+            onclick='downloadABCFile(document.getElementById("textAreaABC").value)' />
         </div>
     </div>
 
@@ -41,9 +40,6 @@ layout: page
         {% endif %}
         {% endif %}
     </div>
-        
-    <!-- textarea to store filename for download -->
-    <textarea id="filename" style="display:none;"></textarea>
     {% endif %}
 </div>
 
@@ -67,11 +63,7 @@ $(document).ready(function() {
     {% if page.abc contains "K:" %}    
     // create the ABC player
     document.getElementById('ABCplayer').innerHTML = 
-        createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
-    
-    // set the filename for downloading
-    document.getElementById("filename").innerHTML = 
-        slugify(getABCheaderValue("T:", store[tuneID].abc)) + '.abc';      
+        createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');    
     {% endif %}
 
     selectTune(window.store, tuneID);

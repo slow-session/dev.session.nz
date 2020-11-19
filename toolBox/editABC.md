@@ -13,13 +13,6 @@ guide.
 If you want to add a new tune to the archive you can use the
 [Create MD File](/createMD/) page to create the metadata needed.
 
-<!-- Area to store unrolled ABC -->
-<textarea id="ABCprocessed" style="display:none;"></textarea>
-
-<!-- Area to store filename for download -->
-<textarea id="filename" style="display:none;"></textarea>
-
-
 <div class="row">
     <!-- Draw the dots -->
     <div class="output">
@@ -39,7 +32,7 @@ If you want to add a new tune to the archive you can use the
 <div class="row">
     <h3>Or edit this sample ABC:</h3>
     <!-- Read the modified ABC and play if requested -->
-    <textarea name='abc' id="textAreaABCedit" class="abcText" rows="13" spellcheck="false">
+    <textarea name='abc' id="textAreaABC" class="abcText" rows="13" spellcheck="false">
 X: 1
 T: Kilglass Lakes
 R: jig
@@ -62,82 +55,64 @@ DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
     <form>
         <span title="Download the ABC you've entered. Don't lose your work!">
             <input value='Download ABC' type='button' class='filterButton'
-                onclick='downloadFile(document.getElementById("filename").value, document.getElementById("textAreaABCedit").value)' />
+                onclick='downloadABCFile(document.getElementById("textAreaABC").value)' />
         </span>
     </form>
     <p />
 </div>
 
 <script>
-    $(document).ready(function () {
-        // Check for the various File API support.
-        var fileInfo = document.getElementById('fileInfo');
-        if (window.File && window.FileReader && window.FileList && window.Blob) {
-            document.getElementById('files').addEventListener('change', handleFileSelect, false);
-        } else {
-            fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
-        }
-
-        // Create the ABC player
-        ABCplayer.innerHTML = createABCplayer('edit', '{{ site.defaultABCplayer }}');
-
-        processABCchange(textAreaABCedit);
-
-        // If the ABC changes get ready to play the revised ABC
-        $('#textAreaABCedit').change(function () {
-            processABCchange(textAreaABCedit);
-        });
-    });
-
-    function handleFileSelect(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-
-        var files = evt.target.files; // FileList object.
-
-        // files is a FileList of File objects. List some properties.
-        for (var i = 0, f; f = files[i]; i++) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                // Is ABC file valid?
-                if ((getABCheaderValue("X:", this.result) == '') ||
-                    (getABCheaderValue("T:", this.result) == '') ||
-                    (getABCheaderValue("K:", this.result) == '')) {
-                    fileInfo.innerHTML = "Invalid ABC file";
-                    return (1);
-                }
-                // stop tune currently playing if needed
-                var playButton = document.getElementById("textAreaABCedit");
-                if (typeof playButton !== 'undefined' &&
-                    playButton.className == "stopButton") {
-                    stopABC("textAreaABCedit");
-                    playButton.className = "";
-                    playButton.className = "playButton";
-                }
-
-                // Load the new dots
-                textAreaABCedit.value = this.result;
-
-                processABCchange(textAreaABCedit);
-            };
-            reader.readAsText(f);
-        }
+$(document).ready(function () {
+    // Check for the various File API support.
+    var fileInfo = document.getElementById('fileInfo');
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        document.getElementById('files').addEventListener('change', handleABCFileSelect, false);
+    } else {
+        fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
 
-    function processABCchange(textAreaABCedit) {
-        
-        // Reset the filename for downloading
-        document.getElementById("filename").innerHTML = slugify(getABCtitle(textAreaABCedit.value)) + '.abc';
+    // Create the ABC player
+    ABCplayer.innerHTML = createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');   
+});
 
-        // Display the ABC in the textbox as dots
-        abc_editor = new window.ABCJS.Editor("textAreaABCedit", {
-            paper_id: "abcPaper",
-            warnings_id: "warnings",
-            render_options: {
-                responsive: 'resize'
-            },
-            indicate_changed: "true"
-        });
+function handleABCFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+
+    var files = evt.target.files; // FileList object.
+
+    // files is a FileList of File objects. List some properties.
+    for (var i = 0, f; f = files[i]; i++) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            // Is ABC file valid?
+            if ((getABCheaderValue("X:", this.result) == '')
+                || (getABCheaderValue("T:", this.result) == '')
+                || (getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
+                return (1);
+            }
+
+            // Show the dots
+            textAreaABC.value = this.result; 
+            
+            // Display the ABC in the textbox as dots
+            abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
+            
+            // stop tune currently playing if needed
+            var playButton = document.getElementById("playABC1");
+            if (typeof playButton !== 'undefined'
+                && playButton.className == "stopButton") {
+                stopABC("ABC1");
+                playButton.className = "";
+                playButton.className = "playButton";
+            }
+            
+            // Show the player when we've loaded some dots
+            document.getElementById("abcPlayer").style.display = 'block';
+
+        };
+        reader.readAsText(f);
     }
+}
 </script>

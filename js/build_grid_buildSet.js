@@ -22,8 +22,6 @@ function addABCtune(tuneID) {
     var abcSource = item.abc.replace(regex, 'X: ' + tuneID + '\n');
     document.getElementById('textAreaABC').innerHTML += abcSource + "\n";
 
-    document.getElementById("filename").innerHTML = slugify(item.title) + '-set.abc';
-
     document.getElementById('modalControls').style.display = 'block';
     document.getElementById('setTuneTitles').innerHTML += item.title + '<br />';
     document.getElementById('tr' + tuneID).style.backgroundColor = 'khaki';

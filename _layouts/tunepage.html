@@ -68,14 +68,12 @@ layout: page
         </p>
 
         <div title="Download the ABC you've entered. Don't lose your work!">
-            <input value='Download ABC' type='button' class="filterButton" onclick='downloadFile(document.getElementById("filename").value, document.getElementById("textAreaABC1").value)' />
+            <input value='Download ABC' type='button' class="filterButton" onclick='downloadABCFile(document.getElementById("textAreaABC").value)' />
         </div>
         <br />        
         <p>If you feel that your changes are a closer match to the recording on the website, please save your changes (<b>Download ABC</b> button), send them to us at <a href="mailto:{{ site.email }}">{{ site.email }}</a>, and we will review the proposed changes.
         </p>            
     </div>
-    <!-- textarea to store filename for download -->
-    <textarea id="filename" style="display:none;"></textarea></div>
 {% endif %}
 
     <!-- attribution -->
@@ -147,10 +145,6 @@ $(document).ready(function() {
     audioPlayer.innerHTML = createAudioPlayer();
 
     {% if page.abc contains "K:" %}   
-    // Set the filename for downloading
-    document.getElementById("filename").innerHTML =
-      slugify(getABCheaderValue("T:", store[tuneID].abc)) + '.abc';
-
     // create the ABC player
     ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
     {% endif %}
