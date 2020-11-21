@@ -77,18 +77,16 @@ function makeInstrument(timbre) {
  */
 function playABC(textArea, playButton, playPosition, bpm) {
     /*
-     * Our simple ABC player doesn't handle repeats well.
-     * This function unrolls the ABC so that things play better.
+     * Stop any current player
      */
-    var tuneABC = preProcessABC(textArea.value);
-
-    // calculate tune length
-    ABCduration = calculateTuneDuration(tuneABC, bpm);
-
-    let ticks = calculateTicks(tuneABC, bpm);
-
-    // If we have multiple ABC tunes on a page and we start a second one,
-    // close the previous one cleanly
+    stopABC();        
+    
+    /* If we have multiple ABC tunes on a page and we start a second one,
+     * close the previous one cleanly
+     *
+     * Do we still have multiple ABC players on a page ??
+     *
+     */
     if (lastplayButton && lastplayButton != playButton) {
         lastplayButton.className = "";
         lastplayButton.className = "playButton";
@@ -98,38 +96,47 @@ function playABC(textArea, playButton, playPosition, bpm) {
     ABCPosition.Ptr = playPosition;
 
     if (playButton.className == "playButton") {
-        stopABC(tuneABC);
+        /*
+         * Our simple ABC player doesn't handle repeats well.
+         * This function unrolls the ABC so that things play better.
+         */
+        let tuneABC = preProcessABC(textArea.value);
+
+        // calculate tune length
+        ABCduration = calculateTuneDuration(tuneABC, bpm);
+
+        let ticks = calculateTicks(tuneABC, bpm);
+        
         startABC(tuneABC, ticks);
         playButton.className = "";
         playButton.className = "stopButton";
     } else {
-        stopABC(tuneABC);
         playButton.className = "";
         playButton.className = "playButton";
     }
 }
 
 function changeABCspeed(textArea, playButton, bpm) {
-
-    var tuneABC = preProcessABC(textArea.value);
-
-    // Change the speed of playback
-    ABCduration = calculateTuneDuration(tuneABC, bpm);
-
-    let ticks = calculateTicks(tuneABC, bpm);
-
+    /*
+     * stop any current player
+     */
+    stopABC();
+    
+    // if there's an active player, restart it at the new speed
     if (playButton.className == "stopButton") {
-        stopABC(tuneABC);
-        playButton.className = "";
-        playButton.className = "stopButton";
-        setABCPosition(0);
-        ABCCurrentTime = 0;
+        /*
+         * Our simple ABC player doesn't handle repeats well.
+         * This function unrolls the ABC so that things play better.
+         */
+        let tuneABC = preProcessABC(textArea.value);
+
+        // Change the speed of playback
+        ABCduration = calculateTuneDuration(tuneABC, bpm);
+
+        let ticks = calculateTicks(tuneABC, bpm);
+
         startABC(tuneABC, ticks);
-    } else {
-        stopABC(tuneABC);
-        playButton.className = "";
-        playButton.className = "playButton";
-    }
+    } 
 }
 
 function calculateTuneDuration(tuneABC, bpm) {
@@ -198,7 +205,7 @@ function startABC(tuneABC, ticks) {
     IntervalHandle = setInterval(nudgeABCSlider, 100);
 }
 
-function stopABC(tuneABC) {
+function stopABC() {
     clearInterval(IntervalHandle);
     abcStopped = 1;
     instrument.silence();
@@ -217,7 +224,7 @@ function loopABCTune(tuneABC, ticks) {
 
 function nudgeABCSlider() {
     ABCCurrentTime += 0.1;
-    var floatTime = (ABCCurrentTime / ABCduration) * 500;
+    let floatTime = (ABCCurrentTime / ABCduration) * 500;
     ABCPosition.Ptr.value = floatTime;
 }
 
@@ -424,6 +431,6 @@ function unRollABC(ABCNotes) {
     expandedABC = expandedABC.replace(/:$/, "|");
     expandedABC = expandedABC.replace(/:"$/, "|");
     
-    console.log(expandedABC);
+    //console.log(expandedABC);
     return (expandedABC);
 }
