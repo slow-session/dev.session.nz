@@ -415,8 +415,7 @@ function unRollABC(ABCNotes) {
     expandedABC += ABCNotes.substr(pos, sortedTokenLocations[sortedTokens.length - 1] - pos);
 
     /*
-     * Clean up the ABC repeat markers - the above code should clean this up...
-     * But...
+     * Clean up the ABC repeat markers - we don't need them now!
      */
     expandedABC = expandedABC.replace(/:\|/g, "|");
     expandedABC = expandedABC.replace(/\|:/g, "|");
