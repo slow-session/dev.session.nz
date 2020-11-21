@@ -19,7 +19,7 @@
  ################################################################################
 */
 function myDebug(message) {
-    console.log(message);
+    console.log({message});
 }
 
 var BeginLoopTime = 0;
@@ -292,8 +292,6 @@ function selectTune(storeID, tuneID) {
         if (loopForm) {
             loopForm.style.display = "none";
         }
-
-
     }
 
     if (item.abc) {
@@ -327,7 +325,7 @@ function selectTune(storeID, tuneID) {
         <a href="' + urlSessionSearch + '">' + urlSessionSearch + '</a>\
         </strong></fieldset>';
     }
-    // Reset paper state to original value
+    // Reset paper state to original value - right place ???
     document.getElementById('abcPaper').style.display = currentPaperState;
 }
 

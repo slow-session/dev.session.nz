@@ -320,7 +320,7 @@ function unRollABC(ABCNotes) {
         k = 0,
         l = 0,
         m = 0;
-    var bigABCNotes = "";
+    var expandedABC = "";
 
     while ((match = firstBar.exec(ABCNotes)) != null) {
         fBarPos.push(match.index);
@@ -372,18 +372,18 @@ function unRollABC(ABCNotes) {
     }
     pos = 0;
     for (i = 0; i < sortedTokens.length; i++) {
-        if (bigABCNotes.length > 1000) {
+        if (expandedABC.length > 1000) {
             break; //safety check
         }
         if ((sortedTokens[i] == "rr") || (sortedTokens[i] == "se")) { //find next repeat or second ending
-            bigABCNotes += ABCNotes.substr(pos, sortedTokenLocations[i] - pos); //notes from last location to rr or se
+            expandedABC += ABCNotes.substr(pos, sortedTokenLocations[i] - pos); //notes from last location to rr or se
             for (k = i - 1; k >= 0; k--) { //march backward from there
                 // check for likely loop point
                 if ((sortedTokens[k] == "se") || (sortedTokens[k] == "rr") || (sortedTokens[k] == "fb") || (sortedTokens[k] == "lr")) {
                     pos = sortedTokenLocations[k]; // mark loop beginning point
                     for (j = k + 1; j < sortedTokens.length; j++) { //walk forward from there
                         if ((sortedTokens[j] == "fe") || (sortedTokens[j] == "rr")) { // walk to likely stopping point (first ending or repeat)
-                            bigABCNotes += ABCNotes.substr(pos, sortedTokenLocations[j] - pos);
+                            expandedABC += ABCNotes.substr(pos, sortedTokenLocations[j] - pos);
                             pos = sortedTokenLocations[j]; // mark last position encountered
                             i = j + 1; //consume tokens from big loop
                             if (sortedTokens[j] == "fe") { //if we got to a first ending we have to skip it...
@@ -391,7 +391,7 @@ function unRollABC(ABCNotes) {
                                     if (sortedTokens[l] == "se") {
                                         for (m = l; m < sortedTokens.length; m++) { //look for end of second ending
                                             if (sortedTokens[m] == "db") { //a double bar marks the end of a second ending
-                                                bigABCNotes += ABCNotes.substr(sortedTokenLocations[l],
+                                                expandedABC += ABCNotes.substr(sortedTokenLocations[l],
                                                     sortedTokenLocations[m] - sortedTokenLocations[l]); //record second ending
                                                 pos = sortedTokenLocations[m]; //mark most forward progress
                                                 i = m + 1; //consume the tokens from the main loop
@@ -412,26 +412,19 @@ function unRollABC(ABCNotes) {
         } //if
     } //for i
 
-    bigABCNotes += ABCNotes.substr(pos, sortedTokenLocations[sortedTokens.length - 1] - pos);
-    bigABCNotes += "\""; //hack to make sure the newBigABCNotes gets fills when there are not quotes
-
-    let newBigABCNotes = "";
-    for (j = 0; j < bigABCNotes.length; j++) {
-        if (bigABCNotes[j] == "\"") {
-            newBigABCNotes = [bigABCNotes.slice(0, j), "\\\"", bigABCNotes.slice(j)].join('');
-        }
-        newBigABCNotes = newBigABCNotes.substring(0, newBigABCNotes.length - 3); //undo hack
-    }
+    expandedABC += ABCNotes.substr(pos, sortedTokenLocations[sortedTokens.length - 1] - pos);
 
     /*
      * Clean up the ABC repeat markers - the above code should clean this up...
      * But...
      */
-    newBigABCNotes = newBigABCNotes.replace(/:\|/g, "|");
-    newBigABCNotes = newBigABCNotes.replace(/\|:/g, "|");
-    newBigABCNotes = newBigABCNotes.replace(/::/g, "|");
-    newBigABCNotes = newBigABCNotes.replace(/\|+/g, "|");
-    newBigABCNotes = newBigABCNotes.replace(/:$/, "|");
-
-    return (newBigABCNotes);
+    expandedABC = expandedABC.replace(/:\|/g, "|");
+    expandedABC = expandedABC.replace(/\|:/g, "|");
+    expandedABC = expandedABC.replace(/::/g, "|");
+    expandedABC = expandedABC.replace(/\|+/g, "|");
+    expandedABC = expandedABC.replace(/:$/, "|");
+    expandedABC = expandedABC.replace(/:"$/, "|");
+    
+    console.log(expandedABC);
+    return (expandedABC);
 }
