@@ -877,6 +877,14 @@
             var ABCtoken = /(?:\[[A-Za-z]:[^\]]*\])|\s+|%[^\n]*|![^\s!:|\[\]]*!|\+[^+|!]*\+|[_<>@^]?"[^"]*"|\[|\]|>+|<+|(?:(?:\^+|_+|=|)[A-Ga-g](?:,+|'+|))|\(\d+(?::\d+){0,2}|\d*\/\d+|\d+\/?|\/+|[xzXZ]|\[?\|\]?|:?\|:?|::|./g;
 
             module.exports = function parseABCFile(str) {
+                 /*
+                  * This simple ABC player doesn't handle repeats well.
+                  * This function unrolls the ABC so that things play better.
+                  * ASJL 2020/11/23
+                  */
+                str = preProcessABC(str);
+                // console.log(str);
+                
                 var lines = str.split('\n'),
                     result = {},
                     context = result,
@@ -899,20 +907,6 @@
                         // Parse the notes.
                         // TED:  parses ABC a line at a time - problem if looking for repeats
                         parseABCNotes(lines[j]);
-                    }
-                }
-                for (j = 0; j < lines.length; ++j) {
-                    // First, check to see if the line is a header line.
-                    header = ABCheader.exec(lines[j]);
-                    if (header) {
-                        handleInformation(header[1], header[2].trim());
-                    } else if (/^\s*(?:%.*)?$/.test(lines[j])) {
-                        // Skip blank and comment lines.
-                        continue;
-                    } else {
-                        // Parse the notes.
-                        // TED:  parses ABC a line at a time - problem if looking for repeats
-                        makeLongLine(lines[j]);
                     }
                 }
                 var infer = ['unitnote', 'unitbeat', 'tempo'];
@@ -1186,8 +1180,6 @@
                         index = parsed.index;
                     }
                 }
-
-                function makeLongLine(str) {}
                 // Parse M: lines.  "3/4" is 3/4 time and "C" is 4/4 (common) time.
                 function parseMeter(mline, beatinfo) {
                     var d = /^C/.test(mline) ? 4 / 4 : durationToTime(mline);
@@ -1699,6 +1691,234 @@
                         }
                     }
                     return i + (n / d);
+                }
+                // ASJL - moved from abcplayer.js - 2020/11/23
+                function preProcessABC(tuneABC) {
+                    /*
+                     * Our simple ABC player doesn't handle repeats well.
+                     * This function unrolls the ABC so that things play better.
+                     */
+                    var lines = tuneABC.split('\n');
+                    var ABCHeader = [""];
+                    var ABCNotes = [""];
+                    var headerRegex = /^([A-Za-z]):\s*(.*)$/;
+                    var blankRegex = /^\s*(?:%.*)?$/;
+                    var tuneIndex = 0;
+                    var endOfHeaderFound = false;
+                    var processedABC = "";
+                    for (var j = 0; j < lines.length; ++j) {
+                        if (headerRegex.exec(lines[j])) {
+                            if (endOfHeaderFound) {
+                                endOfHeaderFound = false;
+                                tuneIndex++;
+                                ABCHeader[tuneIndex] = "";
+                                ABCNotes[tuneIndex] = "";
+                                if (lines[j].startsWith('X:')) {
+                                    continue;
+                                }
+                            }
+                            // put the header lines back in place
+                            ABCHeader[tuneIndex] += lines[j] + "\n";
+                            //
+                            if (lines[j].startsWith('K:')) {
+                                endOfHeaderFound = true;
+                            }
+                        } else if (blankRegex.test(lines[j])) {
+                            // Skip blank and comment lines.
+                            continue;
+                        } else {
+                            // Notes to parse
+                            ABCNotes[tuneIndex] += lines[j];
+                        }
+                    }
+                    for (i = 0; i < ABCHeader.length; ++i) {
+                        processedABC += ABCHeader[i] + unRollABC(ABCNotes[i]) + "\n";;
+                    }
+                    return (processedABC);
+                }
+                // ASJL - moved from abcplayer.js - 2020/11/23
+                function unRollABC(ABCNotes) {
+                    /*
+                     * Regular expression used to parse ABC - https://regex101.com/ was very helpful in decoding
+                     *
+                
+                    ABCString = (?:\[[A-Za-z]:[^\]]*\])|\s+|%[^\n]*|![^\s!:|\[\]]*!|\+[^+|!]*\+|[_<>@^]?"[^"]*"|\[|\]|>+|<+|(?:(?:\^+|_+|=|)[A-Ga-g](?:,+|'+|))|\(\d+(?::\d+){0,2}|\d*\/\d+|\d+\/?|\/+|[xzXZ]|\[?\|:\]?|:?\|:?|::|.
+                
+                    (?:\[[A-Za-z]:[^\]]*\]) matches nothing
+                    \s+|%[^\n]* matches spaces
+                    ![^\s!:|\[\]]*! no matches
+                    \+[^+|!]*\+ no matches
+                    [_<>@^]?"[^"]*" matches chords
+                    \[|\] matches [ or ]
+                    [_<>@^]?{[^"]*} matches grace note phrases {...}
+                    :?\|:? matches :| or |:
+                    (?:(?:\^+|_+|=|)[A-Ga-g](?:,+|'+|)) matches letters A-Ga-g in or out of chords and other words
+                    \(\d+(?::\d+){0,2} matches triplet, or quad symbol (3
+                    \d*\/\d+ matches fractions i.e. 4/4 1/8 etc
+                    \d+\/? matches all single digits
+                    \[\d+|\|\d+ matches first and second endings
+                    \|\||\|\] matches double bars either || or |]
+                    (\|\|)|(\|\])|:\||\|:|\[\d+|\|\d+ matches first and second endings, double bars, and right and left repeats
+                
+                    */
+                
+                    var fEnding = /\|1/g,
+                        sEnding = /\|2/g,
+                        lRepeat = /\|:/g,
+                        rRepeat = /:\|/g,
+                        dblBar = /\|\|/g,
+                        firstBar = /\|/g;
+                    var fEnding2 = /\[1/g,
+                        sEnding2 = /\[2/g,
+                        dblBar2 = /\|\]/g;
+                    var match, fBarPos = [],
+                        fEndPos = [],
+                        sEndPos = [],
+                        lRepPos = [],
+                        rRepPos = [],
+                        dblBarPos = [];
+                    var tokenString = [],
+                        tokenLocations = [],
+                        tokenCount = 0,
+                        sortedTokens = [],
+                        sortedTokenLocations = [];
+                    var pos = 0,
+                        i = 0,
+                        k = 0,
+                        l = 0,
+                        m = 0;
+                    var expandedABC = "";
+                
+                    while ((match = firstBar.exec(ABCNotes)) != null) {
+                        fBarPos.push(match.index);
+                    }
+                    tokenString[tokenCount] = "fb";
+                    if (fBarPos[0] > 6) {
+                        fBarPos[0] = 0;
+                    }
+                    // first bar
+                    tokenLocations[tokenCount++] = fBarPos[0]; 
+                    while (((match = fEnding.exec(ABCNotes)) || (match = fEnding2.exec(ABCNotes))) != null) {
+                        fEndPos.push(match.index);
+                        tokenString[tokenCount] = "fe";
+                         // first endings
+                        tokenLocations[tokenCount++] = match.index;
+                    }
+                    while (((match = sEnding.exec(ABCNotes)) || (match = sEnding2.exec(ABCNotes))) != null) {
+                        sEndPos.push(match.index);
+                        tokenString[tokenCount] = "se";
+                        // second endings
+                        tokenLocations[tokenCount++] = match.index;
+                        
+                    }
+                    while ((match = rRepeat.exec(ABCNotes)) != null) {
+                        rRepPos.push(match.index);
+                        tokenString[tokenCount] = "rr";
+                         // right repeats
+                        tokenLocations[tokenCount++] = match.index;
+                    }
+                    while ((match = lRepeat.exec(ABCNotes)) != null) {
+                        lRepPos.push(match.index);
+                        tokenString[tokenCount] = "lr";
+                        // left repeats
+                        tokenLocations[tokenCount++] = match.index;
+                    }
+                    while (((match = dblBar.exec(ABCNotes)) || (match = dblBar2.exec(ABCNotes))) != null) {
+                        dblBarPos.push(match.index);
+                        tokenString[tokenCount] = "db";
+                        // double bars
+                        tokenLocations[tokenCount++] = match.index;
+                    }
+                    tokenString[tokenCount] = "lb";
+                    // last bar
+                    tokenLocations[tokenCount++] = fBarPos[fBarPos.length - 1]; 
+                
+                    var indices = tokenLocations.map(function (elem, index) {
+                        return index;
+                    });
+                    indices.sort(function (a, b) {
+                        return tokenLocations[a] - tokenLocations[b];
+                    });
+                
+                    for (j = 0; j < tokenLocations.length; j++) {
+                        sortedTokens[j] = tokenString[indices[j]];
+                        sortedTokenLocations[j] = tokenLocations[indices[j]];
+                    }
+                    pos = 0;
+                    
+                    for (i = 0; i < sortedTokens.length; i++) {
+                        // safety check - is 1000 enough? ASJL 2020/11/23
+                        if (expandedABC.length > 1000) {
+                            break;
+                        }
+                        // find next repeat or second ending
+                        if ((sortedTokens[i] == "rr") || (sortedTokens[i] == "se")) { 
+                            //notes from last location to rr or se
+                            expandedABC += ABCNotes.substr(pos, sortedTokenLocations[i] - pos);
+                            // march backward from there
+                            for (k = i - 1; k >= 0; k--) {
+                                // check for likely loop point
+                                if ((sortedTokens[k] == "se") || (sortedTokens[k] == "rr") || (sortedTokens[k] == "fb") || (sortedTokens[k] == "lr")) {
+                                    // mark loop beginning point
+                                    pos = sortedTokenLocations[k];
+                                     // walk forward from there
+                                     for (j = k + 1; j < sortedTokens.length; j++) {
+                                        // walk to likely stopping point (first ending or repeat)
+                                        if ((sortedTokens[j] == "fe") || (sortedTokens[j] == "rr")) { 
+                                            expandedABC += ABCNotes.substr(pos, sortedTokenLocations[j] - pos);
+                                            // mark last position encountered
+                                            pos = sortedTokenLocations[j];
+                                            // consume tokens from big loop
+                                            i = j + 1;
+                                            // if we got to a first ending we have to skip it..
+                                            if (sortedTokens[j] == "fe") { 
+                                                // walk forward from here until the second ending
+                                                for (l = j; l < sortedTokens.length; l++) { 
+                                                    if (sortedTokens[l] == "se") {
+                                                        // look for end of second ending
+                                                        for (m = l; m < sortedTokens.length; m++) { 
+                                                            // a double bar marks the end of a second ending
+                                                            if (sortedTokens[m] == "db") {
+                                                                 // record second ending
+                                                                expandedABC += ABCNotes.substr(sortedTokenLocations[l],
+                                                                    sortedTokenLocations[m] - sortedTokenLocations[l]);
+                                                                //mark most forward progress
+                                                                pos = sortedTokenLocations[m];
+                                                                 // consume the tokens from the main loop
+                                                                i = m + 1;
+                                                                // quit looking
+                                                                break;
+                                                            }
+                                                        } // END of for m loop
+                                                        // consume tokens TED: CHECK THIS
+                                                        i = l + 1;
+                                                        // quit looking
+                                                        break; 
+                                                    }
+                                                } // END of for l loop
+                                            } // END of first ending we have to skip it
+                                            break;
+                                        }
+                                    } // END of for j loop
+                                    break;
+                                } // END of check for likely loop point
+                            } // END of for k loop
+                        } // END of check for likely loop point
+                    } // END of for i loop
+
+                    expandedABC += ABCNotes.substr(pos, sortedTokenLocations[sortedTokens.length - 1] - pos);
+                
+                    /*
+                     * Clean up the ABC repeat markers - we don't need them now!
+                     */
+                    expandedABC = expandedABC.replace(/:\|/g, "|");
+                    expandedABC = expandedABC.replace(/\|:/g, "|");
+                    expandedABC = expandedABC.replace(/::/g, "|");
+                    expandedABC = expandedABC.replace(/\|+/g, "|");
+                    expandedABC = expandedABC.replace(/:$/, "|");
+                    expandedABC = expandedABC.replace(/:"$/, "|");
+                    
+                    return (expandedABC);
                 }
             }
 

@@ -37,7 +37,7 @@ function createABCplayer(textArea, tuneID, timbre) {
     <div class="audioParentOuter" id="ABC${tuneID}">
         <!-- Col 1 -->
         <div class="playpauseButton">
-            <button id="playABC${tuneID}" class="playButton" onclick="playABC(${textArea}, playABC${tuneID}, positionABC${tuneID}, speedSliderABC${tuneID}.value)"></button>
+            <button id="playABC${tuneID}" class="playButton" onclick="playABC(${textArea}.value, playABC${tuneID}, positionABC${tuneID}, speedSliderABC${tuneID}.value)"></button>
         </div>
         <!-- Nested row in second column -->
         <div class="audioChildOuter">
@@ -50,7 +50,7 @@ function createABCplayer(textArea, tuneID, timbre) {
                 <!-- Col 3 -->
                 <div class="audioChildInner">
                     <span title="Adjust playback speed with slider">
-                        <input name="flevel" id="speedSliderABC${tuneID}" class="abcSpeedControl slider" type="range" min="50" max="120" value="100" onchange="changeABCspeed(${textArea}, playABC${tuneID}, value)">
+                        <input name="flevel" id="speedSliderABC${tuneID}" class="abcSpeedControl slider" type="range" min="50" max="120" value="100" onchange="changeABCspeed(${textArea}.value, playABC${tuneID}, value)">
                         <p class="audioLabel">Speed - <strong><output name="level">100</output>%</strong></p>
                     </span>
                 </div>
@@ -75,7 +75,7 @@ function makeInstrument(timbre) {
 /*
  * Play an ABC tune when the button gets pushed
  */
-function playABC(textArea, playButton, playPosition, bpm) {
+function playABC(tuneABC, playButton, playPosition, bpm) {
     /*
      * Stop any current player
      */
@@ -96,17 +96,11 @@ function playABC(textArea, playButton, playPosition, bpm) {
     ABCPosition.Ptr = playPosition;
 
     if (playButton.className == "playButton") {
-        /*
-         * Our simple ABC player doesn't handle repeats well.
-         * This function unrolls the ABC so that things play better.
-         */
-        let tuneABC = preProcessABC(textArea.value);
-
-        // calculate tune length
-        ABCduration = calculateTuneDuration(tuneABC, bpm);
-
         let ticks = calculateTicks(tuneABC, bpm);
         
+        // calculate tune length
+        ABCduration = calculateTuneDuration(tuneABC, bpm);
+                
         startABC(tuneABC, ticks);
         playButton.className = "";
         playButton.className = "stopButton";
@@ -116,7 +110,7 @@ function playABC(textArea, playButton, playPosition, bpm) {
     }
 }
 
-function changeABCspeed(textArea, playButton, bpm) {
+function changeABCspeed(tuneABC, playButton, bpm) {
     /*
      * stop any current player
      */
@@ -124,17 +118,11 @@ function changeABCspeed(textArea, playButton, bpm) {
     
     // if there's an active player, restart it at the new speed
     if (playButton.className == "stopButton") {
-        /*
-         * Our simple ABC player doesn't handle repeats well.
-         * This function unrolls the ABC so that things play better.
-         */
-        let tuneABC = preProcessABC(textArea.value);
-
+        let ticks = calculateTicks(tuneABC, bpm);
+        
         // Change the speed of playback
         ABCduration = calculateTuneDuration(tuneABC, bpm);
-
-        let ticks = calculateTicks(tuneABC, bpm);
-
+        
         startABC(tuneABC, ticks);
     } 
 }
@@ -231,206 +219,4 @@ function nudgeABCSlider() {
 function setABCPosition(ticks) {
     // move position of ABC tune via the slider
     ABCPosition.Ptr.value = ticks;
-}
-
-function preProcessABC(tuneABC) {
-    /*
-     * Our simple ABC player doesn't handle repeats well.
-     * This function unrolls the ABC so that things play better.
-     */
-    var lines = tuneABC.split('\n');
-    var ABCHeader = [""];
-    var ABCNotes = [""];
-    var headerRegex = /^([A-Za-z]):\s*(.*)$/;
-    var blankRegex = /^\s*(?:%.*)?$/;
-    var tuneIndex = 0;
-    var endOfHeaderFound = false;
-    var processedABC = "";
-    for (var j = 0; j < lines.length; ++j) {
-        if (headerRegex.exec(lines[j])) {
-            if (endOfHeaderFound) {
-                endOfHeaderFound = false;
-                tuneIndex++;
-                ABCHeader[tuneIndex] = "";
-                ABCNotes[tuneIndex] = "";
-                if (lines[j].startsWith('X:')) {
-                    continue;
-                }
-            }
-            // put the header lines back in place
-            ABCHeader[tuneIndex] += lines[j] + "\n";
-            //
-            if (lines[j].startsWith('K:')) {
-                endOfHeaderFound = true;
-            }
-        } else if (blankRegex.test(lines[j])) {
-            // Skip blank and comment lines.
-            continue;
-        } else {
-            // Notes to parse
-            ABCNotes[tuneIndex] += lines[j];
-        }
-    }
-    for (i = 0; i < ABCHeader.length; ++i) {
-        processedABC += ABCHeader[i] + unRollABC(ABCNotes[i]) + "\n";;
-    }
-    return (processedABC);
-}
-
-function unRollABC(ABCNotes) {
-    /*
-     * Regular expression used to parse ABC - https://regex101.com/ was very helpful in decoding
-     *
-
-    ABCString = (?:\[[A-Za-z]:[^\]]*\])|\s+|%[^\n]*|![^\s!:|\[\]]*!|\+[^+|!]*\+|[_<>@^]?"[^"]*"|\[|\]|>+|<+|(?:(?:\^+|_+|=|)[A-Ga-g](?:,+|'+|))|\(\d+(?::\d+){0,2}|\d*\/\d+|\d+\/?|\/+|[xzXZ]|\[?\|:\]?|:?\|:?|::|.
-
-    (?:\[[A-Za-z]:[^\]]*\]) matches nothing
-    \s+|%[^\n]* matches spaces
-    ![^\s!:|\[\]]*! no matches
-    \+[^+|!]*\+ no matches
-    [_<>@^]?"[^"]*" matches chords
-    \[|\] matches [ or ]
-    [_<>@^]?{[^"]*} matches grace note phrases {...}
-    :?\|:? matches :| or |:
-    (?:(?:\^+|_+|=|)[A-Ga-g](?:,+|'+|)) matches letters A-Ga-g in or out of chords and other words
-    \(\d+(?::\d+){0,2} matches triplet, or quad symbol (3
-    \d*\/\d+ matches fractions i.e. 4/4 1/8 etc
-    \d+\/? matches all single digits
-    \[\d+|\|\d+ matches first and second endings
-    \|\||\|\] matches double bars either || or |]
-    (\|\|)|(\|\])|:\||\|:|\[\d+|\|\d+ matches first and second endings, double bars, and right and left repeats
-
-    */
-
-    var fEnding = /\|1/g,
-        sEnding = /\|2/g,
-        lRepeat = /\|:/g,
-        rRepeat = /:\|/g,
-        dblBar = /\|\|/g,
-        firstBar = /\|/g;
-    var fEnding2 = /\[1/g,
-        sEnding2 = /\[2/g,
-        dblBar2 = /\|\]/g;
-    var match, fBarPos = [],
-        fEndPos = [],
-        sEndPos = [],
-        lRepPos = [],
-        rRepPos = [],
-        dblBarPos = [];
-    var tokenString = [],
-        tokenLocations = [],
-        tokenCount = 0,
-        sortedTokens = [],
-        sortedTokenLocations = [];
-    var pos = 0,
-        i = 0,
-        k = 0,
-        l = 0,
-        m = 0;
-    var expandedABC = "";
-
-    while ((match = firstBar.exec(ABCNotes)) != null) {
-        fBarPos.push(match.index);
-    }
-    tokenString[tokenCount] = "fb";
-    if (fBarPos[0] > 6) {
-        fBarPos[0] = 0;
-    }
-    tokenLocations[tokenCount++] = fBarPos[0]; // first bar
-    while (((match = fEnding.exec(ABCNotes)) || (match = fEnding2.exec(ABCNotes))) != null) {
-        fEndPos.push(match.index);
-        tokenString[tokenCount] = "fe";
-        tokenLocations[tokenCount++] = match.index; // first endings
-    }
-    while (((match = sEnding.exec(ABCNotes)) || (match = sEnding2.exec(ABCNotes))) != null) {
-        sEndPos.push(match.index);
-        tokenString[tokenCount] = "se";
-        tokenLocations[tokenCount++] = match.index; // second endings
-    }
-    while ((match = rRepeat.exec(ABCNotes)) != null) {
-        rRepPos.push(match.index);
-        tokenString[tokenCount] = "rr";
-        tokenLocations[tokenCount++] = match.index; // right repeats
-    }
-    while ((match = lRepeat.exec(ABCNotes)) != null) {
-        lRepPos.push(match.index);
-        tokenString[tokenCount] = "lr";
-        tokenLocations[tokenCount++] = match.index; // left repeats
-    }
-    while (((match = dblBar.exec(ABCNotes)) || (match = dblBar2.exec(ABCNotes))) != null) {
-        dblBarPos.push(match.index);
-        tokenString[tokenCount] = "db";
-        tokenLocations[tokenCount++] = match.index; // double bars
-    }
-    tokenString[tokenCount] = "lb";
-    tokenLocations[tokenCount++] = fBarPos[fBarPos.length - 1]; // last bar
-
-
-    var indices = tokenLocations.map(function (elem, index) {
-        return index;
-    });
-    indices.sort(function (a, b) {
-        return tokenLocations[a] - tokenLocations[b];
-    });
-
-    for (j = 0; j < tokenLocations.length; j++) {
-        sortedTokens[j] = tokenString[indices[j]];
-        sortedTokenLocations[j] = tokenLocations[indices[j]];
-    }
-    pos = 0;
-    for (i = 0; i < sortedTokens.length; i++) {
-        if (expandedABC.length > 1000) {
-            break; //safety check
-        }
-        if ((sortedTokens[i] == "rr") || (sortedTokens[i] == "se")) { //find next repeat or second ending
-            expandedABC += ABCNotes.substr(pos, sortedTokenLocations[i] - pos); //notes from last location to rr or se
-            for (k = i - 1; k >= 0; k--) { //march backward from there
-                // check for likely loop point
-                if ((sortedTokens[k] == "se") || (sortedTokens[k] == "rr") || (sortedTokens[k] == "fb") || (sortedTokens[k] == "lr")) {
-                    pos = sortedTokenLocations[k]; // mark loop beginning point
-                    for (j = k + 1; j < sortedTokens.length; j++) { //walk forward from there
-                        if ((sortedTokens[j] == "fe") || (sortedTokens[j] == "rr")) { // walk to likely stopping point (first ending or repeat)
-                            expandedABC += ABCNotes.substr(pos, sortedTokenLocations[j] - pos);
-                            pos = sortedTokenLocations[j]; // mark last position encountered
-                            i = j + 1; //consume tokens from big loop
-                            if (sortedTokens[j] == "fe") { //if we got to a first ending we have to skip it...
-                                for (l = j; l < sortedTokens.length; l++) { //walk forward from here until the second ending
-                                    if (sortedTokens[l] == "se") {
-                                        for (m = l; m < sortedTokens.length; m++) { //look for end of second ending
-                                            if (sortedTokens[m] == "db") { //a double bar marks the end of a second ending
-                                                expandedABC += ABCNotes.substr(sortedTokenLocations[l],
-                                                    sortedTokenLocations[m] - sortedTokenLocations[l]); //record second ending
-                                                pos = sortedTokenLocations[m]; //mark most forward progress
-                                                i = m + 1; //consume the tokens from the main loop
-                                                break; //quit looking
-                                            }
-                                        } //for m
-                                        i = l + 1; //consume tokens TED: CHECK THIS
-                                        break; //quit looking
-                                    }
-                                } //for l
-                            }
-                            break;
-                        }
-                    } //for j
-                    break;
-                } //if
-            } //for k
-        } //if
-    } //for i
-
-    expandedABC += ABCNotes.substr(pos, sortedTokenLocations[sortedTokens.length - 1] - pos);
-
-    /*
-     * Clean up the ABC repeat markers - we don't need them now!
-     */
-    expandedABC = expandedABC.replace(/:\|/g, "|");
-    expandedABC = expandedABC.replace(/\|:/g, "|");
-    expandedABC = expandedABC.replace(/::/g, "|");
-    expandedABC = expandedABC.replace(/\|+/g, "|");
-    expandedABC = expandedABC.replace(/:$/, "|");
-    expandedABC = expandedABC.replace(/:"$/, "|");
-    
-    //console.log(expandedABC);
-    return (expandedABC);
 }
