@@ -19,7 +19,7 @@
  ################################################################################
 */
 function myDebug(message) {
-    console.log({message});
+    console.log(message);
 }
 
 var BeginLoopTime = 0;
@@ -294,16 +294,16 @@ function selectTune(storeID, tuneID) {
         }
     }
 
+    // Get the current paper state
+    var currentPaperState = document.getElementById('abcPaper').style.display;
+    // Set the paper state to 'block'
+    document.getElementById('abcPaper').style.display = "block";
+
     if (item.abc) {
         var abcText = document.getElementById(`textAreaABC`);
         if (abcText) {
             abcText.innerHTML = item.abc;
         };
-
-        // Get the current paper state
-        var currentPaperState = document.getElementById('abcPaper').style.display;
-        // Set the paper state to 'block'
-        document.getElementById('abcPaper').style.display = "block";
 
         // Draw the dots
         abc_editor = new window.ABCJS.Editor('textAreaABC', {
@@ -325,7 +325,7 @@ function selectTune(storeID, tuneID) {
         <a href="' + urlSessionSearch + '">' + urlSessionSearch + '</a>\
         </strong></fieldset>';
     }
-    // Reset paper state to original value - right place ???
+    // Reset paper state to original value
     document.getElementById('abcPaper').style.display = currentPaperState;
 }
 
