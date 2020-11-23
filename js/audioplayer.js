@@ -294,16 +294,16 @@ function selectTune(storeID, tuneID) {
         }
     }
 
-    // Get the current paper state
-    var currentPaperState = document.getElementById('abcPaper').style.display;
-    // Set the paper state to 'block'
-    document.getElementById('abcPaper').style.display = "block";
-
     if (item.abc) {
         var abcText = document.getElementById(`textAreaABC`);
         if (abcText) {
             abcText.innerHTML = item.abc;
         };
+        
+        // Get the current paper state
+        var currentPaperState = document.getElementById('abcPaper').style.display;
+        // Set the paper state to 'block'
+        document.getElementById('abcPaper').style.display = "block";
 
         // Draw the dots
         abc_editor = new window.ABCJS.Editor('textAreaABC', {
@@ -314,6 +314,8 @@ function selectTune(storeID, tuneID) {
             },
             indicate_changed: "true"
         });
+        // Reset paper state to original value
+        document.getElementById('abcPaper').style.display = currentPaperState;
     } else {
         document.getElementById('abcPaper').style.paddingBottom = '0px';
         document.getElementById('abcPaper').style.overflow = 'auto';
@@ -325,8 +327,7 @@ function selectTune(storeID, tuneID) {
         <a href="' + urlSessionSearch + '">' + urlSessionSearch + '</a>\
         </strong></fieldset>';
     }
-    // Reset paper state to original value
-    document.getElementById('abcPaper').style.display = currentPaperState;
+    
 }
 
 function LoadAudio(audioSource, playPosition) {

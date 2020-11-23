@@ -63,7 +63,6 @@ function enable_button() {
 }
 
 function show_iframe(url) {
-    console.log(url);
     // Add other sources as needed
     if (url.startsWith('https://www.youtube.com/')) {
         url = url.replace('&t=', '?start=');
