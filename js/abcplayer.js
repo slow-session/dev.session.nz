@@ -155,12 +155,14 @@ function setTuneDuration(tuneABC, bpm) {
     if (meterStr == "C|") {
         meterStr = "2/2";
     }
+    
     var noteLenStr = getABCheaderValue("L:", tuneABC);
     if (!noteLenStr) {
         noteLenStr = "1/8";
     }
-
+    
     let tuneDuration = bars * eval(meterStr) * 16 * eval(noteLenStr) * 60 / bpm;
+    
     CurrentABCSlider.noUiSlider.updateOptions({
         range: {
             'min': 0,
@@ -171,7 +173,7 @@ function setTuneDuration(tuneABC, bpm) {
 
 function calculateTicks(tuneABC, bpm) {
     // The ABC L: value scales the ticks value!
-    var noteLenStr = getABCheaderValue("L:", tuneABC);
+    let noteLenStr = getABCheaderValue("L:", tuneABC);
     if (!noteLenStr) {
         noteLenStr = "1/8";
     }
