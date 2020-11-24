@@ -27,7 +27,7 @@ abc: |
     K:G
     F|:~G2 BG DGBG |ABcA BG~G2|AGAB cBcA|EAAG FDEF |
     ~G2 BG DGBd|~c2 AB cdef|gedB ~c2 Bc|dBcA BG~G2:|
-    f2|~g2bg dgbg|gbag fdde|~f2af dfaf|gbag fdef|
+    f2|:~g2bg dgbg|gbag fdde|~f2af dfaf|gbag fdef|
     ~g2 bg dgbg|gbag  fdef|gedB ~c2Bc|dBcA BG G2:|
     
 

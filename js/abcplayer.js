@@ -106,7 +106,7 @@ function changeABCspeed(textArea, playButton, bpm) {
 
     // save the speed
     bpmReset = bpm;
-    
+
     // if there's an active player, restart it at the new speed
     if (playButton.className == "stopButton") {
         /*
@@ -117,10 +117,10 @@ function changeABCspeed(textArea, playButton, bpm) {
 
         // Change the speed of playback
         setTuneDuration(tuneABC, bpm);
-        
+
         let ticks = calculateTicks(tuneABC, bpm);
         startABCplayer(tuneABC, ticks);
-    } 
+    }
 }
 
 function setTuneDuration(tuneABC, bpm) {
@@ -137,14 +137,14 @@ function setTuneDuration(tuneABC, bpm) {
     if (meterStr == "C|") {
         meterStr = "2/2";
     }
-    
+
     var noteLenStr = getABCheaderValue("L:", tuneABC);
     if (!noteLenStr) {
         noteLenStr = "1/8";
     }
-    
+
     let tuneDuration = bars * eval(meterStr) * 16 * eval(noteLenStr) * 60 / bpm;
-    
+
     currentABCslider.noUiSlider.updateOptions({
         range: {
             'min': 0,
@@ -217,9 +217,9 @@ function nudgeABCSlider() {
 function createABCSliders(textArea, tuneID) {
     let audioSlider = document.getElementById(`audioSliderABC${tuneID}`);
     let speedSlider = document.getElementById(`speedSliderABC${tuneID}`);
-    let playButton =  document.getElementById(`playABC${tuneID}`);
+    let playButton = document.getElementById(`playABC${tuneID}`);
     let tuneABC = document.getElementById(textArea);
-    
+
     currentABCslider = audioSlider;
 
     noUiSlider.create(audioSlider, {
