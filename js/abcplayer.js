@@ -11,19 +11,14 @@
  * Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) Licence.
  */
 
-var playingNow = 0;
 var abcStopped = 0;
-var ABCheader = /^([A-Za-z]):\s*(.*)$/;
-
-var lastplayButton;
-var ABCCurrentTime = 0;
-var IntervalHandle;
-var CurrentABCSlider = null;
+var abcCurrentTime = 0;
+var intervalHandle;
+var currentABCslider = null;
 var bpmReset = 0;
 
 // Select a timbre that sounds like an electric piano.
 var instrument;
-
 
 function createABCplayer(textArea, tuneID, timbre) {
     /*
@@ -36,14 +31,14 @@ function createABCplayer(textArea, tuneID, timbre) {
     <div class="audioParentOuter" id="ABC${tuneID}">
         <!-- Col 1 -->
         <div class="playpauseButton">
-            <button id="playABC${tuneID}" class="playButton" onclick="playABC(${textArea}, playABC${tuneID}, positionABC${tuneID}, '100')"></button>
+            <button id="playABC${tuneID}" class="playButton" onclick="playABC(${textArea}, playABC${tuneID}, '100')"></button>
         </div>
         <!-- Nested row in second column -->
         <div class="audioChildOuter">
             <div class="abcParentInner">
                 <!-- Col 2 -->
                 <div class="audioChildInner">
-                    <div id="positionABC${tuneID}" class="abcAudioControl"></div>
+                    <div id="audioSliderABC${tuneID}" class="abcAudioControl"></div>
                 </div>
                 <!-- Col 3 -->
                 <div class="audioChildInner">
@@ -73,24 +68,11 @@ function makeInstrument(timbre) {
 /*
  * Play an ABC tune when the button gets pushed
  */
-function playABC(textArea, playButton, playPosition, bpm) {
+function playABC(textArea, playButton, bpm) {
     /*
      * Stop any current player
      */
-    stopABC();
-
-    /* If we have multiple ABC tunes on a page and we start a second one,
-     * close the previous one cleanly
-     *
-     * Do we still have multiple ABC players on a page ??
-     *
-     */
-    if (lastplayButton && lastplayButton != playButton) {
-        lastplayButton.className = "";
-        lastplayButton.className = "playButton";
-        CurrentABCSlider.noUiSlider.set(0);
-    }
-    lastplayButton = playButton;
+    stopABCplayer();
 
     if (playButton.className == "playButton") {
         /*
@@ -107,7 +89,7 @@ function playABC(textArea, playButton, playPosition, bpm) {
         setTuneDuration(tuneABC, bpm);
 
         let ticks = calculateTicks(tuneABC, bpm);
-        startABC(tuneABC, ticks);
+        startABCplayer(tuneABC, ticks);
         playButton.className = "";
         playButton.className = "stopButton";
     } else {
@@ -120,7 +102,7 @@ function changeABCspeed(textArea, playButton, bpm) {
     /*
      * stop any current player
      */
-    stopABC();
+    stopABCplayer();
 
     // save the speed
     bpmReset = bpm;
@@ -137,7 +119,7 @@ function changeABCspeed(textArea, playButton, bpm) {
         setTuneDuration(tuneABC, bpm);
         
         let ticks = calculateTicks(tuneABC, bpm);
-        startABC(tuneABC, ticks);
+        startABCplayer(tuneABC, ticks);
     } 
 }
 
@@ -163,7 +145,7 @@ function setTuneDuration(tuneABC, bpm) {
     
     let tuneDuration = bars * eval(meterStr) * 16 * eval(noteLenStr) * 60 / bpm;
     
-    CurrentABCSlider.noUiSlider.updateOptions({
+    currentABCslider.noUiSlider.updateOptions({
         range: {
             'min': 0,
             'max': tuneDuration
@@ -198,52 +180,47 @@ function getABCheaderValue(key, tuneABC) {
     return ABCvalue;
 }
 
-function startABC(tuneABC, ticks) {
-    playingNow = 1;
+function startABCplayer(tuneABC, ticks) {
     abcStopped = 0;
     instrument.silence();
     instrument.play({
         tempo: ticks
     }, tuneABC, function () {
-        playingNow = 0;
-        loopABCTune(tuneABC, ticks);
+        loopABCplayer(tuneABC, ticks);
     });
-    CurrentABCSlider.noUiSlider.set(0);
-    ABCCurrentTime = 0;
-
-    IntervalHandle = setInterval(nudgeABCSlider, 300);
+    abcCurrentTime = 0;
+    currentABCslider.noUiSlider.set(0);
+    intervalHandle = setInterval(nudgeABCSlider, 300);
 }
 
-function stopABC() {
-    clearInterval(IntervalHandle);
+function stopABCplayer() {
+    clearInterval(intervalHandle);
     abcStopped = 1;
     instrument.silence();
-    CurrentABCSlider.noUiSlider.set(0);
 }
 
-function loopABCTune(tuneABC, ticks) {
+function loopABCplayer(tuneABC, ticks) {
     instrument.silence();
-    clearInterval(IntervalHandle);
-    if ((playingNow == 0) && (abcStopped == 0)) {
-        startABC(tuneABC, ticks);
-        CurrentABCSlider.noUiSlider.set(0);
-        ABCCurrentTime = 0;
+    clearInterval(intervalHandle);
+
+    if (abcStopped == 0) {
+        startABCplayer(tuneABC, ticks);
     }
 }
 
 function nudgeABCSlider() {
-    ABCCurrentTime += 0.3;
+    abcCurrentTime += 0.3;
 
-    CurrentABCSlider.noUiSlider.set(ABCCurrentTime);
+    currentABCslider.noUiSlider.set(abcCurrentTime);
 }
 
 function createABCSliders(textArea, tuneID) {
-    let audioSlider = document.getElementById(`positionABC${tuneID}`);
+    let audioSlider = document.getElementById(`audioSliderABC${tuneID}`);
     let speedSlider = document.getElementById(`speedSliderABC${tuneID}`);
     let playButton =  document.getElementById(`playABC${tuneID}`);
     let tuneABC = document.getElementById(textArea);
     
-    CurrentABCSlider = audioSlider;
+    currentABCslider = audioSlider;
 
     noUiSlider.create(audioSlider, {
         start: [0],
@@ -279,8 +256,8 @@ function preProcessABC(tuneABC) {
      * This function unrolls the ABC so that things play better.
      */
     var lines = tuneABC.split('\n');
-    var ABCHeader = [""];
-    var ABCNotes = [""];
+    var abcHeader = [""];
+    var abcNotes = [""];
     var headerRegex = /^([A-Za-z]):\s*(.*)$/;
     var blankRegex = /^\s*(?:%.*)?$/;
     var tuneIndex = 0;
@@ -291,14 +268,14 @@ function preProcessABC(tuneABC) {
             if (endOfHeaderFound) {
                 endOfHeaderFound = false;
                 tuneIndex++;
-                ABCHeader[tuneIndex] = "";
-                ABCNotes[tuneIndex] = "";
+                abcHeader[tuneIndex] = "";
+                abcNotes[tuneIndex] = "";
                 if (lines[j].startsWith('X:')) {
                     continue;
                 }
             }
             // put the header lines back in place
-            ABCHeader[tuneIndex] += lines[j] + "\n";
+            abcHeader[tuneIndex] += lines[j] + "\n";
             //
             if (lines[j].startsWith('K:')) {
                 endOfHeaderFound = true;
@@ -308,16 +285,16 @@ function preProcessABC(tuneABC) {
             continue;
         } else {
             // Notes to parse
-            ABCNotes[tuneIndex] += lines[j];
+            abcNotes[tuneIndex] += lines[j];
         }
     }
-    for (i = 0; i < ABCHeader.length; ++i) {
-        processedABC += ABCHeader[i] + unRollABC(ABCNotes[i]) + "\n";;
+    for (i = 0; i < abcHeader.length; ++i) {
+        processedABC += abcHeader[i] + unRollABC(abcNotes[i]) + "\n";;
     }
     return (processedABC);
 }
 
-function unRollABC(ABCNotes) {
+function unRollABC(abcNotes) {
     /*
      * Regular expression used to parse ABC - https://regex101.com/ was very helpful in decoding
      *
@@ -369,7 +346,7 @@ function unRollABC(ABCNotes) {
         m = 0;
     var expandedABC = "";
 
-    while ((match = firstBar.exec(ABCNotes)) != null) {
+    while ((match = firstBar.exec(abcNotes)) != null) {
         fBarPos.push(match.index);
     }
     tokenString[tokenCount] = "fb";
@@ -378,32 +355,32 @@ function unRollABC(ABCNotes) {
     }
     // first bar
     tokenLocations[tokenCount++] = fBarPos[0];
-    while (((match = fEnding.exec(ABCNotes)) || (match = fEnding2.exec(ABCNotes))) != null) {
+    while (((match = fEnding.exec(abcNotes)) || (match = fEnding2.exec(abcNotes))) != null) {
         fEndPos.push(match.index);
         tokenString[tokenCount] = "fe";
         // first endings
         tokenLocations[tokenCount++] = match.index;
     }
-    while (((match = sEnding.exec(ABCNotes)) || (match = sEnding2.exec(ABCNotes))) != null) {
+    while (((match = sEnding.exec(abcNotes)) || (match = sEnding2.exec(abcNotes))) != null) {
         sEndPos.push(match.index);
         tokenString[tokenCount] = "se";
         // second endings
         tokenLocations[tokenCount++] = match.index;
 
     }
-    while ((match = rRepeat.exec(ABCNotes)) != null) {
+    while ((match = rRepeat.exec(abcNotes)) != null) {
         rRepPos.push(match.index);
         tokenString[tokenCount] = "rr";
         // right repeats
         tokenLocations[tokenCount++] = match.index;
     }
-    while ((match = lRepeat.exec(ABCNotes)) != null) {
+    while ((match = lRepeat.exec(abcNotes)) != null) {
         lRepPos.push(match.index);
         tokenString[tokenCount] = "lr";
         // left repeats
         tokenLocations[tokenCount++] = match.index;
     }
-    while (((match = dblBar.exec(ABCNotes)) || (match = dblBar2.exec(ABCNotes))) != null) {
+    while (((match = dblBar.exec(abcNotes)) || (match = dblBar2.exec(abcNotes))) != null) {
         dblBarPos.push(match.index);
         tokenString[tokenCount] = "db";
         // double bars
@@ -434,7 +411,7 @@ function unRollABC(ABCNotes) {
         // find next repeat or second ending
         if ((sortedTokens[i] == "rr") || (sortedTokens[i] == "se")) {
             //notes from last location to rr or se
-            expandedABC += ABCNotes.substr(pos, sortedTokenLocations[i] - pos);
+            expandedABC += abcNotes.substr(pos, sortedTokenLocations[i] - pos);
             // march backward from there
             for (k = i - 1; k >= 0; k--) {
                 // check for likely loop point
@@ -445,7 +422,7 @@ function unRollABC(ABCNotes) {
                     for (j = k + 1; j < sortedTokens.length; j++) {
                         // walk to likely stopping point (first ending or repeat)
                         if ((sortedTokens[j] == "fe") || (sortedTokens[j] == "rr")) {
-                            expandedABC += ABCNotes.substr(pos, sortedTokenLocations[j] - pos);
+                            expandedABC += abcNotes.substr(pos, sortedTokenLocations[j] - pos);
                             // mark last position encountered
                             pos = sortedTokenLocations[j];
                             // consume tokens from big loop
@@ -460,7 +437,7 @@ function unRollABC(ABCNotes) {
                                             // a double bar marks the end of a second ending
                                             if (sortedTokens[m] == "db") {
                                                 // record second ending
-                                                expandedABC += ABCNotes.substr(sortedTokenLocations[l],
+                                                expandedABC += abcNotes.substr(sortedTokenLocations[l],
                                                     sortedTokenLocations[m] - sortedTokenLocations[l]);
                                                 //mark most forward progress
                                                 pos = sortedTokenLocations[m];
@@ -486,7 +463,7 @@ function unRollABC(ABCNotes) {
         } // END of check for likely loop point
     } // END of for i loop
 
-    expandedABC += ABCNotes.substr(pos, sortedTokenLocations[sortedTokens.length - 1] - pos);
+    expandedABC += abcNotes.substr(pos, sortedTokenLocations[sortedTokens.length - 1] - pos);
 
     /*
      * Clean up the ABC repeat markers - we don't need them now!
