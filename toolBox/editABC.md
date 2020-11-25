@@ -108,7 +108,7 @@ function handleABCFileSelect(evt) {
             var playButton = document.getElementById("playABC1");
             if (typeof playButton !== 'undefined'
                 && playButton.className == "stopButton") {
-                stopABC("ABC1");
+                stopABCplayer();
                 playButton.className = "";
                 playButton.className = "playButton";
             }
