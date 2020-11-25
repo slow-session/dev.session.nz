@@ -97,7 +97,7 @@ window.setStore = {
   <div class="tableChild" id="tunesTable"></div>
 </div>
 
-<script src="{{ site.js_host }}/js/build_table_current_sets.js"></script>
+<script defer src="{{ site.js_host }}/js/build_table_current_sets.js"></script>
 
 {% include tuneModal.html%}
 
