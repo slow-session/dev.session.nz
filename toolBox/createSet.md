@@ -176,7 +176,7 @@ Use the "Reset Tunes" button to start a new set.
     };
 </script>
 
-<script defer src="{{ site.js_host }}/js/build_table_createSet.js"></script>
+<script src="{{ site.js_host }}/js/build_table_createSet.js"></script>
 
 <script>
 $(document).ready(function() {

@@ -106,7 +106,7 @@ window.store = {
     };
 </script>
 
-<script defer src="{{ site.js_host }}/js/build_abc_source.js"></script>
+<script src="{{ site.js_host }}/js/build_abc_source.js"></script>
 
 <script>
 function toggle(button) {
