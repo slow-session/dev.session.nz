@@ -159,15 +159,6 @@ p.mp3SpeedLabel {
     width: 100%;
 }
 
-.loopButton {
-    background-color: $brand-color;
-    color: darken($complimentary-color, 10%);
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 8px;
-    font-size: 75%;
-}
-
 // START: sliders used in ABCplayer
 .slider {
     -webkit-appearance: none;
@@ -211,6 +202,19 @@ p.mp3SpeedLabel {
 // END: sliders used in ABCplayer
 
 // END: controls for audio and ABC players
+
+
+.loopButton {
+    background-color: $brand-color;
+    padding: 4px;
+    color: darken($complimentary-color, 10%);
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 75%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: darken($brand-color, 10%);
+}
 
 .filterButton {
     background-color: $brand-color;
