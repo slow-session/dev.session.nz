@@ -68,7 +68,7 @@ layout: page
         </p>
 
         <div title="Download the ABC you've entered. Don't lose your work!">
-            <input value='Download ABC' type='button' class="filterButton" onclick='downloadABCFile(document.getElementById("textAreaABC").value)' />
+            <input value='Download ABC' type='button' class="filterButton" onclick='wssTools.downloadABCFile(document.getElementById("textAreaABC").value)' />
         </div>
         <br />        
         <p>If you feel that your changes are a closer match to the recording on the website, please save your changes (<b>Download ABC</b> button), send them to us at <a href="mailto:{{ site.email }}">{{ site.email }}</a>, and we will review the proposed changes.
@@ -93,7 +93,7 @@ layout: page
         <p>Original audio: <a href="{{ page.mp3_url }}">{{ page.mp3_url }}</a></p>
         <!-- If the mp3_url is one from YouTube or Facebook, embed a copy here -->
         <p><script>
-        show_iframe("{{ page.mp3_url }}");
+        wssTools.show_iframe("{{ page.mp3_url }}");
         </script>
         </p>
         {% endif %}
@@ -104,7 +104,7 @@ layout: page
         <!-- If the mp3_url is one from YouTube or Facebook, embed a copy here -->
         <p>
         <script>
-        show_iframe("{{ page.alt_mp3_url }}");
+        wssTools.show_iframe("{{ page.alt_mp3_url }}");
         </script>
         </p>
         {% endif %}

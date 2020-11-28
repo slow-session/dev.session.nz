@@ -32,7 +32,7 @@ Added <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: 
     <p>Original audio: <a href="{{ page.mp3_url }}">{{ page.mp3_url }}</a></p>
     <!-- If the mp3_url is one from YouTube or Facebook etc, embed a copy here -->
     <p><script>
-    show_iframe("{{ page.mp3_url }}");
+    wssTools.show_iframe("{{ page.mp3_url }}");
     </script>
     </p>
     {% endif %}

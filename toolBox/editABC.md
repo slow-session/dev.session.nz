@@ -55,7 +55,7 @@ DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
     <form>
         <span title="Download the ABC you've entered. Don't lose your work!">
             <input value='Download ABC' type='button' class='filterButton'
-                onclick='downloadABCFile(document.getElementById("textAreaABC").value)' />
+                onclick='wssTools.downloadABCFile(document.getElementById("textAreaABC").value)' />
         </span>
     </form>
     <p />

@@ -110,7 +110,7 @@ function showForm(textArea, myForm) {
 
   // Set the filename for downloading
   document.getElementById("filename").innerHTML = DOMPurify.sanitize(
-    slugify(obj["title"]) + ".md"
+    wssTools.slugify(obj["title"]) + ".md"
   );
 }
 

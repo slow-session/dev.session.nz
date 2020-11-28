@@ -76,7 +76,7 @@ You can download a file containing all the ABCs used on this site. There are a n
         <div class="row">
             <span title="Download the ABC you've entered. Don't lose your work!">
         	    <input value='Download ABC File' type='button' class="filterButton"
-                onclick='downloadFile("WellingtonIrishSessions.abc", 
+                onclick='wssTools.downloadFile("WellingtonIrishSessions.abc", 
                         document.getElementById("abcText").value)' />
             </span>
         </div>
