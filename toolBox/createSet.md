@@ -34,7 +34,7 @@ Fill in the details for the set title, rhythm, location and your name. Then find
       <br />
 
       <label>Location:<sup>*</sup></label><br />
-      <select id="location-box" name="location" onChange="wssTools.toTitleCase()">
+      <select id="location-box" name="location" onChange="wssTools.enableButton()">
           <option value="">All Locations</option>
           {% for location in locations %}
           {% if location != '' %}
@@ -101,10 +101,10 @@ Use the "Reset Tunes" button to start a new set.
     <div class="formParent">
     <div class="formChild">        
 		<input type="text" id="title-box" name="title" placeholder='Search'
-            value='' onkeydown="wssTools.toTitleCase()">
+            value='' onkeydown="wssTools.enableButton()">
     </div>
     <div class="formChild">
-        <select id="tune-rhythm-box" name="tune-rhythm"  onChange="wssTools.toTitleCase()">
+        <select id="tune-rhythm-box" name="tune-rhythm"  onChange="wssTools.enableButton()">
             <option value="">All Rhythms</option>
             {% for rhythm in rhythms %}
             {% if rhythm != '' %}
@@ -114,7 +114,7 @@ Use the "Reset Tunes" button to start a new set.
         </select>
     </div>
     <div class="formChild">
-        <select id="tune-tags-box" name="tune-tags" onChange="wssTools.toTitleCase()">
+        <select id="tune-tags-box" name="tune-tags" onChange="wssTools.enableButton()">
             <option value="">All Tunes</option>
             {% for tag in tags %}
             {% if tag != '' %}
@@ -124,7 +124,7 @@ Use the "Reset Tunes" button to start a new set.
         </select>
     </div>
     <div class="formChild">
-        <select id="tune-location-box" name="tune-location" onChange="wssTools.toTitleCase()">
+        <select id="tune-location-box" name="tune-location" onChange="wssTools.enableButton()">
             <option value="">All Locations</option>
             {% for location in locations %}
             {% if location != '' %}

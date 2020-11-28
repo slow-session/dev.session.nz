@@ -21,10 +21,10 @@ There's a PDF of the book on this site at <a href="/tunebooks/The_Northern_Fiddl
         <div class="formParent">
             <div class="formChild">
                 <input type="text" id="title-box" name="title" placeholder='Search'
-                value='' onkeydown="wssTools.toTitleCase()">
+                value='' onkeydown="wssTools.enableButton()">
             </div>
             <div class="formChild">
-                <select id="rhythm-box" name="rhythm"  onChange="wssTools.toTitleCase()">
+                <select id="rhythm-box" name="rhythm"  onChange="wssTools.enableButton()">
                     <option value="">All Rhythms</option>
                     {% for rhythm in rhythms %}
                     {% if rhythm != '' %}
@@ -34,7 +34,7 @@ There's a PDF of the book on this site at <a href="/tunebooks/The_Northern_Fiddl
                 </select>
             </div>
             <div class="formChild">
-                <select id="musician-box" name="musician"  onChange="wssTools.toTitleCase()">
+                <select id="musician-box" name="musician"  onChange="wssTools.enableButton()">
                     <option value="">All musicians</option>
                     {% for musician in musicians %}
                     {% if musician != '' %}

@@ -43,10 +43,10 @@ page.
         <div class="formParent">
         <div class="formChild">
             <input type="text" id="title-box" name="title" placeholder='Search'
-            value='' onkeydown="wssTools.toTitleCase()">
+            value='' onkeydown="wssTools.enableButton()">
         </div>
         <div class="formChild">
-            <select id="rhythm-box" name="rhythm"  onChange="wssTools.toTitleCase()">
+            <select id="rhythm-box" name="rhythm"  onChange="wssTools.enableButton()">
             <option value="">All Rhythms</option>
             {% for rhythm in rhythms %}
             {% if rhythm != '' %}

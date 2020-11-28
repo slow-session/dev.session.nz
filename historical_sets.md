@@ -16,10 +16,10 @@ page.
         <legend>Select from historical Wellington Sets:</legend>    
         <div class="formParent">
             <div class="formChild">           
-                <input type="text" id="title-box" name="title" placeholder='Search' value='' onkeydown="wssTools.toTitleCase()">
+                <input type="text" id="title-box" name="title" placeholder='Search' value='' onkeydown="wssTools.enableButton()">
             </div>
             <div class="formChild">
-                <select id="rhythm-box" name="rhythm"  onChange="wssTools.toTitleCase()">
+                <select id="rhythm-box" name="rhythm"  onChange="wssTools.enableButton()">
                     <option value="">Any Rhythm</option>
                     {% for rhythm in rhythms %}
                     {% if rhythm != '' %}

@@ -62,7 +62,7 @@ const wssTools = (function () {
         });
     }
 
-    function enable_button() {
+    function enableButton() {
         submit_button.disabled = false;
         submit_button.style.opacity = 1.0;
         submit_button.style.cursor = "pointer";
@@ -111,7 +111,7 @@ const wssTools = (function () {
         slugify: slugify,
         getCheckedCheckboxesFor: getCheckedCheckboxesFor,
         toTitleCase: toTitleCase,
-        enable_button: enable_button,
+        enableButton: enableButton,
         show_iframe: show_iframe,
     };
 })();
