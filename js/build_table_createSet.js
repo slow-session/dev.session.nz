@@ -121,7 +121,7 @@ function showForm(textArea, myForm) {
     var tunesCounter = 0;
 
     // create table headers
-    if (testForMobile()) {
+    if (wssTools.testForMobile()) {
       var appendString =
         '<table id="tunes" class="tuneSelect tablesorter mobileScrolling">';
     } else {

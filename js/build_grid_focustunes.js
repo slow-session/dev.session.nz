@@ -15,7 +15,7 @@
 
 function displayFocusTunesGrid(divID, storeName, storeObject) {
   // create div for tunes grid
-  if (testForMobile()) {
+  if (wssTools.testForMobile()) {
     var appendString = `<div id="${divID}" class="tunesArchiveLayout mobileScrolling">`;
   } else {
     var appendString = `<div id="${divID}" class="tunesArchiveLayout">`;

@@ -26,7 +26,7 @@ function createABCplayer(textArea, tuneID, timbre) {
      */
     instrument = makeInstrument(timbre);
 
-    var abcPlayer = `
+    let abcPlayer = `
 <form onsubmit="return false" oninput="level.value=flevel.valueAsNumber">
     <div class="audioParentOuter" id="ABC${tuneID}">
         <!-- Col 1 -->
@@ -61,7 +61,7 @@ function makeInstrument(timbre) {
      * We abstract this out into a separate function so that when it fails
      * the rest of the code continues on working - Arghh!
      */
-    var tempInstrument = new Instrument(timbre);
+    let tempInstrument = new Instrument(timbre);
     return tempInstrument;
 }
 
@@ -79,7 +79,7 @@ function playABC(textArea, playButton, bpm) {
          * Our simple ABC player doesn't handle repeats well.
          * This function unrolls the ABC so that things play better.
          */
-        var tuneABC = preProcessABC(textArea.value);
+        let tuneABC = preProcessABC(textArea.value);
 
         // speed was reset before play started
         if (bpmReset) {
@@ -113,7 +113,7 @@ function changeABCspeed(textArea, playButton, bpm) {
          * Our simple ABC player doesn't handle repeats well.
          * This function unrolls the ABC so that things play better.
          */
-        var tuneABC = preProcessABC(textArea.value);
+        let tuneABC = preProcessABC(textArea.value);
 
         // Change the speed of playback
         setTuneDuration(tuneABC, bpm);
@@ -125,12 +125,12 @@ function changeABCspeed(textArea, playButton, bpm) {
 
 function setTuneDuration(tuneABC, bpm) {
     // calculate number of bars
-    var bars;
+    let bars;
     bars = tuneABC.split("|").length;
     bars = Math.round(bars / 8) * 8;
 
     // Get the meter from the ABC
-    var meterStr = getABCheaderValue("M:", tuneABC);
+    let meterStr = getABCheaderValue("M:", tuneABC);
     if (meterStr == "C") {
         meterStr = "4/4";
     }
@@ -138,7 +138,7 @@ function setTuneDuration(tuneABC, bpm) {
         meterStr = "2/2";
     }
 
-    var noteLenStr = getABCheaderValue("L:", tuneABC);
+    let noteLenStr = getABCheaderValue("L:", tuneABC);
     if (!noteLenStr) {
         noteLenStr = "1/8";
     }
@@ -246,9 +246,8 @@ function preProcessABC(tuneABC) {
      */
     const header = getHeader(tuneABC);
     const notes = getNotes(tuneABC);
-    let processedABC = header + "\n" + unRollABC(notes) + "\n";
-
-    return processedABC;
+    
+    return header + "\n" + unRollABC(notes) + "\n";
 }
 
 const KEY_LINE_PATTERN = /^\s*K:/;
@@ -286,7 +285,6 @@ function getABCheaderValue(key, tuneABC) {
     return lines[keyIdx].split(":")[1].trim();
 }
 
-
 function unRollABC(abcNotes) {
     /*
        * Regular expression used to parse ABC - https://regex101.com/ was very helpful in decoding
@@ -312,33 +310,33 @@ function unRollABC(abcNotes) {
                   
        */
 
-    var fEnding = /\|1/g,
+    let fEnding = /\|1/g,
         sEnding = /\|2/g,
         lRepeat = /\|:/g,
         rRepeat = /:\|/g,
         dblBar = /\|\|/g,
         firstBar = /\|/g;
-    var fEnding2 = /\[1/g,
+    let fEnding2 = /\[1/g,
         sEnding2 = /\[2/g,
         dblBar2 = /\|\]/g;
-    var match,
+    let match,
         fBarPos = [],
         fEndPos = [],
         sEndPos = [],
         lRepPos = [],
         rRepPos = [],
         dblBarPos = [];
-    var tokenString = [],
+    let tokenString = [],
         tokenLocations = [],
         tokenCount = 0,
         sortedTokens = [],
         sortedTokenLocations = [];
-    var pos = 0,
+    let pos = 0,
         i = 0,
         k = 0,
         l = 0,
         m = 0;
-    var expandedABC = "";
+    let expandedABC = "";
 
     while ((match = firstBar.exec(abcNotes)) != null) {
         fBarPos.push(match.index);
@@ -392,7 +390,7 @@ function unRollABC(abcNotes) {
     // last bar
     tokenLocations[tokenCount++] = fBarPos[fBarPos.length - 1];
 
-    var indices = tokenLocations.map(function (elem, index) {
+    let indices = tokenLocations.map(function (elem, index) {
         return index;
     });
     indices.sort(function (a, b) {

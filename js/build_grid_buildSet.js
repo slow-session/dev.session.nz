@@ -77,7 +77,7 @@ function Reset() {
     var tunesCounter = 0;
 
     // create table headers
-    if (testForMobile()) {
+    if (wssTools.testForMobile()) {
       var appendString =
         '<div id="tunes" class="tunesArchiveLayout mobileScrolling">';
     } else {

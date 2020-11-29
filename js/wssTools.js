@@ -1,7 +1,6 @@
 "use strict";
 
 const wssTools = (function () {
-
     function downloadABCFile(text) {
         // set the filename for downloading
         let filename = slugify(getABCheaderValue("T:", text)) + ".abc";
@@ -10,15 +9,16 @@ const wssTools = (function () {
     }
 
     function downloadFile(filename, text) {
-        var pom = document.createElement("a");
+        let pom = document.createElement("a");
         pom.setAttribute(
             "href",
-            "data:application/download;charset=utf-8," + encodeURIComponent(text)
+            "data:application/download;charset=utf-8," +
+                encodeURIComponent(text)
         );
         pom.setAttribute("download", filename);
 
         if (document.createEvent) {
-            var event = document.createEvent("MouseEvents");
+            let event = document.createEvent("MouseEvents");
             event.initEvent("click", true, true);
             pom.dispatchEvent(event);
         } else {
@@ -46,10 +46,10 @@ const wssTools = (function () {
     }
 
     function getCheckedCheckboxesFor(checkboxName) {
-        var checkboxes = document.querySelectorAll(
+        let checkboxes = document.querySelectorAll(
             'input[name="' + checkboxName + '"]:checked'
         );
-        var values = [];
+        let values = [];
         Array.prototype.forEach.call(checkboxes, function (el) {
             values.push(el.value);
         });
@@ -74,33 +74,47 @@ const wssTools = (function () {
             url = url.replace("&t=", "?start=");
             document.write(
                 '<div class="container-iframe"><iframe   class="responsive-iframe" src="https://www.youtube.com/embed/' +
-                url.split("v=")[1] +
-                '" frameborder="0" allowfullscreen></iframe></div>'
+                    url.split("v=")[1] +
+                    '" frameborder="0" allowfullscreen></iframe></div>'
             );
         } else if (url.startsWith("https://www.facebook.com/")) {
             document.write(
                 '<div class="container-iframe"><iframe   class="responsive-iframe" src="https://www.facebook.com/plugins/video.php?href=' +
-                encodeURI(url) +
-                '&show_text=0&mute=0"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="false"></iframe></div>'
+                    encodeURI(url) +
+                    '&show_text=0&mute=0"  style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="false"></iframe></div>'
             );
         } else if (url.startsWith("https://vimeo.com/")) {
             document.write(
                 '<div class="container-iframe"><iframe   class="responsive-iframe" src="https://player.vimeo.com/video/' +
-                url.split("vimeo.com/")[1] +
-                '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>'
+                    url.split("vimeo.com/")[1] +
+                    '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>'
             );
         } else if (url.startsWith("https://soundcloud.com/")) {
             document.write(
                 '<div class="container-iframe"><iframe   class="responsive-iframe" src="https://w.soundcloud.com/player/?url=' +
-                encodeURI(url) +
-                '&hide_related=true" width="100%"></iframe></div>'
+                    encodeURI(url) +
+                    '&hide_related=true" width="100%"></iframe></div>'
             );
         } else if (url.startsWith("https://media.comhaltas.ie/video/")) {
             document.write(
                 '<div class="container-iframe"><video class="responsive-iframe" controls><source src="' +
-                encodeURI(url) +
-                '" type="video/mp4"></video></div>'
+                    encodeURI(url) +
+                    '" type="video/mp4"></video></div>'
             );
+        }
+    }
+
+    function testForMobile() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        if (
+            userAgent.match(/iPad/i) ||
+            userAgent.match(/iPhone/i) ||
+            userAgent.match(/iPod/i) ||
+            userAgent.match(/Android/i)
+        ) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -113,9 +127,10 @@ const wssTools = (function () {
         toTitleCase: toTitleCase,
         enableButton: enableButton,
         show_iframe: show_iframe,
+        testForMobile: testForMobile,
     };
 })();
 
-if (typeof module !== 'undefined' && module.exports) {
+if (typeof module !== "undefined" && module.exports) {
     module.exports = wssTools;
 }

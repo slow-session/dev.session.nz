@@ -18,7 +18,7 @@
     var tunesGrid = document.getElementById("tunesGrid");
 
     // create table headers
-    if (testForMobile()) {
+    if (wssTools.testForMobile()) {
       var appendString =
         '<div id="tunes" class="tunesPottsLayout mobileScrolling">';
     } else {

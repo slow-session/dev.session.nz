@@ -23,7 +23,7 @@
     mapSetToTuneIDs();
 
     // create table headers
-    if (testForMobile()) {
+    if (wssTools.testForMobile()) {
       var appendString =
         '<table id="tunes" class="tuneSelect tablesorter mobileScrolling">';
     } else {
