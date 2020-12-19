@@ -245,8 +245,10 @@ function preProcessABC(tuneABC) {
      *
      */
     const header = getHeader(tuneABC);
-    const notes = getNotes(tuneABC);
-    
+
+    // Clean out any lines of lyrics from the ABC (starts with 'w:')
+    const notes = getNotes(tuneABC).match(/^(?!w:).+$/gm).join('\n');
+
     return header + "\n" + unRollABC(notes) + "\n";
 }
 
@@ -278,10 +280,10 @@ function getNotes(tuneABC) {
 function getABCheaderValue(key, tuneABC) {
     // Extract the value of one of the ABC keywords e.g. T: Out on the Ocean
     const KEYWORD_PATTERN = new RegExp(`^\\s*${key}`);
-    
+
     const lines = tuneABC.split(/[\r\n]+/).map(line => line.trim());
     const keyIdx = lines.findIndex(line => line.match(KEYWORD_PATTERN));
-    
+
     return lines[keyIdx].split(":")[1].trim();
 }
 

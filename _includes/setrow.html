@@ -28,8 +28,8 @@
 {% if tune.mp3_file contains "mp3" %}
 <td id="showPlayer{{ setTuneID }}">
 <script>
-showPlayer{{ setTuneID }}.innerHTML = createMP3player('{{setTuneID}}', '{{ site.mp3_host }}{{ tune.mp3_file }}');
-createSliders('{{setTuneID}}');
+showPlayer{{ setTuneID }}.innerHTML = audioPlayer.createMP3player('{{setTuneID}}', '{{ site.mp3_host }}{{ tune.mp3_file }}');
+audioPlayer.createMP3Sliders('{{setTuneID}}');
 </script>
 {% else %}
 <td id="showPlayer{{ setTuneID }}">

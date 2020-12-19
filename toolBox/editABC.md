@@ -22,8 +22,8 @@ If you want to add a new tune to the archive you can use the
     <!-- Controls for ABC player -->
     <div id="ABCplayer"></div>
 </div>
+<!-- Group the input and controls for ABC-->
 <div class="row">
-    <!-- Group the input and controls for ABC-->
     <h3>Load an ABC file:</h3>
     <input type="file" id="files" class='filterButton' name="files[]" accept=".abc" />
     <output id="fileInfo"></output>
@@ -45,7 +45,7 @@ K: Dmaj
 DED DFA|BAF d2e|faf ede|1 fdd d3 :|2 fdd d2 e ||
 |:faa fbb|afe ~f3|faf dBA| (3Bcd B AFE|
 DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
-        </textarea>
+    </textarea>
     <!-- Show ABC errors -->
     <div id='warnings'></div>
 </div>

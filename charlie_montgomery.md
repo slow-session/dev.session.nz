@@ -93,6 +93,6 @@ We'd like to thank Charlie very much for giving us the privilege of being able t
 
 <script>
   $(document).ready(function() {
-    audioPlayer.innerHTML = createAudioPlayer();
+    pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
   });
 </script>

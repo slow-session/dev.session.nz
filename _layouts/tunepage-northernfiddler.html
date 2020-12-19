@@ -14,7 +14,7 @@ layout: page
 
     <!-- show/edit the ABC -->
     <form>
-        <input type="button" class="filterButton" value="Show ABC Source" onclick="toggleABC(this);">
+        <input type="button" class="filterButton" value="Show ABC Source" onclick="audioPlayer.toggleABC(this);">
     </form>
     <div id='abcSource' class="abcSource">
         <textarea id="textAreaABC" class="abcText" rows="14" spellcheck="false"></textarea>
@@ -63,8 +63,8 @@ $(document).ready(function() {
     document.getElementById('ABCplayer').innerHTML = 
         createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
         createABCSliders("textAreaABC", tuneID);
-{% endif %}
+    {% endif %}
 
-    selectTune(window.store, tuneID);
+    audioPlayer.selectTune(window.store, tuneID);
 });
 </script>

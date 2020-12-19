@@ -3,7 +3,7 @@ layout: page
 title: Christchurch sessions
 permalink: /christchurch/
 ---
-<div id="audioPlayer"></div>
+<div id="pageAudioPlayer"></div>
 
 <div id="abc-textareas"></div>
 <script>
@@ -107,7 +107,7 @@ There's a large list of tunes including tunes played in other New Zealand sessio
 
 <script>
 $(document).ready(function() {
-    audioPlayer.innerHTML = createAudioPlayer();
+    pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 
     /* turn off sorting on last column */
     $("#sets").tablesorter({

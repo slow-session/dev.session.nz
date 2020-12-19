@@ -62,7 +62,7 @@
         // build the three columns
         gridRow += '<span><a href="' + item.url + '">' + item.title + "</a></span>";
         gridRow +=
-            '<span><input class="filterButton" type="button" onclick="selectTune(window.store, ' +
+            '<span><input class="filterButton" type="button" onclick="audioPlayer.selectTune(window.store, ' +
             item.tuneID +
             ');" value="Play Now" /></span>';
         gridRow += "<span>" + item.key + " " + item.rhythm + "</span>";

@@ -88,6 +88,6 @@ You can check those out in our <a href="/latest/">Latest Tunes</a> page.
 
 <script>
 $(document).ready(function() {
-    audioPlayer.innerHTML = createAudioPlayer();
+    pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 });
 </script>

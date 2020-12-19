@@ -18,7 +18,7 @@ You can use tools like <a href="https://www.mediahuman.com/youtube-to-mp3-conver
 <output id="fileInfo"></output>
 
 <div class="player">
-<div id="audioPlayer"></div>
+<div id="pageAudioPlayer"></div>
 <div id="showPlayer"></div>
 </div>
 
@@ -38,7 +38,7 @@ function handleAudioFileSelect(evt) {
     var fileInfo = document.getElementById('fileInfo');
     var audioPlayer = document.getElementById('audioPlayer');
     var showPlayer = document.getElementById('showPlayer');
-    audioPlayer.innerHTML = createAudioPlayer();
+    pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 
     // files is a FileList of File objects. List some properties.
     for (var i = 0, f; f = files[i]; i++) {
@@ -47,14 +47,14 @@ function handleAudioFileSelect(evt) {
             showPlayer.innerHTML = '';
         } else {
             fileInfo.innerHTML = f.name + ' - unsupported file type';
-            audioPlayer.innerHTML = '';
+            pageAudioPlayer.innerHTML = '';
             showPlayer.innerHTML = '';
             continue;
         }       
         var reader = new FileReader();
         reader.onload = function(e) {
-            showPlayer.innerHTML = createMP3player('1', this.result);
-            createSliders('1');
+            showPlayer.innerHTML = audioPlayer.createMP3player('1', this.result);
+            audioPlayer.createMP3Sliders('1');
         };
         reader.readAsDataURL(f);
     }

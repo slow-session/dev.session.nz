@@ -94,7 +94,7 @@
       tableRow +=
         '<tr class="tdArchive" style="background-color:transparent;"><td>';
       tableRow +=
-        '<input class="filterButton" type="button" onclick="selectTune(store,' +
+        '<input class="filterButton" type="button" onclick="audioPlayer.selectTune(store,' +
         tuneID +
         ');" value="Play Now" />';
       tableRow += "</td></tr>";

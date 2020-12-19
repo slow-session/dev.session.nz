@@ -103,6 +103,6 @@ window.setStore = {
 
 <script>
 $(document).ready(function() {
-    audioPlayer.innerHTML = createAudioPlayer();
+    pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 });
 </script>

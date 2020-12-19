@@ -27,7 +27,7 @@ function displayFocusTunesGrid(divID, storeName, storeObject) {
 
     appendString += `<span><a href="${item.url}">${item.title}</a></span>
             <span><input class="filterButton" type="button" 
-            onclick="selectTune(${storeName}, ${item.tuneID});" value="Play Now">
+            onclick="audioPlayer.selectTune(${storeName}, ${item.tuneID});" value="Play Now">
             </span>
             <span>${item.key} ${item.rhythm}</span>`;
   }
