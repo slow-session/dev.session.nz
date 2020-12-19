@@ -34,14 +34,14 @@ function handleAudioFileSelect(evt) {
     evt.stopPropagation();
     evt.preventDefault();
 
-    var files = evt.target.files; // FileList object.
-    var fileInfo = document.getElementById('fileInfo');
-    var pageAudioPlayer = document.getElementById('pageAudioPlayer');
-    var showPlayer = document.getElementById('showPlayer');
+    let files = evt.target.files; // FileList object.
+    let fileInfo = document.getElementById('fileInfo');
+    let pageAudioPlayer = document.getElementById('pageAudioPlayer');
+    let showPlayer = document.getElementById('showPlayer');
     pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 
     // files is a FileList of File objects. List some properties.
-    for (var i = 0, f; f = files[i]; i++) {
+    for (let i = 0, f; f = files[i]; i++) {
         if (f.type.indexOf('audio') == 0) {
             fileInfo.innerHTML = '<h2>' + f.name + '<h2>';
             showPlayer.innerHTML = '';
@@ -51,7 +51,7 @@ function handleAudioFileSelect(evt) {
             showPlayer.innerHTML = '';
             continue;
         }       
-        var reader = new FileReader();
+        let reader = new FileReader();
         reader.onload = function(e) {
             showPlayer.innerHTML = audioPlayer.createMP3player('1', this.result);
             audioPlayer.createMP3Sliders('1');
