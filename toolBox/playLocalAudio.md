@@ -36,7 +36,7 @@ function handleAudioFileSelect(evt) {
 
     var files = evt.target.files; // FileList object.
     var fileInfo = document.getElementById('fileInfo');
-    var audioPlayer = document.getElementById('audioPlayer');
+    var pageAudioPlayer = document.getElementById('pageAudioPlayer');
     var showPlayer = document.getElementById('showPlayer');
     pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 
