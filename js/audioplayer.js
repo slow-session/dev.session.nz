@@ -466,12 +466,12 @@ const audioPlayer = (function () {
             // build each row
             loopControlsContainer += `
         <!-- select loop -->
-        <div class="small-4 columns"><input class="loopClass" type="checkbox" onclick="audioPlayer.adjustSegments()" id="check${segmentNumber}">${presetLoopSegments[segmentNumber].name}</div>
+        <div class="small-4 columns"><input class="loopClass" type="checkbox" onclick="audioPlayer.applySegments()" id="check${segmentNumber}">${presetLoopSegments[segmentNumber].name}</div>
         <!-- adjust start of loop -->
         <div class="small-4 columns" style="text-align: center;">
         <a href="javascript:void(0);" class = "downButton" type="button" id= "button${segmentNumber}dn" onclick="audioPlayer.adjustDown(${segmentNumber}, 0)"> 
         <span title=" - 1/5 second">&lt;&lt;</a>
-        <input class="loopClass" type="text" onchange="audioPlayer.adjustSegments()" id="check${segmentNumber}from" size="4" style= "height: 18px;" value=${presetLoopSegments[segmentNumber].start}> 
+        <input class="loopClass" type="text" onchange="audioPlayer.applySegments()" id="check${segmentNumber}from" size="4" style= "height: 18px;" value=${presetLoopSegments[segmentNumber].start}> 
         <a href="javascript:void(0);" 
         class = "upButton" type="button" id= "button${segmentNumber}up" onclick="audioPlayer.adjustUp(${segmentNumber}, 0)"> 
         <span title=" + 1/5 second">&gt;&gt;</a> 
@@ -480,7 +480,7 @@ const audioPlayer = (function () {
         <div class="small-4 columns" style="text-align: center;">
         <a href="javascript:void(0);" class = "downButton" type="button" id= "button${segmentNumber}dn" onclick="audioPlayer.adjustDown(${segmentNumber}, 2)">
         <span title=" - 1/5 second">&lt;&lt;</a> 
-        <input class="loopClass" type="text" onchange="audioPlayer.adjustSegments()" id="check${segmentNumber}to" size="4" style= "height: 18px;" value=${presetLoopSegments[segmentNumber].end}> 
+        <input class="loopClass" type="text" onchange="audioPlayer.applySegments()" id="check${segmentNumber}to" size="4" style= "height: 18px;" value=${presetLoopSegments[segmentNumber].end}> 
         <a href="javascript:void(0);" 
         class = "upButton" type="button" id= "button${segmentNumber}up" onclick="audioPlayer.adjustUp(${segmentNumber}, 2)"> 
         <span title=" + 1/5 second">&gt;&gt;</a> 
