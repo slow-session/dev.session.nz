@@ -3,6 +3,8 @@ layout: page
 title: Add Blackboard ABC
 permalink: /addBlackboardABC/
 ---
+This won't work for tunes with double stops for now. Check the output to make sure it's OK
+and hand tweak the w: lines in the ABC if you need to.
 
 <div class="row">
     <!-- Draw the dots -->
