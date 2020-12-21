@@ -109,19 +109,26 @@ function handleABCFileSelect(evt) {
     }
 }
 function addBlackboardABC(abcText) {
+    // strip out I: and V: lines
     abcText = abcText.match(/^(?![IV]:).+$/gm).join('\n');
-
+    
+    // add the header to the output textarea
     textAreaABCplus.value = getHeader(abcText) + '\n';;
     
+    // process the notes
     let notes = getNotes(abcText);
     let lines = notes.split(/[\r\n]+/).map(line => line.trim());
-        
     lines.forEach (addTextToLine);
+    
+    // display the result
+    let abc_editor = new window.ABCJS.Editor("textAreaABCplus", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
 }
 
 function addTextToLine(value) {
+    // copy an ABC line to the line we're going to add
     let wLine = value;
 
+    // if there's already a w: line we'll discard it
     if (wLine.match(/w:/)) {
         return;
     }
@@ -135,12 +142,15 @@ function addTextToLine(value) {
     // strip the accidentals and other meta chars
     wLine = wLine.replace(/[\^=_\/\,~:(%]/g, '');
 
+    // split the line into single tokens
     wLine = wLine.split('').join(' ');
+    // remove double spaces
     wLine = wLine.replace(/\s\s+/g, ' ');
 
+    // uppercase the higher octave notes
     wLine = wLine.replace(/[a-g]/g, "$&'").toUpperCase();
     
+    // add the notes to the output textarea
     textAreaABCplus.value += value + '\nw: ' + wLine + '\n';
-    let abc_editor = new window.ABCJS.Editor("textAreaABCplus", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
 }
 </script>
