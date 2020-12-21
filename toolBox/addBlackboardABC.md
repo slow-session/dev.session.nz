@@ -7,16 +7,6 @@ This won't work for tunes with double stops for now. Check the output to make su
 and hand tweak the w: lines in the ABC if you need to.
 
 <div class="row">
-    <!-- Draw the dots -->
-    <div class="output">
-        <div id="abcPaper" class="abcPaper"></div>
-    </div>
-
-    <!-- Controls for ABC player -->
-    <div id="ABCplayer"></div>
-</div>
-<!-- Group the input and controls for ABC-->
-<div class="row">
     <h3>Load an ABC file:</h3>
     <input type="file" id="files" class='filterButton' name="files[]" accept=".abc" />
     <output id="fileInfo"></output>
@@ -30,6 +20,16 @@ and hand tweak the w: lines in the ABC if you need to.
     <!-- Show ABC errors -->
     <div id='warnings'></div>
 </div>
+<div class="row">
+    <!-- Draw the dots -->
+    <div class="output">
+        <div id="abcPaper" class="abcPaper"></div>
+    </div>
+
+    <!-- Controls for ABC player -->
+    <div id="ABCplayer"></div>
+</div>
+<!-- Group the input and controls for ABC-->
 <div class="row">
 <!-- Add the Blackboard ABC-->
     <h3>Add the Blackboard ABC:</h3>
@@ -94,7 +94,6 @@ function handleABCFileSelect(evt) {
             // Show the dots
             textAreaABC.value = this.result; 
             
-            // Display the ABC in the textbox as dots
             let abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
             
             // stop tune currently playing if needed
@@ -110,29 +109,14 @@ function handleABCFileSelect(evt) {
     }
 }
 function addBlackboardABC(abcText) {
-        
-    textAreaABCplus.value = getHeader(abcText) + '\n';  
+    abcText = abcText.match(/^(?![IV]:).+$/gm).join('\n');
+
+    textAreaABCplus.value = getHeader(abcText) + '\n';;
     
     let notes = getNotes(abcText);
     let lines = notes.split(/[\r\n]+/).map(line => line.trim());
         
     lines.forEach (addTextToLine);
-}
-
-function getHeader(tuneABC) {
-    const lines = tuneABC.split(/[\r\n]+/).map(line => line.trim());
-    const keyIdx = lines.findIndex(line => line.match(KEY_LINE_PATTERN));
-    if (keyIdx < 0) {
-        return '';
-    } else {
-        return lines.splice(0, keyIdx + 1).join('\n').trim();
-    }
-}
-
-function getNotes(tuneABC) {
-    const lines = tuneABC.split(/[\r\n]+/).map(line => line.trim());
-    const keyIdx = lines.findIndex(line => line.match(KEY_LINE_PATTERN));
-    return lines.splice(keyIdx + 1, lines.length).join('\n').trim();
 }
 
 function addTextToLine(value) {
@@ -149,7 +133,7 @@ function addTextToLine(value) {
     // strip out the chords
     wLine = wLine.replace(/"[A-Ga-z]*"/g, '');
     // strip the accidentals and other meta chars
-    wLine = wLine.replace(/[\^=_\/\,~:(]/g, '');
+    wLine = wLine.replace(/[\^=_\/\,~:(%]/g, '');
 
     wLine = wLine.split('').join(' ');
     wLine = wLine.replace(/\s\s+/g, ' ');
