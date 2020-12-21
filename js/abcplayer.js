@@ -224,6 +224,7 @@ function createABCSliders(textArea, tuneID) {
         tooltips: [
             wNumb({
                 decimals: 0,
+                prefix: "Speed: ",
                 postfix: " %",
             }),
         ],
