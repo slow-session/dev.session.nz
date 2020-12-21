@@ -136,7 +136,6 @@ function getNotes(tuneABC) {
 }
 
 function addTextToLine(value) {
-    console.log(value);
     let wLine = value;
 
     // strip out the note lengths
