@@ -138,6 +138,10 @@ function getNotes(tuneABC) {
 function addTextToLine(value) {
     let wLine = value;
 
+    if (wLine.match(/w:/)) {
+        return;
+    }
+
     // strip out the note lengths
     wLine = wLine.replace(/\d+/g, '');
     // strip out the grace notes
