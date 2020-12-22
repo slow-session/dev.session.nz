@@ -25,9 +25,9 @@
     // create table headers
     if (wssTools.testForMobile()) {
       var appendString =
-        '<table id="tunes" class="tuneSelect tablesorter mobileScrolling">';
+        '<table id="tunes" class="tuneSelect mobileScrolling">';
     } else {
-      var appendString = '<table id="tunes" class="tuneSelect tablesorter">';
+      var appendString = '<table id="tunes" class="tuneSelect">';
     }
 
     appendString +=

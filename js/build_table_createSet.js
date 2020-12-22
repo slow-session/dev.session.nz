@@ -123,18 +123,18 @@ function showForm(textArea, myForm) {
     // create table headers
     if (wssTools.testForMobile()) {
       var appendString =
-        '<table id="tunes" class="tuneSelect tablesorter mobileScrolling">';
+        '<table id="tunes" class="tuneSelect mobileScrolling">';
     } else {
-      var appendString = '<table id="tunes" class="tuneSelect tablesorter">';
+      var appendString = '<table id="tunes" class="tuneSelect">';
     }
 
     appendString +=
       '<thead> \
          <tr> \
            <th style="width:10%;min-width:75px;">Add Tune</th> \
-           <th style="width:35%;">Name &#x25B2;&#x25BC;</th> \
-           <th style="width:6%;">Rhythm<br />&#x25B2;&#x25BC;</th> \
-           <th style="width:4%;">Key<br />&#x25B2;&#x25BC;</th> \
+           <th style="width:35%;">Name</th> \
+           <th style="width:6%;">Rhythm</th> \
+           <th style="width:4%;">Key</th> \
          </tr> \
          </thead> \
          <tbody>';
