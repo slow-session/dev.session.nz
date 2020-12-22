@@ -138,7 +138,8 @@ function addTextToLine(value) {
     // strip out the grace notes
     wLine = wLine.replace(/{[A-Ga-g]}/g, '');
     // strip out the chords
-    wLine = wLine.replace(/"[A-Ga-z]*"/g, '');
+    wLine = wLine.replace(/".*?"/g, '');
+    wLine = wLine.replace(/!.*?!/g, '');
     // strip the accidentals and other meta chars
     wLine = wLine.replace(/[\^=_\/\,~:(%]/g, '');
 
@@ -146,6 +147,9 @@ function addTextToLine(value) {
     wLine = wLine.split('').join(' ');
     // remove double spaces
     wLine = wLine.replace(/\s\s+/g, ' ');
+
+    // fix double stops
+    wLine = wLine.replace(/\[ ([A-Za-z]) ([A-Za-z]) \]/g, '$1$2');
 
     // uppercase the higher octave notes
     wLine = wLine.replace(/[a-g]/g, "$&'").toUpperCase();
