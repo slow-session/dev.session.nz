@@ -131,6 +131,9 @@ function setTuneDuration(tuneABC, bpm) {
 
     // Get the meter from the ABC
     let meterStr = getABCheaderValue("M:", tuneABC);
+    if (!meterStr) {
+        meterStr = "4/4";
+    }
     if (meterStr == "C") {
         meterStr = "4/4";
     }
@@ -284,7 +287,11 @@ function getABCheaderValue(key, tuneABC) {
     const lines = tuneABC.split(/[\r\n]+/).map(line => line.trim());
     const keyIdx = lines.findIndex(line => line.match(KEYWORD_PATTERN));
 
-    return lines[keyIdx].split(":")[1].trim();
+    if (lines[keyIdx]){
+        return lines[keyIdx].split(":")[1].trim();
+    } else {
+        return null;
+    }
 }
 
 function unRollABC(abcNotes) {
