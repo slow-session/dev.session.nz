@@ -14,7 +14,7 @@ You can use this page to play an ABC file you've stored locally.
 
 <div class="player">
 <!-- hide the player until we've loaded some dots -->
-<div id="abcPlayer" style="display:none;"></div>
+<div id="ABCplayer" style="display:none;"></div>
 </div>
 
 <input type="file" id="files" class='filterButton' name="files[]" accept="text/vnd.abc,.abc"/>
@@ -32,8 +32,8 @@ $(document).ready(function()
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
 	// Create the ABC player
-    abcPlayer.innerHTML = createABCplayer('textAreaABC', 1, '{{ site.defaultABCplayer }}');
-    createABCSliders("textAreaABC", '1');
+    document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer('textAreaABC', 1, '{{ site.defaultABCplayer }}');
+    abcPlayer.createABCsliders("textAreaABC", '1');
 
 });
 
@@ -49,9 +49,9 @@ function handleABCFileSelect(evt) {
 
         reader.onload = function(e) {
             // Is ABC file valid?
-            if ((getABCheaderValue("X:", this.result) == '')
-                || (getABCheaderValue("T:", this.result) == '')
-                || (getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
+            if ((abcPlayer.getABCheaderValue("X:", this.result) == '')
+                || (abcPlayer.getABCheaderValue("T:", this.result) == '')
+                || (abcPlayer.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
                 return (1);
             }
 
@@ -65,7 +65,7 @@ function handleABCFileSelect(evt) {
             var playButton = document.getElementById("playABC1");
             if (typeof playButton !== 'undefined'
                 && playButton.className == "stopButton") {
-                stopABCplayer();
+                abcPlayer.stopABCplayer();
                 playButton.className = "";
                 playButton.className = "playButton";
             }

@@ -3,7 +3,7 @@
 const wssTools = (function () {
     function downloadABCFile(text) {
         // set the filename for downloading
-        let filename = slugify(getABCheaderValue("T:", text)) + ".abc";
+        let filename = slugify(abcPlayer.getABCheaderValue("T:", text)) + ".abc";
 
         downloadFile(filename, text);
     }

@@ -75,8 +75,8 @@ $(document).ready(function () {
     let abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
     
     // Create the ABC player
-    ABCplayer.innerHTML = createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');  
-    createABCSliders("textAreaABC", '1');
+    document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');  
+    abcPlayer.createABCsliders("textAreaABC", '1');
  
 });
 
@@ -92,9 +92,9 @@ function handleABCFileSelect(evt) {
 
         reader.onload = function(e) {
             // Is ABC file valid?
-            if ((getABCheaderValue("X:", this.result) == '')
-                || (getABCheaderValue("T:", this.result) == '')
-                || (getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
+            if ((abcPlayer.getABCheaderValue("X:", this.result) == '')
+                || (abcPlayer.getABCheaderValue("T:", this.result) == '')
+                || (abcPlayer.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
                 return (1);
             }
 
@@ -108,7 +108,7 @@ function handleABCFileSelect(evt) {
             var playButton = document.getElementById("playABC1");
             if (typeof playButton !== 'undefined'
                 && playButton.className == "stopButton") {
-                stopABCplayer();
+                abcPlayer.stopABCplayer();
                 playButton.className = "";
                 playButton.className = "playButton";
             }

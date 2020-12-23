@@ -67,8 +67,8 @@ $(document).ready(function () {
     let abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
     
     // Create the ABC player
-    ABCplayer.innerHTML = createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');  
-    createABCSliders("textAreaABC", '1');
+    document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');  
+    abcPlayer.createABCsliders("textAreaABC", '1');
  
 });
 
@@ -84,9 +84,9 @@ function handleABCFileSelect(evt) {
 
         reader.onload = function(e) {
             // Is ABC file valid?
-            if ((getABCheaderValue("X:", this.result) == '')
-                || (getABCheaderValue("T:", this.result) == '')
-                || (getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
+            if ((abcPlayer.getABCheaderValue("X:", this.result) == '')
+                || (abcPlayer.getABCheaderValue("T:", this.result) == '')
+                || (abcPlayer.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
                 return (1);
             }
 
@@ -99,7 +99,7 @@ function handleABCFileSelect(evt) {
             var playButton = document.getElementById("playABC1");
             if (typeof playButton !== 'undefined'
                 && playButton.className == "stopButton") {
-                stopABCplayer();
+                abcPlayer.stopABCplayer();
                 playButton.className = "";
                 playButton.className = "playButton";
             }
@@ -155,5 +155,30 @@ function addTextToLine(value) {
     
     // add the notes to the output textarea
     textAreaABCplus.value += value + '\nw: ' + wLine + '\n';
+}
+
+const KEY_LINE_PATTERN = /^\s*K:/;
+
+/** 
+ * Extract the header from an ABC tune string, matching lines up to 
+ * and including key specification.  Gracefully assume presence of X and T
+ * fields.
+ * http://abcnotation.com/wiki/abc:standard:v2.1#tune_header_definition
+ */
+function getHeader(tuneABC) {
+    const lines = tuneABC.split(/[\r\n]+/).map(line => line.trim());
+    const keyIdx = lines.findIndex(line => line.match(KEY_LINE_PATTERN));
+    if (keyIdx < 0) {
+        return '';
+    } else {
+        return lines.splice(0, keyIdx + 1).join('\n').trim();
+    }
+}
+
+/** Extract the notes from an ABC tune string, by removing the header. */
+function getNotes(tuneABC) {
+    const lines = tuneABC.split(/[\r\n]+/).map(line => line.trim());
+    const keyIdx = lines.findIndex(line => line.match(KEY_LINE_PATTERN));
+    return lines.splice(keyIdx + 1, lines.length).join('\n').trim();
 }
 </script>

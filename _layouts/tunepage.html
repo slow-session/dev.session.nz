@@ -152,8 +152,8 @@ layout: page
 
         {% if page.abc contains "K:" %}
         // create the ABC player
-        ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
-        createABCSliders("textAreaABC", tuneID); 
+        document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
+        abcPlayer.createABCsliders("textAreaABC", tuneID); 
         {% endif %}
 
 

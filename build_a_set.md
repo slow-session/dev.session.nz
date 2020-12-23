@@ -106,7 +106,7 @@ page.
 $(document).ready(function() {
     let tuneID = 1;
     
-    ABCplayer.innerHTML = createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
-    createABCSliders("textAreaABC", tuneID);
+    document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
+    abcPlayer.createABCsliders("textAreaABC", tuneID);
 });
 </script>

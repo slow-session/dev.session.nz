@@ -61,8 +61,8 @@ $(document).ready(function() {
     {% if page.abc contains "K:" %}    
     // create the ABC player
     document.getElementById('ABCplayer').innerHTML = 
-        createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
-        createABCSliders("textAreaABC", tuneID);
+        abcPlayer.createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
+        abcPlayer.createABCsliders("textAreaABC", tuneID);
     {% endif %}
 
     audioPlayer.selectTune(window.store, tuneID);
