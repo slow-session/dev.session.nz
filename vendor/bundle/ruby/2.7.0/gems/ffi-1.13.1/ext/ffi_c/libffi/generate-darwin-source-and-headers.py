@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-import subprocess
-import os
-import errno
-import collections
-import glob
 import argparse
+import collections
+import errno
+import glob
+import os
+import subprocess
+
 
 class Platform(object):
     pass
