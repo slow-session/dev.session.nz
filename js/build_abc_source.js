@@ -14,27 +14,28 @@
  */
 
 function displayABCsource() {
-  var abcText = document.getElementById("abcText");
+  let abcText = document.getElementById("abcText");
 
   // create file headers
-  var appendString = "% \n% File sourced from: " + window.location.href + "\n";
+  let appendString = "% \n% File sourced from: " + window.location.href + "\n";
   appendString += "% Generated on: " + new Date() + "\n%\n";
 
-  for (var key in store) {
+  for (let key in store) {
     // Iterate over the original data
-    var item = store[key];
+    let item = store[key];
     appendString += createABCitem(item);
   }
+  console.log(DOMPurify.sanitize(appendString));
 
   abcText.innerHTML = DOMPurify.sanitize(appendString);
 }
 
 function createABCitem(item) {
-  var gridRow = "";
+  let gridRow = "";
 
   // build the ABC item
-  var newABC = decodeURI(item.abc).replace(/X:\s*/g, "X: " + item.tuneID);
-
+  let newABC = decodeURI(item.abc).replace(/X:.*/, "X: " + item.tuneID);
+  
   if (newABC) {
     gridRow += newABC + "\n";
   }
