@@ -318,13 +318,19 @@ const audioPlayer = (function () {
             document.getElementById("abcPaper").style.display = "block";
 
             // Draw the dots
-            let abc_editor = new window.ABCJS.Editor("textAreaABC", {
-                paper_id: "abcPaper",
-                warnings_id: "warnings",
-                render_options: {
-                    responsive: "resize",
-                },
-                indicate_changed: "true",
+            let abcEditor = new window.ABCJS.Editor("textAreaABC", {
+                paper_id: "abcPaper", 
+                warnings_id:"warnings", 
+                render_options: {responsive: 'resize'}, 
+                indicate_changed: "true", 
+                synth: { el: "#abcAudio", options: {
+                        displayLoop: true,
+                        displayRestart: true,
+                        displayPlay: true,
+                        displayProgress: true,
+                        displayWarp: true
+                    }
+                }
             });
             // Reset paper state to original value
             document.getElementById("abcPaper").style.display = currentPaperState;
