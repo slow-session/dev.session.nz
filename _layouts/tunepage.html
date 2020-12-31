@@ -151,7 +151,7 @@ layout: page
         // create the ABC player
         pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 
-        {% if page.abc contains "K:" %}
+        {% if page.abc contains "Kx:" %}
         // create the ABC player
         document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
         abcPlayer.createABCsliders("textAreaABC", tuneID); 

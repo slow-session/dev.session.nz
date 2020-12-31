@@ -6,6 +6,7 @@ layout: page
     
     <!-- display the dots -->
     <div id="abcPaper" class="abcPaper"></div>
+    <div id="abcAudio"></div>
     
     <!-- play the ABC version -->
     <div style="overflow-x:auto;">
@@ -58,7 +59,7 @@ window.store = {
 document.addEventListener("DOMContentLoaded", function (event) {
     let tuneID = "{{ tuneID }}";
     
-    {% if page.abc contains "K:" %}    
+    {% if page.abc contains "Kx:" %}    
     // create the ABC player
     document.getElementById('ABCplayer').innerHTML = 
         abcPlayer.createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
