@@ -3,16 +3,6 @@ layout: page
 title: editABC
 permalink: editABC-test
 ---
-<link rel="stylesheet" type="text/css" href="../abcjs-audio.css">
-
-<style>
-.audio-error {
-	color: red;
-	padding: 10px;
-}
-</style>
-
-
 <!-- Draw the dots -->
 <div class="row">
     <div id="abcPaper" class="abcPaper"></div>

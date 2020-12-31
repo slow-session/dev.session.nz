@@ -175,3 +175,9 @@
 .abcjs-large .abcjs-tempo-wrapper {
 	font-size: 20px;
 }
+
+.audio-error {
+	color: red;
+	padding: 10px;
+}
+
