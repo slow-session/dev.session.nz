@@ -103,7 +103,7 @@ page.
 <textarea id="textAreaABC" style="display:none;"></textarea>
 
 <script>
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function (event) {
     let tuneID = 1;
     
     document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');

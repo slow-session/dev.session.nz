@@ -92,7 +92,7 @@ We'd like to thank Charlie very much for giving us the privilege of being able t
 {% include tuneModal.html%}
 
 <script>
-  $(document).ready(function() {
+  document.addEventListener("DOMContentLoaded", function (event) {
     pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
   });
 </script>

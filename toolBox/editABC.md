@@ -62,7 +62,7 @@ DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
 </div>
 
 <script>
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function (event) {
     // Check for the various File API support.
     var fileInfo = document.getElementById('fileInfo');
     if (window.File && window.FileReader && window.FileList && window.Blob) {

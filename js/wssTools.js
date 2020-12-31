@@ -26,14 +26,6 @@ const wssTools = (function () {
         }
     }
 
-    function printDotsImage(svg) {
-        if (testForMobile()) {
-            alert("Sorry, printing not working from mobile devices");
-        } else {
-            $(svg).printThis();
-        }
-    }
-
     function slugify(text) {
         return text
             .toString()
@@ -121,7 +113,6 @@ const wssTools = (function () {
     return {
         downloadABCFile: downloadABCFile,
         downloadFile: downloadFile,
-        printDotsImage: printDotsImage,
         slugify: slugify,
         getCheckedCheckboxesFor: getCheckedCheckboxesFor,
         toTitleCase: toTitleCase,

@@ -87,7 +87,7 @@ We add new tunes to the main Tunes Archive reasonably often.
 You can check those out in our <a href="/latest/">Latest Tunes</a> page.
 
 <script>
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function (event) {
     pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 });
 </script>

@@ -41,7 +41,7 @@ Pick a random tune from the archive:
 </div>
 
 <script>
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function (event) {
     pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 });
 </script>

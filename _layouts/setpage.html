@@ -60,13 +60,8 @@ var regex = new RegExp('X:.*\n');
 <div id="ABCplayer"></div>
 </div>
 
-<hr>
-<p>You can print your set using this button. Please think of the trees!</p>
-
-<input class="button" type="button" class="filterButton" value="Print this Set" onclick="wssTools.printDotsImage(document.getElementById('abcPaper').innerHTML)" />
-
 <script>
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function (event) {
     let tuneID = 1;
     tunelist.innerHTML = tuneList.slice(0, -2);
 

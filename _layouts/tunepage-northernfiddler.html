@@ -55,7 +55,7 @@ window.store = {
     },
 };
 
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function (event) {
     let tuneID = "{{ tuneID }}";
     
     {% if page.abc contains "K:" %}    

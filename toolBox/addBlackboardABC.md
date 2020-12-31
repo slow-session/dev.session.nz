@@ -54,7 +54,7 @@ Check the output to make sure it's OK and hand tweak the w: lines in the ABC if 
 </div>
 
 <script>
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function (event) {
     // Check for the various File API support.
     var fileInfo = document.getElementById('fileInfo');
     if (window.File && window.FileReader && window.FileList && window.Blob) {

@@ -62,7 +62,7 @@ This collection was one of the very early uses of ABC to capture and transmit Ir
 {% include tunesObrienGrid.html%}
 
 <script>
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function (event) {
 
 });
 </script>

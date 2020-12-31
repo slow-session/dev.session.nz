@@ -6,14 +6,11 @@ permalink: editABC-test
 <!-- Draw the dots -->
 <div class="row">
     <div id="abcPaper" class="abcPaper"></div>
-    <div id="abcAudio"></div>
-
-    <div id="ABCplayer"></div>
-    
+    <div id="abcAudio"></div>    
 </div>
-<!-- Group the input and controls for ABC-->
-<h3>Open an ABC file or type your ABC below:</h3>
 <div class="row">
+    <!-- Group the input and controls for ABC-->
+    <h3>Open an ABC file or type your ABC below:</h3>
     <input type="file" id="files" class='filterButton' aria-label="Open ABC file" name="files[]" accept=".abc" />
     <output id="fileInfo"></output>
 </div>
@@ -34,7 +31,6 @@ permalink: editABC-test
 
 
 <script>
-
 // Get ready to read the textarea
 let abcEditor = new window.ABCJS.Editor("textAreaABC", {
     paper_id: "abcPaper", 
@@ -46,12 +42,13 @@ let abcEditor = new window.ABCJS.Editor("textAreaABC", {
             displayRestart: true,
             displayPlay: true,
             displayProgress: true,
-            displayWarp: true
+            displayWarp: true,
+            options: {abcjsParams: {program: 27}}
         }
     }
 });
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function (event) {
     // Check for the various File API support.
     var fileInfo = document.getElementById('fileInfo');
     if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -59,10 +56,6 @@ $(document).ready(function () {
     } else {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
-
-    // Create the ABC player
-    document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');  
-    abcPlayer.createABCsliders("textAreaABC", '1');
 });
 
 function handleABCFileSelect(evt) {

@@ -4,7 +4,7 @@
 	height: 26px;
 	padding: 0 5px;
 	border-radius: 3px;
-	background-color: #424242;
+	background-color: #668092;
 	display: flex;
 	align-items: center;
 	box-sizing: border-box;
@@ -70,7 +70,7 @@
 }
 
 .abcjs-inline-audio .abcjs-midi-progress-background {
-	background-color: #424242;
+	background-color: #668092;
 	height: 10px;
 	border-radius: 5px;
 	border: 2px solid #cccccc;
@@ -107,7 +107,7 @@
 
 .abcjs-inline-audio .abcjs-tempo-wrapper {
 	font-size: 10px;
-	color: #f4f4f4;
+	color: black;
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;

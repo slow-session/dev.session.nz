@@ -22,8 +22,7 @@ You can use this page to play an ABC file you've stored locally.
 <output id="fileInfo"></output>
 
 <script>
-$(document).ready(function()
-{
+document.addEventListener("DOMContentLoaded", function (event) {
     // Check for the various File API support.
     var fileInfo = document.getElementById('fileInfo');
     if (window.File && window.FileReader && window.FileList && window.Blob) {

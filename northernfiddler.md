@@ -78,7 +78,7 @@ There's a PDF of the book on this site at <a href="/tunebooks/The_Northern_Fiddl
 {% include tunesNorthernFiddlerGrid.html%}
 
 <script>
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function (event) {
 
 });
 </script>
