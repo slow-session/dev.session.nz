@@ -135,7 +135,7 @@ function addBlackboardABC(abcText) {
     lines.forEach (addTextToLine);
     
     // Display the ABC in the textbox as dots
-    let abcEditor = new window.ABCJS.Editor("textAreaABC", {
+    let abcEditor = new window.ABCJS.Editor("textAreaABCplus", {
         paper_id: "abcPaper", 
         warnings_id:"abcWarnings", 
         render_options: {responsive: 'resize'}, 
