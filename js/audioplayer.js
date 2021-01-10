@@ -667,11 +667,11 @@ const audioPlayer = (function () {
         switch (button.value) {
             case "Show the Dots":
                 button.value = "Hide the Dots";
-                document.getElementById("abcPaper").style.display = "block";
+                document.getElementById("abcOutput").style.display = "block";
                 break;
             case "Hide the Dots":
                 button.value = "Show the Dots";
-                document.getElementById("abcPaper").style.display = "none";
+                document.getElementById("abcOutput").style.display = "none";
                 break;
         }
     }
