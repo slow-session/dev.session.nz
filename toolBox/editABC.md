@@ -17,6 +17,7 @@ If you want to add a new tune to the archive you can use the
     <!-- Draw the dots -->
     <div class="output">
         <div id="abcPaper" class="abcPaper"></div>
+        <div id="abcAudio"></div>
     </div>
 
     <!-- Controls for ABC player -->
@@ -72,7 +73,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
     
     // Display the ABC in the textbox as dots
-    let abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
+     let abcEditor = new window.ABCJS.Editor("textAreaABC", {
+                paper_id: "abcPaper", 
+                warnings_id:"warnings", 
+                render_options: {responsive: 'resize'}, 
+                indicate_changed: "true", 
+                synth: { el: "#abcAudio", options: {
+                        displayLoop: true,
+                        displayRestart: true,
+                        displayPlay: true,
+                        displayProgress: true,
+                        displayWarp: true
+                    }
+                }
+            });
     
     // Create the ABC player
     document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');  
@@ -102,8 +116,20 @@ function handleABCFileSelect(evt) {
             textAreaABC.value = this.result; 
             
             // Display the ABC in the textbox as dots
-            let abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
-            
+            let abcEditor = new window.ABCJS.Editor("textAreaABC", {
+                paper_id: "abcPaper", 
+                warnings_id:"warnings", 
+                render_options: {responsive: 'resize'}, 
+                indicate_changed: "true", 
+                synth: { el: "#abcAudio", options: {
+                        displayLoop: true,
+                        displayRestart: true,
+                        displayPlay: true,
+                        displayProgress: true,
+                        displayWarp: true
+                    }
+                }
+            });
             // stop tune currently playing if needed
             var playButton = document.getElementById("playABC1");
             if (typeof playButton !== 'undefined'
