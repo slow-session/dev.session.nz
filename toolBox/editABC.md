@@ -18,6 +18,8 @@ If you want to add a new tune to the archive you can use the
     <div class="output">
         <div id="abcPaper" class="abcPaper"></div>
         <div id="abcAudio"></div>
+        <!-- Show ABC errors -->
+        <div id='abcWarnings'></div>
     </div>
 
     <!-- Controls for ABC player -->
@@ -47,8 +49,7 @@ DED DFA|BAF d2e|faf ede|1 fdd d3 :|2 fdd d2 e ||
 |:faa fbb|afe ~f3|faf dBA| (3Bcd B AFE|
 DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
     </textarea>
-    <!-- Show ABC errors -->
-    <div id='warnings'></div>
+    
 </div>
 <div class="row">
     <!-- Allow the user to save their ABC-->
@@ -75,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     // Display the ABC in the textbox as dots
      let abcEditor = new window.ABCJS.Editor("textAreaABC", {
                 paper_id: "abcPaper", 
-                warnings_id:"warnings", 
+                warnings_id:"abcWarnings", 
                 render_options: {responsive: 'resize'}, 
                 indicate_changed: "true", 
                 synth: { el: "#abcAudio", options: {
@@ -89,8 +90,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             });
     
     // Create the ABC player
-    document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');  
-    abcPlayer.createABCsliders("textAreaABC", '1');
+    //document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');  
+    //abcPlayer.createABCsliders("textAreaABC", '1');
  
 });
 
@@ -113,12 +114,12 @@ function handleABCFileSelect(evt) {
             }
 
             // Show the dots
-            textAreaABC.value = this.result; 
+            textAreaABC.value = this.result + "\n"; 
             
             // Display the ABC in the textbox as dots
             let abcEditor = new window.ABCJS.Editor("textAreaABC", {
                 paper_id: "abcPaper", 
-                warnings_id:"warnings", 
+                warnings_id:"abcWarnings", 
                 render_options: {responsive: 'resize'}, 
                 indicate_changed: "true", 
                 synth: { el: "#abcAudio", options: {
