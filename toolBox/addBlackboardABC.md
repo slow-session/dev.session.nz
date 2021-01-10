@@ -23,6 +23,7 @@ Check the output to make sure it's OK and hand tweak the w: lines in the ABC if 
     <!-- Draw the dots -->
     <div class="output">
         <div id="abcPaper" class="abcPaper"></div>
+        <div id="abcAudio"></div>
     </div>
 
     <!-- Controls for ABC player -->
@@ -64,11 +65,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
     
     // Display the ABC in the textbox as dots
-    let abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
-    
-    // Create the ABC player
-    document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');  
-    abcPlayer.createABCsliders("textAreaABC", '1');
+    let abcEditor = new window.ABCJS.Editor("textAreaABC", {
+        paper_id: "abcPaper", 
+        warnings_id:"abcWarnings", 
+        render_options: {responsive: 'resize'}, 
+        indicate_changed: "true", 
+        synth: { el: "#abcAudio", options: {
+                displayLoop: true,
+                displayRestart: true,
+                displayPlay: true,
+                displayProgress: true,
+                displayWarp: true
+            }
+        }
+    });
  
 });
 
@@ -91,18 +101,23 @@ function handleABCFileSelect(evt) {
             }
 
             // Show the dots
-            textAreaABC.value = this.result; 
+            textAreaABC.value = this.result + "\n"; 
             
-            let abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
-            
-            // stop tune currently playing if needed
-            var playButton = document.getElementById("playABC1");
-            if (typeof playButton !== 'undefined'
-                && playButton.className == "stopButton") {
-                abcPlayer.stopABCplayer();
-                playButton.className = "";
-                playButton.className = "playButton";
-            }
+            // Display the ABC in the textbox as dots
+            let abcEditor = new window.ABCJS.Editor("textAreaABC", {
+                paper_id: "abcPaper", 
+                warnings_id:"abcWarnings", 
+                render_options: {responsive: 'resize'}, 
+                indicate_changed: "true", 
+                synth: { el: "#abcAudio", options: {
+                        displayLoop: true,
+                        displayRestart: true,
+                        displayPlay: true,
+                        displayProgress: true,
+                        displayWarp: true
+                    }
+                }
+            });
         };
         reader.readAsText(f);
     }

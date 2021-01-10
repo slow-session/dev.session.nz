@@ -58,14 +58,6 @@ window.store = {
 
 document.addEventListener("DOMContentLoaded", function (event) {
     let tuneID = "{{ tuneID }}";
-    
-    {% if page.abc contains "Kx:" %}    
-    // create the ABC player
-    document.getElementById('ABCplayer').innerHTML = 
-        abcPlayer.createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
-        abcPlayer.createABCsliders("textAreaABC", tuneID);
-    {% endif %}
-
     audioPlayer.selectTune(window.store, tuneID);
 });
 </script>

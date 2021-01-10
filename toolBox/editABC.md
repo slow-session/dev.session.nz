@@ -88,11 +88,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }
                 }
             });
-    
-    // Create the ABC player
-    //document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer('textAreaABC', '1', '{{ site.defaultABCplayer }}');  
-    //abcPlayer.createABCsliders("textAreaABC", '1');
- 
 });
 
 function handleABCFileSelect(evt) {

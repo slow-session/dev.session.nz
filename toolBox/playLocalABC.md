@@ -10,6 +10,7 @@ You can use this page to play an ABC file you've stored locally.
 
 <div class="output">
     <div id="abcPaper" class="abcPaper"></div>
+    <div id="abcAudio"></div>
 </div>
 
 <div class="player">
@@ -30,10 +31,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     } else {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
-	// Create the ABC player
-    document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer('textAreaABC', 1, '{{ site.defaultABCplayer }}');
-    abcPlayer.createABCsliders("textAreaABC", '1');
-
 });
 
 function handleABCFileSelect(evt) {
@@ -58,8 +55,21 @@ function handleABCFileSelect(evt) {
             textAreaABC.value = this.result;
             
             // Display the ABC in the textbox as dots
-            abc_editor = new window.ABCJS.Editor("textAreaABC", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
-            
+            let abcEditor = new window.ABCJS.Editor("textAreaABC", {
+                paper_id: "abcPaper", 
+                warnings_id:"abcWarnings", 
+                render_options: {responsive: 'resize'}, 
+                indicate_changed: "true", 
+                synth: { el: "#abcAudio", options: {
+                        displayLoop: true,
+                        displayRestart: true,
+                        displayPlay: true,
+                        displayProgress: true,
+                        displayWarp: true
+                    }
+                }
+            });
+
             // stop tune currently playing if needed
             var playButton = document.getElementById("playABC1");
             if (typeof playButton !== 'undefined'
