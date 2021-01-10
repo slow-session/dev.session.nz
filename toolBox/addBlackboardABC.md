@@ -134,8 +134,21 @@ function addBlackboardABC(abcText) {
     let lines = notes.split(/[\r\n]+/).map(line => line.trim());
     lines.forEach (addTextToLine);
     
-    // display the result
-    let abc_editor = new window.ABCJS.Editor("textAreaABCplus", { paper_id: "abcPaper", warnings_id:"abcWarnings", render_options: {responsive: 'resize'}, indicate_changed: "true" });
+    // Display the ABC in the textbox as dots
+    let abcEditor = new window.ABCJS.Editor("textAreaABC", {
+        paper_id: "abcPaper", 
+        warnings_id:"abcWarnings", 
+        render_options: {responsive: 'resize'}, 
+        indicate_changed: "true", 
+        synth: { el: "#abcAudio", options: {
+                displayLoop: true,
+                displayRestart: true,
+                displayPlay: true,
+                displayProgress: true,
+                displayWarp: true
+            }
+        }
+    });
 }
 
 function addTextToLine(value) {
