@@ -15,9 +15,6 @@
             <div id="abcAudio"></div>
         </div>
 
-        <!-- Controls for ABC player -->
-        <div id="ABCplayer"></div>
-
         <!-- Allow the user to save their ABC-->
         <form>
             <div class="formParent">
@@ -34,7 +31,7 @@
 
 <script>
     // Get the modal
-    var setModal = document.getElementById("setModal");
+    let setModal = document.getElementById("setModal");
 
     function viewModal() {
         loadTextarea();
@@ -42,7 +39,7 @@
     }
 
     // Get the <span> element that closes the setModal
-    var span = document.getElementsByClassName("close")[0];
+    let span = document.getElementsByClassName("close")[0];
 
     // When the user clicks on <span> (x), close the setModal
     span.onclick = function () {

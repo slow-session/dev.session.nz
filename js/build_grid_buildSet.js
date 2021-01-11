@@ -12,11 +12,12 @@
  *
  * Derived from: http://jekyll.tips/jekyll-casts/jekyll-search-using-lunr-js/
  */
+"use strict";
 
 let tuneIDs = [];
 
 function addABCtune(tuneID) {
-    var item = store[tuneID];
+    let item = store[tuneID];
 
     document.getElementById("setTuneTitles").innerHTML += item.title + "<br />";
     document.getElementById("gr" + tuneID).style.backgroundColor = "khaki";
@@ -60,8 +61,7 @@ function Reset() {
     document.getElementById("abcPaper").style.paddingBottom = "0px";
     document.getElementById("abcPaper").style.overflow = "auto";
 
-    var tLen = tuneIDs.length;
-    for (i = 0; i < tLen; i++) {
+    for (i = 0; i < tuneIDs.length; i++) {
         document.getElementById("gr" + tuneIDs[i]).style.backgroundColor = "";
     }
     tuneIDs = [];
@@ -69,23 +69,23 @@ function Reset() {
 
 (function () {
     function displayTunesGrid(results, store) {
-        var tunesGrid = document.getElementById("tunesGrid");
-        var tunesCount = document.getElementById("tunesCount");
-        var tunesCounter = 0;
+        let tunesGrid = document.getElementById("tunesGrid");
+        let tunesCount = document.getElementById("tunesCount");
+        let tunesCounter = 0;
 
         // create table headers
         if (wssTools.testForMobile()) {
-            var appendString =
+            let appendString =
                 '<div id="tunes" class="tunesArchiveLayout mobileScrolling">';
         } else {
-            var appendString = '<div id="tunes" class="tunesArchiveLayout">';
+            let appendString = '<div id="tunes" class="tunesArchiveLayout">';
         }
 
         if (results.length) {
             // Are there any results?
-            for (var i = 0; i < results.length; i++) {
+            for (let i = 0; i < results.length; i++) {
                 // Iterate over the results
-                var item = store[results[i].ref];
+                let item = store[results[i].ref];
 
                 if (item.abc) {
                     appendString += createGridRow(item);
@@ -93,9 +93,9 @@ function Reset() {
                 }
             }
         } else {
-            for (var key in store) {
+            for (let key in store) {
                 // Iterate over the original data
-                var item = store[key];
+                let item = store[key];
                 if (item.abc) {
                     appendString += createGridRow(item);
                     tunesCounter++;
@@ -109,8 +109,8 @@ function Reset() {
     }
 
     function createGridRow(item) {
-        var gridRow = "";
-        var tuneID = "ABC" + item.tuneID;
+        let gridRow = "";
+        let tuneID = "ABC" + item.tuneID;
 
         // build the first three columns
         gridRow +=
@@ -131,11 +131,11 @@ function Reset() {
     }
 
     function getQueryVariable(variable) {
-        var query = window.location.search.substring(1);
-        var vars = query.split("&");
+        let query = window.location.search.substring(1);
+        let vars = query.split("&");
 
-        for (var i = 0; i < vars.length; i++) {
-            var pair = vars[i].split("=");
+        for (let i = 0; i < vars.length; i++) {
+            let pair = vars[i].split("=");
 
             if (pair[0] === variable) {
                 return decodeURIComponent(pair[1].replace(/\+/g, "%20"));
@@ -144,23 +144,23 @@ function Reset() {
     }
 
     // create the searchTerm from the form data and reflect the values chosen in the form
-    var searchTerm = "";
-    var title = getQueryVariable("title");
+    let searchTerm = "";
+    let title = getQueryVariable("title");
     if (title) {
         searchTerm = title + " ";
         document.getElementById("title-box").setAttribute("value", title);
     }
-    var rhythm = getQueryVariable("rhythm");
+    let rhythm = getQueryVariable("rhythm");
     if (rhythm) {
         searchTerm += rhythm + " ";
-        var e = document.getElementById("rhythm-box");
+        let e = document.getElementById("rhythm-box");
         if (e) {
             e.value = rhythm;
         }
     }
 
     // Define the index terms for lunr search
-    var tuneIndex = lunr(function () {
+    let tuneIndex = lunr(function () {
         this.field("id");
         this.field("title", {
             boost: 10,
@@ -169,7 +169,7 @@ function Reset() {
     });
 
     // Add the search items to the search index
-    for (var key in window.store) {
+    for (let key in window.store) {
         // Add the data to lunr
         tuneIndex.add({
             id: key,
@@ -181,7 +181,7 @@ function Reset() {
     // Get results
     if (searchTerm) {
         // Get lunr to perform a search
-        var results = tuneIndex.search(searchTerm);
+        let results = tuneIndex.search(searchTerm);
 
         // sort the results
         results.sort((a, b) => a.ref - b.ref);
