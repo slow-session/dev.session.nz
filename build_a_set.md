@@ -127,12 +127,3 @@ document.addEventListener("DOMContentLoaded", function (event) {
     });
 });
 </script>
-
-<style type="text/css">
-@media print
-{
-body * { visibility: hidden; }
-#abcPaper * { visibility: visible; }
-#abcPaper { position: absolute; top: 40px; left: 30px; }
-}
-</style>
