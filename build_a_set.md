@@ -76,7 +76,7 @@ page.
 <div class="row"></div>
 
 <form>
-    <fieldset id="modalControls" style="display:block;">
+    <fieldset id="modalControls" style="display:inline;">
         <legend>Selected Tunes</legend>
         <div id="setTuneTitles" class="setChoice"></div>
         <div class="formParent">
@@ -103,10 +103,27 @@ page.
 <textarea id="textAreaABC" style="display:none;"></textarea>
 
 <script>
+let abcEditor = null;
+
 document.addEventListener("DOMContentLoaded", function (event) {
-    let tuneID = 1;
-    
-    document.getElementById('ABCplayer').innerHTML = abcPlayer.createABCplayer("textAreaABC", tuneID, '{{ site.defaultABCplayer }}');
-    abcPlayer.createABCsliders("textAreaABC", tuneID);
+    // Draw the dots
+    abcEditor = new window.ABCJS.Editor("textAreaABC", {
+        paper_id: "abcPaper",
+        warnings_id: "abcWarnings",
+        render_options: {
+            responsive: 'resize'
+        },
+        indicate_changed: "true",
+        synth: {
+            el: "#abcAudio",
+            options: {
+                displayLoop: true,
+                displayRestart: true,
+                displayPlay: true,
+                displayProgress: true,
+                displayWarp: true
+            }
+        }
+    });
 });
 </script>

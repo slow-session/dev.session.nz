@@ -10,8 +10,9 @@
             <h2>Choose some tunes first!!</h2>
         </div>
         <!-- Draw the dots -->
-        <div class="output" id='output' style="max-width: 650px;">
+        <div class="output" id='output'>
             <div id="abcPaper" class="abcPaper"></div>
+            <div id="abcAudio"></div>
         </div>
 
         <!-- Controls for ABC player -->
@@ -36,7 +37,8 @@
     var setModal = document.getElementById("setModal");
 
     function viewModal() {
-        setModal.style.display = "block";
+        loadTextarea();
+        setModal.style.display = "inline";
     }
 
     // Get the <span> element that closes the setModal
@@ -44,22 +46,14 @@
 
     // When the user clicks on <span> (x), close the setModal
     span.onclick = function () {
-        var playerClass = document.getElementById("playABC1").className;
-        if (playerClass == 'stopButton') { // audio is currently playing.
-            document.getElementById("playABCset").className = "playButton";
-            stopABC("playABCset");
-        }
+        wssTools.stopABCplayer();
         setModal.style.display = "none";
     }
 
     // When the user clicks anywhere outside of the setModal, close it
     window.onclick = function (event) {
         if (event.target == setModal) {
-            var playerClass = document.getElementById("playABC1").className;
-            if (playerClass == 'stopButton') { // audio is currently playing.
-                document.getElementById("playABCset").className = "playButton";
-                stopABC("playABCset");
-            }
+            wssTools.stopABCplayer();
             setModal.style.display = "none";
         }
     }

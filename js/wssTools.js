@@ -110,6 +110,12 @@ const wssTools = (function () {
         }
     }
 
+    function stopABCplayer () {
+        if (document.querySelector(".abcjs-midi-start.abcjs-btn.abcjs-pushed")) {
+            document.querySelector(".abcjs-midi-start.abcjs-btn.abcjs-pushed").click();
+        }
+    }
+
     return {
         downloadABCFile: downloadABCFile,
         downloadFile: downloadFile,
@@ -119,6 +125,7 @@ const wssTools = (function () {
         enableButton: enableButton,
         show_iframe: show_iframe,
         testForMobile: testForMobile,
+        stopABCplayer: stopABCplayer,
     };
 })();
 
