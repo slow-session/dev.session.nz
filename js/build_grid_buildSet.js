@@ -72,13 +72,14 @@ function Reset() {
         let tunesGrid = document.getElementById("tunesGrid");
         let tunesCount = document.getElementById("tunesCount");
         let tunesCounter = 0;
+        let appendString = '';
 
         // create table headers
         if (wssTools.testForMobile()) {
-            let appendString =
+            appendString =
                 '<div id="tunes" class="tunesArchiveLayout mobileScrolling">';
         } else {
-            let appendString = '<div id="tunes" class="tunesArchiveLayout">';
+            appendString = '<div id="tunes" class="tunesArchiveLayout">';
         }
 
         if (results.length) {
@@ -110,8 +111,7 @@ function Reset() {
 
     function createGridRow(item) {
         let gridRow = "";
-        let tuneID = "ABC" + item.tuneID;
-
+        
         // build the first three columns
         gridRow +=
             '<span id="gr' +
