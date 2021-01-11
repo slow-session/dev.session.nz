@@ -23,6 +23,8 @@ You can use this page to play an ABC file you've stored locally.
 <output id="fileInfo"></output>
 
 <script>
+let abcEditor = null;
+
 document.addEventListener("DOMContentLoaded", function (event) {
     // Check for the various File API support.
     var fileInfo = document.getElementById('fileInfo');
@@ -31,6 +33,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
     } else {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
+
+    // Display the ABC in the textbox as dots
+    abcEditor = new window.ABCJS.Editor("textAreaABC", {
+        paper_id: "abcPaper", 
+        warnings_id:"abcWarnings", 
+        render_options: {responsive: 'resize'}, 
+        indicate_changed: "true", 
+        synth: { el: "#abcAudio", options: {
+                displayLoop: true,
+                displayRestart: true,
+                displayPlay: true,
+                displayProgress: true,
+                displayWarp: true,
+            }
+        }
+    });
 });
 
 function handleABCFileSelect(evt) {
@@ -51,37 +69,15 @@ function handleABCFileSelect(evt) {
                 return (1);
             }
 
+            // stop any current playback
+            wssTools.stopABCplayer();
+            
             // Show the dots
             textAreaABC.value = this.result;
-            
-            // Display the ABC in the textbox as dots
-            let abcEditor = new window.ABCJS.Editor("textAreaABC", {
-                paper_id: "abcPaper", 
-                warnings_id:"abcWarnings", 
-                render_options: {responsive: 'resize'}, 
-                indicate_changed: "true", 
-                synth: { el: "#abcAudio", options: {
-                        displayLoop: true,
-                        displayRestart: true,
-                        displayPlay: true,
-                        displayProgress: true,
-                        displayWarp: true
-                    }
-                }
-            });
 
-            // stop tune currently playing if needed
-            var playButton = document.getElementById("playABC1");
-            if (typeof playButton !== 'undefined'
-                && playButton.className == "stopButton") {
-                abcPlayer.stopABCplayer();
-                playButton.className = "";
-                playButton.className = "playButton";
-            }
-            
-            // Show the player when we've loaded some dots
-            document.getElementById("abcPlayer").style.display = 'block';
-
+            // Gross hack to get the ABC to draw after file is loaded
+            // The option 'drawABChack' doesn't exist and is silently ignored
+            abcEditor.paramChanged({drawABChack: 1});
         };
         reader.readAsText(f);
     }
