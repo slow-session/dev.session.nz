@@ -38,7 +38,7 @@ const audioPlayer = (function () {
     <source id="mp3Source" type="audio/mp3"></source> 
     Your browser does not support the audio format.
 </audio>`;
-        
+
         return audioPlayer;
     }
 
@@ -52,31 +52,29 @@ const audioPlayer = (function () {
             <button id="playMP3-${tuneID}" class="playButton" onclick="audioPlayer.playAudio(${tuneID}, '${mp3url}')"></button>
         </div>
         <!-- Nested row in second column -->
-        <div class="audioChildOuter">
-            <div class="audioParentInner">
-                <!-- Col 2 - audio slider -->
-                <div class="audioChildInner">
-                    <div class="audio">
-                        <span title="Play the tune and then create a loop using the Start and End sliders">
-                            <div id="positionMP3-${tuneID}" class="mp3AudioControl"></div>
-                        </span>
-                    </div>
-                    <div class="mp3LoopControl">
-                        <span title="Play the tune and then create a loop using the Loop Start and Loop End buttons">
-                            <input type="button" class="loopButton" id="LoopStart" value=" Loop Start " onclick="audioPlayer.setFromSlider()" />
-                            <input type="button" class="loopButton" id="LoopEnd" value=" Loop End " onclick="audioPlayer.setToSlider()" />
-                            <input type="button" class="loopButton" id="Reset" value=" Reset " onclick="audioPlayer.resetFromToSliders()" />
-                        </span>
-                    </div>
+        <div class="audioParentInner">
+            <!-- Col 2 - audio slider -->
+            <div class="audioChildInner">
+                <div class="audio">
+                    <span title="Play the tune and then create a loop using the Start and End sliders">
+                        <div id="positionMP3-${tuneID}"></div>
+                    </span>
                 </div>
-                <!-- Col 3 - speed slider -->
-                <div class="audioChildInner">
-                    <div id="speedControl-${tuneID}" class="mp3SpeedControl">
-                        <span title="Adjust playback speed with slider">
-                            <div id="speedSliderMP3-${tuneID}"></div>
-                            <p class="mp3SpeedLabel"><strong>Playback Speed</strong></p>
-                        </span>
-                    </div>
+                <div class="mp3LoopControl">
+                    <span title="Play the tune and then create a loop using the Loop Start and Loop End buttons">
+                        <input type="button" class="loopButton" id="LoopStart" value=" Loop Start " onclick="audioPlayer.setFromSlider()" />
+                        <input type="button" class="loopButton" id="LoopEnd" value=" Loop End " onclick="audioPlayer.setToSlider()" />
+                        <input type="button" class="loopButton" id="Reset" value=" Reset " onclick="audioPlayer.resetFromToSliders()" />
+                    </span>
+                </div>
+            </div>
+            <!-- Col 3 - speed slider -->
+            <div class="audioChildInner">
+                <div id="speedControl-${tuneID}">
+                <span title="Adjust playback speed with slider">
+                        <div id="speedSliderMP3-${tuneID}"></div>
+                        <p class="mp3SpeedLabel"><strong>Playback Speed</strong></p>
+                    </span>
                 </div>
             </div>
         </div>
@@ -319,11 +317,15 @@ const audioPlayer = (function () {
 
             // Draw the dots
             let abcEditor = new window.ABCJS.Editor("textAreaABC", {
-                paper_id: "abcPaper", 
-                warnings_id:"warnings", 
-                render_options: {responsive: 'resize'}, 
-                indicate_changed: "true", 
-                synth: { el: "#abcAudio", options: {
+                paper_id: "abcPaper",
+                warnings_id: "warnings",
+                render_options: {
+                    responsive: 'resize'
+                },
+                indicate_changed: "true",
+                synth: {
+                    el: "#abcAudio",
+                    options: {
                         displayLoop: true,
                         displayRestart: true,
                         displayPlay: true,
@@ -332,6 +334,7 @@ const audioPlayer = (function () {
                     }
                 }
             });
+            
             // Reset paper state to original value
             document.getElementById("abcPaper").style.display = currentPaperState;
         } else {

@@ -176,7 +176,7 @@ function showForm(textArea, myForm) {
       item.tuneID +
       '\')" value="Select">';
     tableRow +=
-      '<td class="tuneTitle" style="text-align:left"><span title="Tune played in: ' +
+      '<td style="text-align:left"><span title="Tune played in: ' +
       item.location +
       '">';
     tableRow += '<a href="' + item.url + '">' + item.title + "</a></span></td>";

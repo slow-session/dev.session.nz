@@ -4,6 +4,7 @@
     padding-right: 2rem
 }
 
+// START: controls for embedded videos
 .container-iframe {
     position: relative;
     overflow: hidden;
@@ -21,11 +22,12 @@
     width: 100%;
     height: 100%;
   }
-  
+// END: controls for embedded videos
 
-// START: controls for audio and ABC players
+// START: controls for audio player
 .audioParentOuter {
-    display: inline-flex;
+    display: grid;
+    grid-template-columns: 2.5em 1fr;
     border-style: solid;
     border-radius: 8px;
     border-color: $brand-color;
@@ -39,24 +41,11 @@
     flex-wrap: wrap;
 }
 
-.abcParentInner {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 1.5rem;
-}
-
-.audioChildOuter {
-    flex: 1 auto;
-}
-
 .audioChildInner {
     flex: 1;
     padding-left: 1rem;
     padding-right: 1rem;
-}
-
-.mp3AudioControl {
-    margin-top: 1.5rem;
+    padding-top: 1.5rem;
 }
 
 .mp3LoopControl {
@@ -64,27 +53,6 @@
     min-width: 10rem;
     display: flex;
     justify-content: space-around;
-}
-
-.mp3SpeedControl {
-    margin-top: 1.5rem;
-}
-
-.abcAudioControl {
-    width: 100%;
-    min-width: 12.5rem;
-    margin-bottom: 2.0rem;
-    float: left;
-}
-
-.abcSpeedControl {
-    width: 100%;
-    margin-bottom: 1.5rem;
-    float: left;
-}
-
-.playPauseButton {
-    max-width: 2.5rem;
 }
 
 .playButton {
@@ -120,13 +88,6 @@
     margin-top: 0.5rem;
 }
 
-p.audioLabel {
-    clear: left;
-    font-size: small;
-    text-align: center;
-    margin-bottom: 0;
-}
-
 p.mp3SpeedLabel {
     margin-top: 2.5rem;
     margin-bottom: 0;
@@ -134,10 +95,6 @@ p.mp3SpeedLabel {
     clear: left;
     font-size: small;
     text-align: center;
-}
-
-.tuneTitle {
-    font-size: 110%;
 }
 
 .abcSource {
@@ -193,14 +150,6 @@ p.mp3SpeedLabel {
     cursor: not-allowed;
 }
 
-.sep {
-    border-bottom: 1px solid black;
-}
-
-.sep td {
-    padding-bottom: 5px;
-}
-
 h2 span {
     display: inline;
     font-size: 16px;
@@ -230,7 +179,6 @@ fieldset {
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    
 }
 
 .formChild {
@@ -442,7 +390,7 @@ tr#no_hover:hover {
 }
 
 // if the height is 320px we show 10 tunes in the table
-.tunesArchiveLayout {
+.tunes3columnLayout {
     display: grid;
     max-height: 320px;
     grid-template-columns: minmax(100px, 350px) 2fr minmax(50px, 90px);
@@ -454,47 +402,14 @@ tr#no_hover:hover {
     border-radius: 8px;
 }
 
-.tunesArchiveLayout > span {
-    display: flex;
-    padding: 4px 2px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
-
-.tunesArchiveLayout > span:nth-child(6n + 1),
-.tunesArchiveLayout > span:nth-child(6n + 2),
-.tunesArchiveLayout > span:nth-child(6n + 3) {
+.tunes3columnLayout > span:nth-child(6n + 1),
+.tunes3columnLayout > span:nth-child(6n + 2),
+.tunes3columnLayout > span:nth-child(6n + 3) {
     background-color: darken($complimentary-color, 6%);
 }
 
-.tuneoftheweekLayout {
-    display: grid;
-    grid-template-columns: minmax(100px, 350px) 2fr minmax(50px, 90px);
-    grid-auto-rows: fit-content(1em);
-    border-color: $brand-color;
-    border-style: solid;
-    border-radius: 8px;
-}
-
-.tuneoftheweekLegend {
-    grid-column: 1 / span 3;
-    margin: -1em auto -0.5em;
-    padding: 3px;
-    background-color: $complimentary-color;
-    text-align: center;
-}
-
-.tuneoftheweekLayout > span {
-    display: flex;
-    padding: 6px 2px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
-
 // if the height is 320px we show 10 tunes in the table
-.tunesObrienLayout {
+.tunes2columnLayout {
     display: grid;
     max-height: 320px;
     grid-template-columns: minmax(200px, 300px) minmax(60px, 90px);
@@ -506,21 +421,13 @@ tr#no_hover:hover {
     border-radius: 8px;
 }
 
-.tunesObrienLayout > span {
-    display: flex;
-    padding: 4px 2px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-}
-
-.tunesObrienLayout > span:nth-child(4n + 1),
-.tunesObrienLayout > span:nth-child(4n + 2) {
+.tunes2columnLayout > span:nth-child(4n + 1),
+.tunes2columnLayout > span:nth-child(4n + 2) {
     background-color: darken($complimentary-color, 6%);
 }
 
 // if the height is 320px we show 10 tunes in the table
-.tunesPottsLayout {
+.tunes1columnLayout {
     display: grid;
     max-height: 320px;
     grid-template-columns: minmax(300px, 600px);
@@ -532,17 +439,18 @@ tr#no_hover:hover {
     border-radius: 8px;
 }
 
-.tunesPottsLayout > span {
+.tunes1columnLayout > span:nth-child(2n + 1) {
+    background-color: darken($complimentary-color, 6%);
+}
+
+.tunes3columnLayout > span,
+.tunes2columnLayout > span,
+.tunes1columnLayout > span {
     display: flex;
     padding: 4px 2px;
     text-align: center;
     justify-content: center;
     align-items: center;
-}
-
-.tunesPottsLayout > span:nth-child(4n + 1),
-.tunesPottsLayout > span:nth-child(4n + 2) {
-    background-color: darken($complimentary-color, 6%);
 }
 
 .titleSpanLeft {
@@ -649,6 +557,17 @@ tr#no_hover:hover {
 }
 // END: LongBow
 
+.editHelp {
+    display: none;
+    overflow: auto;
+    border: 2px solid $brand-color;
+    background-color: darken($complimentary-color, 6%);
+    border-radius: 8px;
+    margin: 10px;
+    padding: 10px;
+}
+
+
 /* Some basic CSS to make the Audio controls in abcjs presentable. */
 
 .abcjs-inline-audio {
@@ -754,7 +673,9 @@ tr#no_hover:hover {
 	font-family: sans-serif;
 	font-size: 16px;
 	box-sizing: border-box;
-	color: #f4f4f4;
+    color: #f4f4f4;
+    // local hack
+    display: none;
 }
 
 .abcjs-inline-audio .abcjs-tempo-wrapper {
@@ -926,4 +847,19 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     opacity: 0.7;
     border-radius: 50%;
     border: none;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    border: 2px solid $brand-color;
+    background-color: darken($complimentary-color, 6%);
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+.grid-child {
+    border: 2px solid $brand-color;
+    border-radius: 8px;
 }

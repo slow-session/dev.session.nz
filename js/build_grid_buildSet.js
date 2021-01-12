@@ -77,9 +77,9 @@ function Reset() {
         // create table headers
         if (wssTools.testForMobile()) {
             appendString =
-                '<div id="tunes" class="tunesArchiveLayout mobileScrolling">';
+                '<div id="tunes" class="tunes3columnLayout mobileScrolling">';
         } else {
-            appendString = '<div id="tunes" class="tunesArchiveLayout">';
+            appendString = '<div id="tunes" class="tunes3columnLayout">';
         }
 
         if (results.length) {
