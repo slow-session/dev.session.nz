@@ -46,7 +46,7 @@
                 setsCounter++;
             }
         }
-        appendString += "</tbody></table></div>";
+        appendString += "</div>";
         setsTable.innerHTML = appendString;
         setsCount.innerHTML = setsCounter;
     }
