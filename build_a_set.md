@@ -11,7 +11,7 @@ in the order you want to play them in the set. When you've done that you'll be a
 to view the set.
 
 You can also look at some sets that have been played in Wellington in recent times on our
-<button class="filterButton" onclick="window.location.href = '/historical_sets/';">Historical Sets</button>
+<button class="filterButton" onclick="window.location.href = '/historic_sets/';">Historic Sets</button>
 page.
 
 <script>
