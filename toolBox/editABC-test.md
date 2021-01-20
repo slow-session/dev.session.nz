@@ -6,19 +6,25 @@ permalink: editABC-test
 <!-- Draw the dots -->
 <div class="row">
     <div id="abcPaper" class="abcPaper"></div>
-        <!-- Show ABC errors -->
+    <!-- Show ABC errors -->
     <div id='abcWarnings' class='abcWarnings'></div>
-    <div id="abcAudio"></div>    
+    <div id="abcAudio"></div>
 </div>
 
+<!-- Controls for ABC player -->
+<div id="ABCplayer"></div>
+<div id="xxx"></div>
+
+
+
 <label for="filesRow">Open an ABC file:</label>
-<div id="filesRow" class="row small-up-1 medium-up-2 large-up-2">
+<div id="filesRow" class="grid-container">
     <!-- Group the input and controls for ABC-->
-    <div class="small-9 columns">
+    <div>
         <input type="file" id="files" class='filterButton' aria-label="Open ABC file" name="files[]" accept=".abc" />
+        <output id="fileInfo"></output>
     </div>
-    <output id="fileInfo"></output>
-    <div class="small-3 columns">
+    <div>
         <input value='Show Help' id='help' type='button' class='filterButton' aria-label="Help" onclick='toggleHelp(this)'/>
     </div>
 </div>
@@ -59,6 +65,8 @@ permalink: editABC-test
 <script>
 
 let abcEditor = null;
+let midiBuffer = null;
+let synthControl = null;
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // Check for the various File API support.
@@ -74,18 +82,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
         warnings_id:"abcWarnings", 
         render_options: {responsive: 'resize'}, 
         indicate_changed: "true", 
-        synth: { el: "#abcAudio", options: {
-                displayLoop: true,
-                displayRestart: true,
-                displayPlay: true,
-                displayProgress: true,
-                displayWarp: true,
-            }
-        }
     });
-});
+    
+    synthControl = new ABCJS.synth.SynthController();
+    midiBuffer = new ABCJS.synth.CreateSynth();
 
-//console.log(window.ABCJS.instrumentIndexToName[21]);
+    console.log(synthControl);
+
+    // Create the ABC player
+    ABCplayer.innerHTML = abcPlayer.createABCplayer('1');  
+    abcPlayer.createABCsliders('1');
+});
 
 function handleABCFileSelect(evt) {
     evt.stopPropagation();
@@ -96,83 +103,41 @@ function handleABCFileSelect(evt) {
     // files is a FileList of File objects. List some properties.
     for (var i = 0, f; f = files[i]; i++) {
         var reader = new FileReader();
-
+        resetEditABCpage();
         reader.onload = function(e) {
+            
             // Is ABC file valid?
-            if ((getABCheaderValue("X:", this.result) == '')
-                || (getABCheaderValue("T:", this.result) == '')
-                || (getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
+            if ((abcPlayer.getABCheaderValue("X:", this.result) == '')
+                || (abcPlayer.getABCheaderValue("T:", this.result) == '')
+                || (abcPlayer.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
                 return (1);
             }
-            // Show the dots
+            // Copy the file into the textarea
             textAreaABC.value = this.result + '\n';
-            
+
             // Gross hack to get the ABC to draw after file is loaded
             // The option 'drawABChack' doesn't exist and is silently ignored
             // but this forces a redraw
             abcEditor.paramChanged({drawABChack: 1});
             
-            let ac = ABCJS.synth.activeAudioContext();
-            console.log(ac);
-            
-            /*
-            abcEditor.synth.synthControl.midiBuffer = new ABCJS.synth.CreateSynth();
-            abcEditor.synth.synthControl.midiBuffer.init({
-                visualObj: abcEditor.synth.synthControl.visualObj,
-                audioContext: ac,
-                debugCallback: function (message) { console.log(message) },
-                soundFontUrl: "https://paulrosen.github.io/midi-js-soundfonts/FluidR3_GM/",
-                options: {
-                    program: 21
-                }
-            });
-            */
-
-            
-            let xxx = abcEditor.synth.synthControl.setTune({
-                visualObj: abcEditor.synth.synthControl.visualObj,
-                userAction: true,
-                audioParams: {
-                    debugCallback: function (message) { console.log(message) },
-                    options: {
-                        program: 21,
-                    },
-                },
-            });
-            console.log(xxx);
-            
-            console.log(abcEditor.synth.synthControl);
-
-            //console.log(ABCJS.synth.instrumentIndexToName[21]);
-
-            
+            // Load the tune            
+            abcPlayer.loadAudio(textAreaABC, '1');
         };
         reader.readAsText(f);
     }
 }
 
-
-function getABCheaderValue(key, tuneABC) {
-    // Extract the value of one of the ABC keywords e.g. T: Out on the Ocean
-    const KEYWORD_PATTERN = new RegExp(`^\\s*${key}`);
-
-    const lines = tuneABC.split(/[\r\n]+/).map(line => line.trim());
-    const keyIdx = lines.findIndex(line => line.match(KEYWORD_PATTERN));
-    if (keyIdx < 0) {
-        return '';
-    } else {
-        return lines[keyIdx].split(":")[1].trim();
-    }
-}
-
-function resetEditABCpage () {
+function resetEditABCpage() {
     document.getElementById("abcPaper").innerHTML = '';
     document.getElementById("abcPaper").style.paddingBottom = "0px";
     document.getElementById("abcPaper").style.overflow = "auto";
-    //textAreaABC.value = "% Set instrument to 'accordion'\n%%MIDI program 21\n";
     textAreaABC.value = "";
     document.getElementById('abcWarnings').innerHTML = 'No errors';
     files.value = '';
+
+    if (synthControl) {
+        synthControl.disable(true);
+    }
 }
 
 function toggleHelp(button) {
@@ -187,5 +152,4 @@ function toggleHelp(button) {
             break;
     }
 }
-
 </script>

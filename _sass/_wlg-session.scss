@@ -675,7 +675,7 @@ tr#no_hover:hover {
 	box-sizing: border-box;
     color: #f4f4f4;
     // local hack
-    display: none;
+    //display: none;
 }
 
 .abcjs-inline-audio .abcjs-tempo-wrapper {
@@ -683,7 +683,9 @@ tr#no_hover:hover {
 	color: black;
 	box-sizing: border-box;
 	display: flex;
-	align-items: center;
+    align-items: center;
+    // local hack
+    display: none;
 }
 
 .abcjs-inline-audio .abcjs-midi-tempo {
@@ -853,9 +855,6 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
-    border: 2px solid $brand-color;
-    background-color: darken($complimentary-color, 6%);
-    border-radius: 8px;
     padding: 0.5rem;
 }
 
