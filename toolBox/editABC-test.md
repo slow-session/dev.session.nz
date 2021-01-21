@@ -63,9 +63,8 @@ permalink: editABC-test
 
 
 <script>
-
 let abcEditor = null;
-let midiBuffer = null;
+let synth = null;
 let synthControl = null;
 
 document.addEventListener("DOMContentLoaded", function (event) {
@@ -77,6 +76,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
 
+    // For drawing the dots
     abcEditor = new window.ABCJS.Editor("textAreaABC", {
         paper_id: "abcPaper", 
         warnings_id:"abcWarnings", 
@@ -84,11 +84,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
         indicate_changed: "true", 
     });
     
+    // Create the ABCJS player structures
+    synth = new ABCJS.synth.CreateSynth();
     synthControl = new ABCJS.synth.SynthController();
-    midiBuffer = new ABCJS.synth.CreateSynth();
-
-    console.log(synthControl);
-
+    
     // Create the ABC player
     ABCplayer.innerHTML = abcPlayer.createABCplayer('1');  
     abcPlayer.createABCsliders('1');
@@ -106,10 +105,11 @@ function handleABCFileSelect(evt) {
         resetEditABCpage();
         reader.onload = function(e) {
             
+            abcPlayer.stopPlay();
+        
             // Is ABC file valid?
-            if ((abcPlayer.getABCheaderValue("X:", this.result) == '')
-                || (abcPlayer.getABCheaderValue("T:", this.result) == '')
-                || (abcPlayer.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
+            if (abcPlayer.isABCfile(this.result) == false) {
+                fileInfo.innerHTML = "Invalid ABC file";
                 return (1);
             }
             // Copy the file into the textarea
@@ -134,10 +134,6 @@ function resetEditABCpage() {
     textAreaABC.value = "";
     document.getElementById('abcWarnings').innerHTML = 'No errors';
     files.value = '';
-
-    if (synthControl) {
-        synthControl.disable(true);
-    }
 }
 
 function toggleHelp(button) {

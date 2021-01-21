@@ -20,7 +20,6 @@ const abcPlayer = (function () {
     let audioSlider = null;
     let audioDuration = 0;
     let sliderPosition = 0;
-    //let midiBuffer = null;
 
     function createABCplayer(tuneID) {
         /*
@@ -87,7 +86,7 @@ const abcPlayer = (function () {
 
         speedSlider.noUiSlider.on("change", function (value) {
             sliderPosition = 0;
-            audioDuration = midiBuffer.duration * 100 / value;
+            audioDuration = synth.duration * 100 / value;
             setAudioSlider(audioDuration);
             synthControl.setWarp(value);
             synthControl.restart();
@@ -97,7 +96,7 @@ const abcPlayer = (function () {
     function loadAudio(textAreaABC, tuneID) {
         let visualObj = ABCJS.renderAbc("*", textAreaABC.value)[0];
 
-        midiBuffer.init({
+        synth.init({
             visualObj: visualObj,
             millisecondsPerMeasure: visualObj.millisecondsPerMeasure(),
             debugCallback: function (message) {
@@ -110,8 +109,8 @@ const abcPlayer = (function () {
             }
         }).then(function (response) {
             console.log(response);
-            midiBuffer.prime().then(function (response) {
-                audioDuration = midiBuffer.duration;
+            synth.prime().then(function (response) {
+                audioDuration = synth.duration;
                 setAudioSlider(audioDuration);
             });
         }).catch(function (error) {
@@ -120,8 +119,13 @@ const abcPlayer = (function () {
         
         synthControl.setTune(visualObj, false, {
             millisecondsPerMeasure: visualObj.millisecondsPerMeasure(),
+            options: {
+                program: 21,
+                chordsOff: true,
+                defaultQpm: 100,
+            }
         });
-
+        
         let playButton = document.getElementById(`playButton${tuneID}`);
         playButton.className = "";
         playButton.className = "playButton";
@@ -131,10 +135,9 @@ const abcPlayer = (function () {
         audioSlider.noUiSlider.set(sliderPosition);
     
         audioLoaded = true;
-        console.log(synthControl);
-        console.log(midiBuffer);
 
-        console.log(synthControl.isStarted);
+        console.log(synth);
+        console.log(synthControl);
     }
 
     /*
@@ -151,7 +154,6 @@ const abcPlayer = (function () {
             playButton.className = "";
             playButton.className = "pauseButton";
             intervalHandle = setInterval(setSpeedSlider, 200);
-
         } else {
             playButton.className = "";
             playButton.className = "playButton";
@@ -160,7 +162,22 @@ const abcPlayer = (function () {
         synthControl.play();
     }
 
+    function stopPlay() {
+        if (synthControl.isStarted) {
+            synthControl.play();
+        }
+    }
 
+    function isABCfile(tuneABC) {
+        if ((getABCheaderValue("X:", tuneABC) == '') ||
+            (getABCheaderValue("T:", tuneABC) == '') ||
+            (getABCheaderValue("K:", tuneABC) == '')) { 
+                return (false);
+        } else {
+            return (true);
+        }
+    }
+    
     function getABCheaderValue(key, tuneABC) {
         // Extract the value of one of the ABC keywords e.g. T: Out on the Ocean
         const KEYWORD_PATTERN = new RegExp(`^\\s*${key}`);
@@ -185,9 +202,6 @@ const abcPlayer = (function () {
 
     function setSpeedSlider() {
         if (sliderPosition >= audioDuration) {
-            console.log(sliderPosition);
-            //midiBuffer.stop();
-            //midiBuffer.start();
             synthControl.play();
             sliderPosition = 0;
         } else {
@@ -201,7 +215,8 @@ const abcPlayer = (function () {
         createABCsliders: createABCsliders,
         loadAudio: loadAudio,
         playPauseABC: playPauseABC,
-        getABCheaderValue: getABCheaderValue,
+        stopPlay: stopPlay,
+        isABCfile: isABCfile,
     };
 })();
 
