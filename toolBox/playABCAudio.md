@@ -24,7 +24,7 @@ permalink: /playABCAudio/
 
 
 <div class="row">
-    <textarea name='abc' id="textAreaABC" class="abcText" aria-label="textarea ABC" rows="13" spellcheck="false" style="display: none;"></textarea>
+    <textarea name='abc' id="textAreaABC" class="abcText" aria-label="textarea ABC" rows="13" spellcheck="false" oninput="abcPlayer.loadAudio(textAreaABC, '1')"></textarea>
 </div>
 
 
