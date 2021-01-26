@@ -15,169 +15,39 @@
 
 const abcPlayer = (function () {
 
-    let audioLoaded = false;
-    let intervalHandle;
-    let audioSlider = null;
-    let audioDuration = 0;
-    let sliderPosition = 0;
-
-    function createABCplayer(tuneID) {
-        /*
-         * Generate the HTML needed to play ABC tunes
-         */
-
-        let abcPlayer = `
-    <form onsubmit="return false" oninput="level.value=flevel.valueAsNumber">
-        <div class="audioParentOuter" id="ABC${tuneID}">
-            <!-- Col 1 -->
-            <div id="abcPlay${tuneID}" class="playpauseButton">
-                <button id="playButton${tuneID}" class="playButton" onclick="abcPlayer.playPauseABC(${tuneID})"></button>
-            </div>
-            <!-- Nested row in second column -->
-            <div class="audioParentInner">
-                <!-- Col 2 -->
-                <div class="audioChildInner">
-                    <div id="audioSliderABC${tuneID}" class="abcAudioControl"></div>
-                </div>
-                <!-- Col 3 -->
-                <div class="audioChildInner">
-                    <span title="Adjust playback speed with slider">
-                        <div id="speedSliderABC${tuneID}" class="abcSpeedControl"></div>
-                        <p class="mp3SpeedLabel"><strong>Playback Speed</strong></p>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </form>`;
-
-        return abcPlayer;
-    }
-
-    function createABCsliders(tuneID) {
-        audioSlider = document.getElementById(`audioSliderABC${tuneID}`);
-        let speedSlider = document.getElementById(`speedSliderABC${tuneID}`);
-
-        noUiSlider.create(audioSlider, {
-            start: [0],
-            tooltips: [
-                wNumb({
-                    decimals: 1,
-                }),
-            ],
-            range: {
-                min: [0],
-                max: [100],
-            },
-        });
-
-        noUiSlider.create(speedSlider, {
-            start: [100],
-            tooltips: [
-                wNumb({
-                    decimals: 0,
-                    postfix: " %",
-                }),
-            ],
-            range: {
-                min: 51,
-                max: 121,
-            },
-        });
-
-        speedSlider.noUiSlider.on("change", function (value) {
-            sliderPosition = 0;
-            audioDuration = synth.duration * 100 / value;
-            setAudioSlider(audioDuration);
-            synthControl.setWarp(value);
-            synthControl.restart();
-        });
-    }
-
     function loadAudio(textAreaABC, tuneID) {
+        let showPlayer = document.getElementById('showPlayer');
+
         let visualObj = ABCJS.renderAbc("*", textAreaABC.value)[0];
+        let synth = new ABCJS.synth.CreateSynth();
 
         synth.init({
             visualObj: visualObj,
             millisecondsPerMeasure: visualObj.millisecondsPerMeasure(),
             debugCallback: function (message) {
-                console.log(message)
+                console.log("synth: " + message)
             },
-            options: {
-                program: 21,
-                chordsOff: true,
-                defaultQpm: 100,
-            }
         }).then(function (response) {
             console.log(response);
             synth.prime().then(function (response) {
-                audioDuration = synth.duration;
-                setAudioSlider(audioDuration);
+                showPlayer.innerHTML = audioPlayer.createMP3player(tuneID, synth.download());
+                audioPlayer.createMP3Sliders(tuneID);
             });
         }).catch(function (error) {
             console.warn("Audio problem:", error);
         });
-        
-        synthControl.setTune(visualObj, false, {
-            millisecondsPerMeasure: visualObj.millisecondsPerMeasure(),
-            options: {
-                program: 21,
-                chordsOff: true,
-                defaultQpm: 100,
-            }
-        });
-        
-        let playButton = document.getElementById(`playButton${tuneID}`);
-        playButton.className = "";
-        playButton.className = "playButton";
-
-        clearInterval(intervalHandle);
-        sliderPosition = 0;
-        audioSlider.noUiSlider.set(sliderPosition);
-    
-        audioLoaded = true;
-
-        console.log(synth);
-        console.log(synthControl);
-    }
-
-    /*
-     * Play an ABC tune when the button gets pushed
-     */
-    function playPauseABC(tuneID) {
-        let playButton = document.getElementById(`playButton${tuneID}`);
-
-        if (!audioLoaded) {
-            alert("No ABC loaded!");
-            return;
-        }
-        if (playButton.className == "playButton") {
-            playButton.className = "";
-            playButton.className = "pauseButton";
-            intervalHandle = setInterval(setSpeedSlider, 200);
-        } else {
-            playButton.className = "";
-            playButton.className = "playButton";
-            clearInterval(intervalHandle);
-        }
-        synthControl.play();
-    }
-
-    function stopPlay() {
-        if (synthControl.isStarted) {
-            synthControl.play();
-        }
     }
 
     function isABCfile(tuneABC) {
         if ((getABCheaderValue("X:", tuneABC) == '') ||
             (getABCheaderValue("T:", tuneABC) == '') ||
-            (getABCheaderValue("K:", tuneABC) == '')) { 
-                return (false);
+            (getABCheaderValue("K:", tuneABC) == '')) {
+            return (false);
         } else {
             return (true);
         }
     }
-    
+
     function getABCheaderValue(key, tuneABC) {
         // Extract the value of one of the ABC keywords e.g. T: Out on the Ocean
         const KEYWORD_PATTERN = new RegExp(`^\\s*${key}`);
@@ -191,31 +61,8 @@ const abcPlayer = (function () {
         }
     }
 
-    function setAudioSlider(duration) {
-        audioSlider.noUiSlider.updateOptions({
-            range: {
-                min: 0,
-                max: duration,
-            },
-        });
-    }
-
-    function setSpeedSlider() {
-        if (sliderPosition >= audioDuration) {
-            synthControl.play();
-            sliderPosition = 0;
-        } else {
-            sliderPosition += 0.2;
-        }
-        audioSlider.noUiSlider.set(sliderPosition);
-    }
-
     return {
-        createABCplayer: createABCplayer,
-        createABCsliders: createABCsliders,
         loadAudio: loadAudio,
-        playPauseABC: playPauseABC,
-        stopPlay: stopPlay,
         isABCfile: isABCfile,
     };
 })();
