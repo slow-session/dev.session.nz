@@ -28,7 +28,7 @@ const abcPlayer = (function () {
                 console.log("synth: " + message)
             },
         }).then(function (response) {
-            console.log(response);
+            //console.log(response);
             synth.prime().then(function (response) {
                 showPlayer.innerHTML = audioPlayer.createMP3player(tuneID, synth.download());
                 audioPlayer.createMP3Sliders(tuneID);
