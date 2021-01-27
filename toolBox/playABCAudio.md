@@ -47,6 +47,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 
+    let showPlayer = document.getElementById('showPlayer');
+    showPlayer.innerHTML = audioPlayer.createMP3player('1', '');
+
     
     // For drawing the dots
     abcEditor = new window.ABCJS.Editor("textAreaABC", {
