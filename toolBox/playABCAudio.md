@@ -44,12 +44,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 
     let pageAudioPlayer = document.getElementById('pageAudioPlayer');
-
     pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
-
-    let showPlayer = document.getElementById('showPlayer');
-    showPlayer.innerHTML = audioPlayer.createMP3player('1', '');
-
     
     // For drawing the dots
     abcEditor = new window.ABCJS.Editor("textAreaABC", {
@@ -58,9 +53,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         render_options: {responsive: 'resize'}, 
         indicate_changed: "true",
     });
-    
-    //document.getElementById("textAreaABC")
-    //    .addEventListener("change", (event) => abcPlayer.loadABCAudio(textAreaABC, '1'));
 });
 
 
