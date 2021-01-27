@@ -27,7 +27,7 @@ permalink: /playABCAudio/
     <textarea name='abc' id="textAreaABC" class="abcText" 
     aria-label="textarea ABC" rows="13" spellcheck="false"
     placeholder="Or type ABC here...."
-    oninput="abcPlayer.loadAudio(textAreaABC, '1')"></textarea>
+    oninput="abcPlayer.loadABCAudio(textAreaABC, '1')"></textarea>
 </div>
 
 
@@ -47,15 +47,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 
+    
     // For drawing the dots
     abcEditor = new window.ABCJS.Editor("textAreaABC", {
         paper_id: "abcPaper", 
-        /*
         warnings_id:"abcWarnings", 
-        */
         render_options: {responsive: 'resize'}, 
         indicate_changed: "true",
     });
+    
+    //document.getElementById("textAreaABC")
+    //    .addEventListener("change", (event) => abcPlayer.loadABCAudio(textAreaABC, '1'));
 });
 
 
@@ -87,7 +89,7 @@ function handleABCFileSelect(evt) {
             abcEditor.paramChanged({drawABChack: 1});
             
             // Load the tune            
-            abcPlayer.loadAudio(textAreaABC, '1');
+            abcPlayer.loadABCAudio(textAreaABC, '1');
         };
         reader.readAsText(f);
     }

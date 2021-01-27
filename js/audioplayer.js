@@ -360,8 +360,14 @@ const audioPlayer = (function () {
     }
 
     function LoadAudio(audioSource, playPosition) {
-        //myDebug("Loading: " + audioSource)
+        myDebug("Loading: " + audioSource)
         OneAudioPlayer.src = audioSource;
+
+        OneAudioPlayer.load();
+        console.log(OneAudioPlayer.muted);
+        OneAudioPlayer.muted = false;
+        console.log(OneAudioPlayer.muted);
+
         playPosition.noUiSlider.updateOptions({
             tooltips: [
                 wNumb({

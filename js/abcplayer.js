@@ -15,11 +15,11 @@
 
 const abcPlayer = (function () {
 
-    function loadAudio(textAreaABC, tuneID) {
+    function loadABCAudio(textAreaABC, tuneID) {
         let showPlayer = document.getElementById('showPlayer');
 
         console.log("loading...");
-        
+
         let visualObj = ABCJS.renderAbc("*", textAreaABC.value)[0];
         let synth = new ABCJS.synth.CreateSynth();
 
@@ -64,7 +64,7 @@ const abcPlayer = (function () {
     }
 
     return {
-        loadAudio: loadAudio,
+        loadABCAudio: loadABCAudio,
         isABCfile: isABCfile,
     };
 })();
