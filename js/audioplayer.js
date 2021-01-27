@@ -169,6 +169,7 @@ const audioPlayer = (function () {
                 previousPlayButton = playButton;
 
                 LoadAudio(audioSource, playPosition);
+                console.log(OneAudioPlayer.defaultMuted);
 
                 OneAudioPlayer.onloadedmetadata = function () {
                     initialiseAudioSlider();
@@ -186,24 +187,13 @@ const audioPlayer = (function () {
 
             OneAudioPlayer.playbackRate = speedSlider.noUiSlider.get() / 100;
 
-            /*
+
             let playPromise = OneAudioPlayer.play();
             if (playPromise) {
                 playPromise.catch(function (error) {
                     console.error(error);
                 });
             }
-            */
-
-           OneAudioPlayer.play().then(function (response) {
-                    OneAudioPlayer.muted = true;
-                    console.log(OneAudioPlayer.muted);
-                    OneAudioPlayer.muted = false;
-                    console.log(OneAudioPlayer.muted);
-            }).catch(function (error) {
-                console.warn("Audio problem:", error);
-            });
-            
             playButton.className = "";
             playButton.className = "pauseButton";
         } else {
