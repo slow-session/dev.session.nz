@@ -23,7 +23,7 @@ If you want to add a new tune to the archive you can use the
     </div>
 
     <!-- Controls for ABC player -->
-    <div id="ABCplayer"></div>
+    <div id="pageABCplayer"></div>
 </div>
 <!-- Group the input and controls for ABC-->
 <div class="row">

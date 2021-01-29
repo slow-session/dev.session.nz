@@ -30,12 +30,14 @@ const audioPlayer = (function () {
     var currentAudioSlider = null;
     var presetLoopSegments = [];
     var isIOS = testForIOS();
+    let wavURL = null;
 
     function createAudioPlayer() {
         let audioPlayer = `
 <!-- declare an Audio Player for this page-->
 <audio id="OneAudioPlayer">
     <source id="mp3Source" type="audio/mp3"></source> 
+    <source id="wavSource" type="audio/wav"></source>
     Your browser does not support the audio format.
 </audio>`;
 
@@ -43,13 +45,15 @@ const audioPlayer = (function () {
     }
 
     function createMP3player(tuneID, mp3url) {
+        let tuneType = "MP3";
+
         // build the MP3 player for each tune
         let mp3player = `
 <form onsubmit="return false" oninput="level.value = flevel.valueAsNumber">
-    <div id="audioPlayer-${tuneID}" class="audioParentOuter">
+    <div id="mp3Player-${tuneID}" class="audioParentOuter">
         <!-- Col 1 - play button -->
         <div class="playpauseButton">
-            <button id="playMP3-${tuneID}" class="playButton" onclick="audioPlayer.playAudio(${tuneID}, '${mp3url}')"></button>
+            <button id="playMP3-${tuneID}" class="playButton" onclick="audioPlayer.playAudio('${tuneType}', ${tuneID}, '${mp3url}')"></button>
         </div>
         <!-- Nested row in second column -->
         <div class="audioParentInner">
@@ -73,7 +77,7 @@ const audioPlayer = (function () {
                 <div id="speedControl-${tuneID}">
                 <span title="Adjust playback speed with slider">
                         <div id="speedSliderMP3-${tuneID}"></div>
-                        <p class="mp3SpeedLabel"><strong>Playback Speed</strong></p>
+                        <p class="speedLabel"><strong>Playback Speed</strong></p>
                     </span>
                 </div>
             </div>
@@ -84,9 +88,53 @@ const audioPlayer = (function () {
         return mp3player;
     }
 
-    function createMP3Sliders(tuneID) {
-        let audioSlider = document.getElementById(`positionMP3-${tuneID}`);
-        let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
+    function createABCplayer(tuneID, wavURL) {
+        let tuneType = "ABC";
+
+        // build the ABC player for each tune
+        let abcPlayer = `
+<form onsubmit="return false" oninput="level.value = flevel.valueAsNumber">
+    <div id="abcPlayer-${tuneID}" class="audioParentOuter">
+        <!-- Col 1 - play button -->
+        <div class="playpauseButton">
+            <button id="playABC-${tuneID}" class="playButton" onclick="audioPlayer.playAudio('${tuneType}', ${tuneID}, '${wavURL}')"></button>
+        </div>
+        <!-- Nested row in second column -->
+        <div class="audioParentInner">
+            <!-- Col 2 - audio slider -->
+            <div class="audioChildInner">
+                <div class="audio">
+                    <span title="Play the tune and then create a loop using the Start and End sliders">
+                        <div id="positionABC-${tuneID}"></div>
+                    </span>
+                </div>
+                <div class="mp3LoopControl">
+                    <span title="Play the tune and then create a loop using the Loop Start and Loop End buttons">
+                        <input type="button" class="loopButton" id="LoopStart" value=" Loop Start " onclick="audioPlayer.setFromSlider()" />
+                        <input type="button" class="loopButton" id="LoopEnd" value=" Loop End " onclick="audioPlayer.setToSlider()" />
+                        <input type="button" class="loopButton" id="Reset" value=" Reset " onclick="audioPlayer.resetFromToSliders()" />
+                    </span>
+                </div>
+            </div>
+            <!-- Col 3 - speed slider -->
+            <div class="audioChildInner">
+                <div id="speedControl-${tuneID}">
+                <span title="Adjust playback speed with slider">
+                        <div id="speedSliderABC-${tuneID}"></div>
+                        <p class="speedLabel"><strong>Playback Speed</strong></p>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>`;
+
+        return abcPlayer;
+    }
+
+    function createSliders(tuneType, tuneID) {
+        let audioSlider = document.getElementById(`position${tuneType}-${tuneID}`);
+        let speedSlider = document.getElementById(`speedSlider${tuneType}-${tuneID}`);
 
         noUiSlider.create(audioSlider, {
             start: [0, 0, 100],
@@ -153,10 +201,10 @@ const audioPlayer = (function () {
         });
     }
 
-    function playAudio(tuneID, audioSource) {
-        let playButton = document.getElementById(`playMP3-${tuneID}`);
-        let playPosition = document.getElementById(`positionMP3-${tuneID}`);
-        let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
+    function playAudio(tuneType, tuneID, audioSource) {
+        let playButton = document.getElementById(`play${tuneType}-${tuneID}`);
+        let playPosition = document.getElementById(`position${tuneType}-${tuneID}`);
+        let speedSlider = document.getElementById(`speedSlider${tuneType}-${tuneID}`);
 
         if (playButton.className == "playButton") {
             if (!OneAudioPlayer.src.includes(audioSource)) {
@@ -169,7 +217,6 @@ const audioPlayer = (function () {
                 previousPlayButton = playButton;
 
                 LoadAudio(audioSource, playPosition);
-                console.log(OneAudioPlayer.defaultMuted);
 
                 OneAudioPlayer.onloadedmetadata = function () {
                     initialiseAudioSlider();
@@ -186,7 +233,6 @@ const audioPlayer = (function () {
             OneAudioPlayer.addEventListener("ended", restartLoop);
 
             OneAudioPlayer.playbackRate = speedSlider.noUiSlider.get() / 100;
-
 
             let playPromise = OneAudioPlayer.play();
             if (playPromise) {
@@ -206,11 +252,21 @@ const audioPlayer = (function () {
     function selectTune(storeID, tuneID) {
         let item = storeID[tuneID];
 
-        let showPlayer = document.getElementById("showPlayer");
+        let pageMP3player = document.getElementById("pageMP3player");
 
+        // Add info to page if needed
+        let tuneTitle = document.getElementById("tuneTitle");
+        if (tuneTitle) {
+            tuneTitle.innerHTML =
+                `<h2>${item.title}<span> - ${item.key} ${item.rhythm}</span></h2>`;
+        }
         let tuneInfo = document.getElementById("tuneInfo");
         if (tuneInfo) {
-            tuneInfo.innerHTML = "";
+            if (item.mp3_source) {
+                tuneInfo.innerHTML = "Source: " + item.mp3_source;
+            } else {
+                tuneInfo.innerHTML = "";
+            }
         }
 
         // Clear the loop preset display
@@ -237,28 +293,10 @@ const audioPlayer = (function () {
             modal.style.display = "block";
         }
 
-        // Add info to page if needed
-        let tuneTitle = document.getElementById("tuneTitle");
-        if (tuneTitle) {
-            tuneTitle.innerHTML =
-                "<h2>" +
-                item.title +
-                "<span> - " +
-                item.key +
-                " " +
-                item.rhythm +
-                "</span></h2>";
-        }
-
-        if (item.mp3.includes("mp3") && showPlayer) {
-            let tuneInfo = document.getElementById("tuneInfo");
-            if (tuneInfo && item.mp3_source) {
-                tuneInfo.innerHTML = "Source: " + item.mp3_source;
-            }
-
-            // make the MP3 player
-            showPlayer.innerHTML = audioPlayer.createMP3player(tuneID, item.mp3);
-            createMP3Sliders(tuneID);
+        // make the MP3 player
+        if (item.mp3.includes("mp3") && pageMP3player) {
+            pageMP3player.innerHTML = audioPlayer.createMP3player(tuneID, item.mp3);
+            createSliders("MP3", tuneID);
 
             let playPosition = document.getElementById(`positionMP3-${tuneID}`);
             LoadAudio(item.mp3, playPosition);
@@ -282,7 +320,7 @@ const audioPlayer = (function () {
             };
         } else {
             // no recording available
-            if (showPlayer) {
+            if (pageMP3player) {
                 let recordingMessage =
                     "<fieldset><strong> \
             A recording for this tune is not available.";
@@ -297,8 +335,8 @@ const audioPlayer = (function () {
                 }
                 recordingMessage += "</strong></fieldset>";
 
-                showPlayer.style.overflow = "auto";
-                showPlayer.innerHTML = recordingMessage;
+                pageMP3player.style.overflow = "auto";
+                pageMP3player.innerHTML = recordingMessage;
             }
 
             if (loopForm) {
@@ -307,9 +345,24 @@ const audioPlayer = (function () {
         }
 
         if (item.abc) {
-            let abcText = document.getElementById(`textAreaABC`);
-            if (abcText) {
-                abcText.innerHTML = item.abc;
+            displayNotation(item.abc);
+
+            // make the ABC player
+            console.log(pageABCplayer);
+            if (pageABCplayer) {
+                // synthesise the sound file and load the player
+                loadABCAudio(item.abc, tuneID);     
+                
+                
+            }
+        }
+    }
+
+    function displayNotation(abcText) {
+        if (abcText) {
+            let textAreaABC = document.getElementById("textAreaABC");
+            if (textAreaABC) {
+                textAreaABC.innerHTML = abcText;
             }
 
             // Get the current paper state
@@ -325,18 +378,8 @@ const audioPlayer = (function () {
                     responsive: 'resize'
                 },
                 indicate_changed: "true",
-                synth: {
-                    el: "#abcAudio",
-                    options: {
-                        displayLoop: true,
-                        displayRestart: true,
-                        displayPlay: true,
-                        displayProgress: true,
-                        displayWarp: true,
-                    }
-                }
             });
-            
+
             // Reset paper state to original value
             document.getElementById("abcPaper").style.display = currentPaperState;
         } else {
@@ -349,15 +392,15 @@ const audioPlayer = (function () {
                 item.title.replace(/\s+/g, "+");
             document.getElementById("abcPaper").innerHTML =
                 "<fieldset><strong> \
-        <p>We don't have dots for this tune. If you find a version of the tune that's a good match, send \
-        us a copy of the ABC and we'll get it added to the site. You might find it on The Session \
-        at this link:</p>\
-        <a href=\"" +
+    <p>We don't have dots for this tune. If you find a version of the tune that's a good match, send \
+    us a copy of the ABC and we'll get it added to the site. You might find it on The Session \
+    at this link:</p>\
+    <a href=\"" +
                 urlSessionSearch +
                 '">' +
                 urlSessionSearch +
                 "</a>\
-        </strong></fieldset>";
+    </strong></fieldset>";
         }
     }
 
@@ -366,7 +409,7 @@ const audioPlayer = (function () {
         OneAudioPlayer.src = audioSource;
 
         OneAudioPlayer.load();
-        
+
         playPosition.noUiSlider.updateOptions({
             tooltips: [
                 wNumb({
@@ -381,6 +424,38 @@ const audioPlayer = (function () {
             ],
         });
         currentAudioSlider = playPosition;
+        console.log(currentAudioSlider);
+    }
+
+    function loadABCAudio(abcText, tuneID) {
+        let pageABCplayer = document.getElementById("pageABCplayer");
+
+        console.log("loading...");
+
+        let visualObj = ABCJS.renderAbc("*", abcText)[0];
+        let synth = new ABCJS.synth.CreateSynth();
+
+        synth.init({
+            visualObj: visualObj,
+            millisecondsPerMeasure: visualObj.millisecondsPerMeasure(),
+            debugCallback: function (message) {
+                console.log("synth: " + message);
+            },
+        }).then(function (response) {
+            console.log(response);
+            synth.prime().then(function (response) {
+                console.log("loaded...");
+                wavURL = synth.download();                
+                console.log("create ABC player");
+                pageABCplayer.innerHTML = audioPlayer.createABCplayer(tuneID, wavURL);
+                createSliders("ABC", tuneID);
+                console.log(wavURL);
+                let playPosition = document.getElementById(`positionABC-${tuneID}`);
+                LoadAudio(wavURL, playPosition);
+            });
+        }).catch(function (error) {
+            console.warn("Audio problem:", error);
+        });
     }
 
     function initialiseAudioSlider() {
@@ -742,7 +817,8 @@ const audioPlayer = (function () {
     return {
         createAudioPlayer: createAudioPlayer,
         createMP3player: createMP3player,
-        createMP3Sliders: createMP3Sliders,
+        createABCplayer: createABCplayer,
+        createSliders: createSliders,
         playAudio: playAudio,
         selectTune: selectTune,
         setFromSlider: setFromSlider,

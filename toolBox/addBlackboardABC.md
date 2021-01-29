@@ -27,7 +27,7 @@ Check the output to make sure it's OK and hand tweak the w: lines in the ABC if 
     </div>
 
     <!-- Controls for ABC player -->
-    <div id="ABCplayer"></div>
+    <div id="pageABCplayer"></div>
 </div>
 <!-- Group the input and controls for ABC-->
 <div class="row">

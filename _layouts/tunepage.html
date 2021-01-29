@@ -37,7 +37,7 @@ layout: page
 <!-- audio player for MP3 files-->
 <div id="pageAudioPlayer"></div>
 <div style="overflow-x:auto;">
-    <div id="showPlayer"></div>
+    <div id="pageMP3player"></div>
 </div>
 
 <!-- preset loops -->
@@ -52,11 +52,12 @@ layout: page
     <div id="abcPaper" class="abcPaper"></div>
     <div id="abcAudio"></div>
 
-    {% if page.abc contains "K:" %}
     <!-- play the ABC version -->
     <div style="overflow-x:auto;">
-        <div id="ABCplayer"></div>
+        <div id="pageABCplayer"></div>
     </div>
+    {% if page.abc contains "K:" %}
+    
 
     <!-- show/edit the ABC -->
     <form>
@@ -153,5 +154,6 @@ layout: page
         pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
 
         audioPlayer.selectTune(window.store, tuneID);
+
     });
 </script>

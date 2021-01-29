@@ -15,7 +15,7 @@ You can use this page to play an ABC file you've stored locally.
 
 <div class="player">
 <!-- hide the player until we've loaded some dots -->
-<div id="ABCplayer" style="display:none;"></div>
+<div id="pageABCplayer" style="display:none;"></div>
 </div>
 
 <input type="file" id="files" class='filterButton' name="files[]" accept="text/vnd.abc,.abc"/>

@@ -16,7 +16,8 @@
 const abcPlayer = (function () {
 
     function loadABCAudio(textAreaABC, tuneID) {
-        let showPlayer = document.getElementById('showPlayer');
+        let pageAudioPlayer = document.getElementById('pageAudioPlayer');
+        let pageMP3player = document.getElementById('pageMP3player');
 
         console.log("loading...");
 
@@ -27,13 +28,17 @@ const abcPlayer = (function () {
             visualObj: visualObj,
             millisecondsPerMeasure: visualObj.millisecondsPerMeasure(),
             debugCallback: function (message) {
-                console.log("synth: " + message)
+                console.log("synth: " + message);
             },
         }).then(function (response) {
-            //console.log(response);
+            console.log(response);
             synth.prime().then(function (response) {
-                showPlayer.innerHTML = audioPlayer.createMP3player(tuneID, synth.download());
-                audioPlayer.createMP3Sliders(tuneID);
+                console.log("loaded...");
+                pageAudioPlayer.innerHTML = '';
+                pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
+                console.log(pageAudioPlayer.innerHTML);
+                pageMP3player.innerHTML = audioPlayer.createMP3player(tuneID, synth.download());
+                audioPlayer.createSliders("MP3", tuneID);
             });
         }).catch(function (error) {
             console.warn("Audio problem:", error);

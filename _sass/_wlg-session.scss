@@ -89,7 +89,7 @@
     margin-top: 0.5rem;
 }
 
-p.mp3SpeedLabel {
+p.speedLabel {
     margin-top: 2.5rem;
     margin-bottom: 0;
     min-width: 7rem;
@@ -675,8 +675,6 @@ tr#no_hover:hover {
 	font-size: 16px;
 	box-sizing: border-box;
     color: #f4f4f4;
-    // local hack
-    //display: none;
 }
 
 .abcjs-inline-audio .abcjs-tempo-wrapper {
@@ -685,8 +683,6 @@ tr#no_hover:hover {
 	box-sizing: border-box;
 	display: flex;
     align-items: center;
-    // local hack
-    display: none;
 }
 
 .abcjs-inline-audio .abcjs-midi-tempo {

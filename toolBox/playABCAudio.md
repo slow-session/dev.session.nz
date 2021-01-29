@@ -15,7 +15,7 @@ permalink: /playABCAudio/
 
 <div class="player">
 <div id="pageAudioPlayer"></div>
-<div id="showPlayer"></div>
+<div id="pageMP3player"></div>
 </div>
 
 <!-- Group the input and controls for ABC-->
@@ -30,7 +30,6 @@ permalink: /playABCAudio/
     oninput="abcPlayer.loadABCAudio(textAreaABC, '1')"></textarea>
 </div>
 
-
 <script>
 let abcEditor = null;
 
@@ -43,9 +42,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
 
-    let pageAudioPlayer = document.getElementById('pageAudioPlayer');
-    pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
-    
     // For drawing the dots
     abcEditor = new window.ABCJS.Editor("textAreaABC", {
         paper_id: "abcPaper", 
@@ -54,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
         indicate_changed: "true",
     });
 });
-
 
 function handleABCFileSelect(evt) {
     evt.stopPropagation();
@@ -95,8 +90,8 @@ function resetEditABCpage() {
     document.getElementById("abcPaper").style.paddingBottom = "0px";
     document.getElementById("abcPaper").style.overflow = "auto";
     textAreaABC.value = "";
-    //document.getElementById('abcWarnings').innerHTML = 'No errors';
     document.getElementById('fileInfo').innerHTML = '';
+    document.getElementById("pageAudioPlayer").innerHTML = '';
 }
 
         
