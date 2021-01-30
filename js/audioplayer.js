@@ -88,8 +88,7 @@ const audioPlayer = (function () {
         return mp3player;
     }
 
-    function createABCplayer(tuneID, wavURL) {
-        let tuneType = "ABC";
+    function createABCplayer(tuneID, abcText) {
 
         // build the ABC player for each tune
         let abcPlayer = `
@@ -97,7 +96,8 @@ const audioPlayer = (function () {
     <div id="abcPlayer-${tuneID}" class="audioParentOuter">
         <!-- Col 1 - play button -->
         <div class="playpauseButton">
-            <button id="playABC-${tuneID}" class="playButton" onclick="audioPlayer.playAudio('${tuneType}', ${tuneID}, '${wavURL}')"></button>
+            <button id="playABC-${tuneID}" class="playButton" 
+            onclick="audioPlayer.playABCAudio(${tuneID}, 'abcText')"></button>
         </div>
         <!-- Nested row in second column -->
         <div class="audioParentInner">
@@ -110,9 +110,9 @@ const audioPlayer = (function () {
                 </div>
                 <div class="mp3LoopControl">
                     <span title="Play the tune and then create a loop using the Loop Start and Loop End buttons">
-                        <input type="button" class="loopButton" id="LoopStart" value=" Loop Start " onclick="audioPlayer.setFromSlider()" />
-                        <input type="button" class="loopButton" id="LoopEnd" value=" Loop End " onclick="audioPlayer.setToSlider()" />
-                        <input type="button" class="loopButton" id="Reset" value=" Reset " onclick="audioPlayer.resetFromToSliders()" />
+                        <input type="button" class="loopButton" id="LoopStartABC" value=" Loop Start " onclick="audioPlayer.setFromSlider()" />
+                        <input type="button" class="loopButton" id="LoopEndABC" value=" Loop End " onclick="audioPlayer.setToSlider()" />
+                        <input type="button" class="loopButton" id="ResetABC" value=" Reset " onclick="audioPlayer.resetFromToSliders()" />
                     </span>
                 </div>
             </div>
@@ -253,6 +253,7 @@ const audioPlayer = (function () {
         let item = storeID[tuneID];
 
         let pageMP3player = document.getElementById("pageMP3player");
+        let pageABCplayer = document.getElementById("pageABCplayer");
 
         // Add info to page if needed
         let tuneTitle = document.getElementById("tuneTitle");
@@ -345,15 +346,17 @@ const audioPlayer = (function () {
         }
 
         if (item.abc) {
-            displayNotation(item.abc);
+            let textAreaABC = document.getElementById("textAreaABC");
+            if (textAreaABC) {
+                textAreaABC.innerHTML = item.abc;
+            }
+            displayNotation(textAreaABC.value);
 
             // make the ABC player
-            console.log(pageABCplayer);
             if (pageABCplayer) {
                 // synthesise the sound file and load the player
-                loadABCAudio(item.abc, tuneID);     
-                
-                
+                pageABCplayer.innerHTML = audioPlayer.createABCplayer(tuneID, textAreaABC.value);
+                createSliders("ABC", tuneID);
             }
         }
     }
@@ -424,15 +427,16 @@ const audioPlayer = (function () {
             ],
         });
         currentAudioSlider = playPosition;
-        console.log(currentAudioSlider);
     }
 
-    function loadABCAudio(abcText, tuneID) {
-        let pageABCplayer = document.getElementById("pageABCplayer");
-
+    function playABCAudio(tuneID, textAreaABC) {
+        console.log(tuneID, textAreaABC);
+      
         console.log("loading...");
 
-        let visualObj = ABCJS.renderAbc("*", abcText)[0];
+        textAreaABC = document.getElementById("textAreaABC");
+
+        let visualObj = ABCJS.renderAbc("*", textAreaABC.value)[0];
         let synth = new ABCJS.synth.CreateSynth();
 
         synth.init({
@@ -444,14 +448,13 @@ const audioPlayer = (function () {
         }).then(function (response) {
             console.log(response);
             synth.prime().then(function (response) {
+                let tuneType = "ABC";
                 console.log("loaded...");
                 wavURL = synth.download();                
-                console.log("create ABC player");
-                pageABCplayer.innerHTML = audioPlayer.createABCplayer(tuneID, wavURL);
-                createSliders("ABC", tuneID);
                 console.log(wavURL);
                 let playPosition = document.getElementById(`positionABC-${tuneID}`);
-                LoadAudio(wavURL, playPosition);
+                //LoadAudio(wavURL, playPosition);
+                playAudio(tuneType, tuneID, wavURL);
             });
         }).catch(function (error) {
             console.warn("Audio problem:", error);
@@ -820,6 +823,7 @@ const audioPlayer = (function () {
         createABCplayer: createABCplayer,
         createSliders: createSliders,
         playAudio: playAudio,
+        playABCAudio: playABCAudio,
         selectTune: selectTune,
         setFromSlider: setFromSlider,
         setToSlider: setToSlider,
