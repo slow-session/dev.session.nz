@@ -71,11 +71,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
         render_options: {responsive: 'resize'}, 
         indicate_changed: "true", 
         synth: { el: "#abcAudio", options: {
-                displayLoop: true,
+                displayLoop: false,
                 displayRestart: true,
                 displayPlay: true,
                 displayProgress: true,
-                displayWarp: true
+                displayWarp: false
             }
         }
     });
@@ -110,11 +110,11 @@ function handleABCFileSelect(evt) {
                 render_options: {responsive: 'resize'}, 
                 indicate_changed: "true", 
                 synth: { el: "#abcAudio", options: {
-                        displayLoop: true,
+                        displayLoop: false,
                         displayRestart: true,
                         displayPlay: true,
                         displayProgress: true,
-                        displayWarp: true
+                        displayWarp: false
                     }
                 }
             });
@@ -141,11 +141,11 @@ function addBlackboardABC(abcText) {
         render_options: {responsive: 'resize'}, 
         indicate_changed: "true", 
         synth: { el: "#abcAudio", options: {
-                displayLoop: true,
+                displayLoop: false,
                 displayRestart: true,
                 displayPlay: true,
                 displayProgress: true,
-                displayWarp: true
+                displayWarp: false
             }
         }
     });

@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Play ABC Audio
-permalink: /playABCAudio/
+permalink: /loadABCAudio/
 ---
 
 <!-- Draw the dots -->

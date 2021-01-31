@@ -30,8 +30,7 @@ const audioPlayer = (function () {
     var currentAudioSlider = null;
     var presetLoopSegments = [];
     var isIOS = testForIOS();
-    let wavURL = null;
-
+    
     function createAudioPlayer() {
         let audioPlayer = `
 <!-- declare an Audio Player for this page-->
@@ -44,8 +43,7 @@ const audioPlayer = (function () {
         return audioPlayer;
     }
 
-    function createMP3player(tuneID, mp3url) {
-        let tuneType = "MP3";
+    function createMP3player(tuneID, mp3URL) {
 
         // build the MP3 player for each tune
         let mp3player = `
@@ -53,7 +51,8 @@ const audioPlayer = (function () {
     <div id="mp3Player-${tuneID}" class="audioParentOuter">
         <!-- Col 1 - play button -->
         <div class="playpauseButton">
-            <button id="playMP3-${tuneID}" class="playButton" onclick="audioPlayer.playAudio('${tuneType}', ${tuneID}, '${mp3url}')"></button>
+            <button id="playMP3-${tuneID}" class="playButton" 
+            onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')"></button>
         </div>
         <!-- Nested row in second column -->
         <div class="audioParentInner">
@@ -88,53 +87,9 @@ const audioPlayer = (function () {
         return mp3player;
     }
 
-    function createABCplayer(tuneID, abcText) {
-
-        // build the ABC player for each tune
-        let abcPlayer = `
-<form onsubmit="return false" oninput="level.value = flevel.valueAsNumber">
-    <div id="abcPlayer-${tuneID}" class="audioParentOuter">
-        <!-- Col 1 - play button -->
-        <div class="playpauseButton">
-            <button id="playABC-${tuneID}" class="playButton" 
-            onclick="audioPlayer.playABCAudio(${tuneID}, 'abcText')"></button>
-        </div>
-        <!-- Nested row in second column -->
-        <div class="audioParentInner">
-            <!-- Col 2 - audio slider -->
-            <div class="audioChildInner">
-                <div class="audio">
-                    <span title="Play the tune and then create a loop using the Start and End sliders">
-                        <div id="positionABC-${tuneID}"></div>
-                    </span>
-                </div>
-                <div class="mp3LoopControl">
-                    <span title="Play the tune and then create a loop using the Loop Start and Loop End buttons">
-                        <input type="button" class="loopButton" id="LoopStartABC" value=" Loop Start " onclick="audioPlayer.setFromSlider()" />
-                        <input type="button" class="loopButton" id="LoopEndABC" value=" Loop End " onclick="audioPlayer.setToSlider()" />
-                        <input type="button" class="loopButton" id="ResetABC" value=" Reset " onclick="audioPlayer.resetFromToSliders()" />
-                    </span>
-                </div>
-            </div>
-            <!-- Col 3 - speed slider -->
-            <div class="audioChildInner">
-                <div id="speedControl-${tuneID}">
-                <span title="Adjust playback speed with slider">
-                        <div id="speedSliderABC-${tuneID}"></div>
-                        <p class="speedLabel"><strong>Playback Speed</strong></p>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>`;
-
-        return abcPlayer;
-    }
-
-    function createSliders(tuneType, tuneID) {
-        let audioSlider = document.getElementById(`position${tuneType}-${tuneID}`);
-        let speedSlider = document.getElementById(`speedSlider${tuneType}-${tuneID}`);
+    function createSliders(tuneID) {
+        let audioSlider = document.getElementById(`positionMP3-${tuneID}`);
+        let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
 
         noUiSlider.create(audioSlider, {
             start: [0, 0, 100],
@@ -201,10 +156,10 @@ const audioPlayer = (function () {
         });
     }
 
-    function playAudio(tuneType, tuneID, audioSource) {
-        let playButton = document.getElementById(`play${tuneType}-${tuneID}`);
-        let playPosition = document.getElementById(`position${tuneType}-${tuneID}`);
-        let speedSlider = document.getElementById(`speedSlider${tuneType}-${tuneID}`);
+    function playAudio(tuneID, audioSource) {
+        let playButton = document.getElementById(`playMP3-${tuneID}`);
+        let playPosition = document.getElementById(`positionMP3-${tuneID}`);
+        let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
 
         if (playButton.className == "playButton") {
             if (!OneAudioPlayer.src.includes(audioSource)) {
@@ -253,7 +208,6 @@ const audioPlayer = (function () {
         let item = storeID[tuneID];
 
         let pageMP3player = document.getElementById("pageMP3player");
-        let pageABCplayer = document.getElementById("pageABCplayer");
 
         // Add info to page if needed
         let tuneTitle = document.getElementById("tuneTitle");
@@ -297,7 +251,7 @@ const audioPlayer = (function () {
         // make the MP3 player
         if (item.mp3.includes("mp3") && pageMP3player) {
             pageMP3player.innerHTML = audioPlayer.createMP3player(tuneID, item.mp3);
-            createSliders("MP3", tuneID);
+            createSliders(tuneID);
 
             let playPosition = document.getElementById(`positionMP3-${tuneID}`);
             LoadAudio(item.mp3, playPosition);
@@ -306,7 +260,7 @@ const audioPlayer = (function () {
             OneAudioPlayer.onloadedmetadata = function () {
                 //myDebug("OneAudioPlayer.duration: " + OneAudioPlayer.duration);
                 if (item.repeats && item.parts) {
-                    //myDebug('setupPresetLoops: ' + OneAudioPlayer.duration);
+                    myDebug('setupPresetLoops: ' + OneAudioPlayer.duration);
                     buildSegments(item);
                     if (presetLoopSegments.length) {
                         document.getElementById(
@@ -350,14 +304,7 @@ const audioPlayer = (function () {
             if (textAreaABC) {
                 textAreaABC.innerHTML = item.abc;
             }
-            displayNotation(textAreaABC.value);
-
-            // make the ABC player
-            if (pageABCplayer) {
-                // synthesise the sound file and load the player
-                pageABCplayer.innerHTML = audioPlayer.createABCplayer(tuneID, textAreaABC.value);
-                createSliders("ABC", tuneID);
-            }
+            displayNotation(item.abc);
         }
     }
 
@@ -381,6 +328,16 @@ const audioPlayer = (function () {
                     responsive: 'resize'
                 },
                 indicate_changed: "true",
+                synth: {
+                    el: "#abcAudio",
+                    options: {
+                        displayLoop: false,
+                        displayRestart: true,
+                        displayPlay: true,
+                        displayProgress: true,
+                        displayWarp: false
+                    }
+                }
             });
 
             // Reset paper state to original value
@@ -411,8 +368,6 @@ const audioPlayer = (function () {
         myDebug("Loading: " + audioSource)
         OneAudioPlayer.src = audioSource;
 
-        OneAudioPlayer.load();
-
         playPosition.noUiSlider.updateOptions({
             tooltips: [
                 wNumb({
@@ -429,37 +384,6 @@ const audioPlayer = (function () {
         currentAudioSlider = playPosition;
     }
 
-    function playABCAudio(tuneID, textAreaABC) {
-        console.log(tuneID, textAreaABC);
-      
-        console.log("loading...");
-
-        textAreaABC = document.getElementById("textAreaABC");
-
-        let visualObj = ABCJS.renderAbc("*", textAreaABC.value)[0];
-        let synth = new ABCJS.synth.CreateSynth();
-
-        synth.init({
-            visualObj: visualObj,
-            millisecondsPerMeasure: visualObj.millisecondsPerMeasure(),
-            debugCallback: function (message) {
-                console.log("synth: " + message);
-            },
-        }).then(function (response) {
-            console.log(response);
-            synth.prime().then(function (response) {
-                let tuneType = "ABC";
-                console.log("loaded...");
-                wavURL = synth.download();                
-                console.log(wavURL);
-                let playPosition = document.getElementById(`positionABC-${tuneID}`);
-                //LoadAudio(wavURL, playPosition);
-                playAudio(tuneType, tuneID, wavURL);
-            });
-        }).catch(function (error) {
-            console.warn("Audio problem:", error);
-        });
-    }
 
     function initialiseAudioSlider() {
         //myDebug('initialiseAudioSlider: ' + OneAudioPlayer.duration);
@@ -543,7 +467,7 @@ const audioPlayer = (function () {
 
         let loopControlsContainer = `
 <div class="container loop-container"><div class="row row-title">
-    <div class="small-4 columns"><strong>Select Preset Loops</strong></div>
+    <div class="small-4 columns"><strong>Preset Loops</strong></div>
     <div class="small-4 columns" style="text-align: center;"><strong>Start</strong></div>
     <div class="small-4 columns" style="text-align: center;"><strong>Finish</strong></div>
 </div>`;
@@ -820,10 +744,8 @@ const audioPlayer = (function () {
     return {
         createAudioPlayer: createAudioPlayer,
         createMP3player: createMP3player,
-        createABCplayer: createABCplayer,
         createSliders: createSliders,
         playAudio: playAudio,
-        playABCAudio: playABCAudio,
         selectTune: selectTune,
         setFromSlider: setFromSlider,
         setToSlider: setToSlider,

@@ -117,11 +117,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
         synth: {
             el: "#abcAudio",
             options: {
-                displayLoop: true,
+                displayLoop: false,
                 displayRestart: true,
                 displayPlay: true,
                 displayProgress: true,
-                displayWarp: true
+                displayWarp: false
             }
         }
     });
