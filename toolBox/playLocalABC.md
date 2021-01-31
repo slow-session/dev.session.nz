@@ -5,7 +5,6 @@ permalink: /playLocalABC/
 ---
 You can use this page to play an ABC file you've stored locally.
 
-
 <textarea id="textAreaABC" style="display:none;"></textarea>
 
 <div class="output">
@@ -36,10 +35,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     // Display the ABC in the textbox as dots
     abcEditor = new window.ABCJS.Editor("textAreaABC", {
-        paper_id: "abcPaper", 
-        warnings_id:"abcWarnings", 
-        render_options: {responsive: 'resize'}, 
-        indicate_changed: "true", 
+        paper_id: "abcPaper",
+        warnings_id:"abcWarnings",
+        render_options: {responsive: 'resize'},
+        indicate_changed: "true",
         synth: { el: "#abcAudio", options: {
                 displayLoop: false,
                 displayRestart: true,
@@ -68,7 +67,7 @@ function handleABCFileSelect(evt) {
                 || (wssTools.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
                 return (1);
             }
-            
+
             // Show the dots
             textAreaABC.value = this.result;
 

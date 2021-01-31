@@ -48,8 +48,8 @@ K: Dmaj
 DED DFA|BAF d2e|faf ede|1 fdd d3 :|2 fdd d2 e ||
 |:faa fbb|afe ~f3|faf dBA| (3Bcd B AFE|
 DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
-    </textarea>
-    
+</textarea>
+
 </div>
 <div class="row">
     <!-- Allow the user to save their ABC-->
@@ -74,13 +74,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
     } else {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
-    
+
     // Display the ABC in the textbox as dots
      abcEditor = new window.ABCJS.Editor("textAreaABC", {
-                paper_id: "abcPaper", 
-                warnings_id:"abcWarnings", 
-                render_options: {responsive: 'resize'}, 
-                indicate_changed: "true", 
+                paper_id: "abcPaper",
+                warnings_id:"abcWarnings",
+                render_options: {responsive: 'resize'},
+                indicate_changed: "true",
                 synth: { el: "#abcAudio", options: {
                         displayLoop: false,
                         displayRestart: true,
@@ -111,8 +111,8 @@ function handleABCFileSelect(evt) {
             }
 
             // Show the dots
-            textAreaABC.value = this.result + "\n"; 
-            
+            textAreaABC.value = this.result + "\n";
+
             // Gross hack to get the ABC to draw after file is loaded
             // The option 'drawABChack' doesn't exist and is silently ignored
             // but the page is redrawn
