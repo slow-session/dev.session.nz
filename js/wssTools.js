@@ -3,7 +3,7 @@
 const wssTools = (function () {
     function downloadABCFile(text) {
         // set the filename for downloading
-        let filename = slugify(abcPlayer.getABCheaderValue("T:", text)) + ".abc";
+        let filename = slugify(wssTools.getABCheaderValue("T:", text)) + ".abc";
 
         downloadFile(filename, text);
     }
@@ -110,9 +110,16 @@ const wssTools = (function () {
         }
     }
 
-    function stopABCplayer () {
-        if (document.querySelector(".abcjs-midi-start.abcjs-btn.abcjs-pushed")) {
-            document.querySelector(".abcjs-midi-start.abcjs-btn.abcjs-pushed").click();
+    function getABCheaderValue(key, tuneABC) {
+        // Extract the value of one of the ABC keywords e.g. T: Out on the Ocean
+        const KEYWORD_PATTERN = new RegExp(`^\\s*${key}`);
+
+        const lines = tuneABC.split(/[\r\n]+/).map(line => line.trim());
+        const keyIdx = lines.findIndex(line => line.match(KEYWORD_PATTERN));
+        if (keyIdx < 0) {
+            return '';
+        } else {
+            return lines[keyIdx].split(":")[1].trim();
         }
     }
 
@@ -125,7 +132,7 @@ const wssTools = (function () {
         enableButton: enableButton,
         show_iframe: show_iframe,
         testForMobile: testForMobile,
-        stopABCplayer: stopABCplayer,
+        getABCheaderValue: getABCheaderValue,
     };
 })();
 

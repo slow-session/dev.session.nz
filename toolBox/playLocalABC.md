@@ -63,20 +63,18 @@ function handleABCFileSelect(evt) {
 
         reader.onload = function(e) {
             // Is ABC file valid?
-            if ((abcPlayer.getABCheaderValue("X:", this.result) == '')
-                || (abcPlayer.getABCheaderValue("T:", this.result) == '')
-                || (abcPlayer.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
+            if ((wssTools.getABCheaderValue("X:", this.result) == '')
+                || (wssTools.getABCheaderValue("T:", this.result) == '')
+                || (wssTools.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
                 return (1);
             }
-
-            // stop any current playback
-            wssTools.stopABCplayer();
             
             // Show the dots
             textAreaABC.value = this.result;
 
             // Gross hack to get the ABC to draw after file is loaded
             // The option 'drawABChack' doesn't exist and is silently ignored
+            // but the page is redrawn
             abcEditor.paramChanged({drawABChack: 1});
         };
         reader.readAsText(f);

@@ -64,6 +64,8 @@ DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
 </div>
 
 <script>
+let abcEditor = null;
+
 document.addEventListener("DOMContentLoaded", function (event) {
     // Check for the various File API support.
     var fileInfo = document.getElementById('fileInfo');
@@ -74,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
     
     // Display the ABC in the textbox as dots
-     let abcEditor = new window.ABCJS.Editor("textAreaABC", {
+     abcEditor = new window.ABCJS.Editor("textAreaABC", {
                 paper_id: "abcPaper", 
                 warnings_id:"abcWarnings", 
                 render_options: {responsive: 'resize'}, 
@@ -102,38 +104,19 @@ function handleABCFileSelect(evt) {
 
         reader.onload = function(e) {
             // Is ABC file valid?
-            if ((abcPlayer.getABCheaderValue("X:", this.result) == '')
-                || (abcPlayer.getABCheaderValue("T:", this.result) == '')
-                || (abcPlayer.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
+            if ((wssTools.getABCheaderValue("X:", this.result) == '')
+                || (wssTools.getABCheaderValue("T:", this.result) == '')
+                || (wssTools.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
                 return (1);
             }
 
             // Show the dots
             textAreaABC.value = this.result + "\n"; 
             
-            // Display the ABC in the textbox as dots
-            let abcEditor = new window.ABCJS.Editor("textAreaABC", {
-                paper_id: "abcPaper", 
-                warnings_id:"abcWarnings", 
-                render_options: {responsive: 'resize'}, 
-                indicate_changed: "true", 
-                synth: { el: "#abcAudio", options: {
-                        displayLoop: false,
-                        displayRestart: true,
-                        displayPlay: true,
-                        displayProgress: true,
-                        displayWarp: false
-                    }
-                }
-            });
-            // stop tune currently playing if needed
-            var playButton = document.getElementById("playABC1");
-            if (typeof playButton !== 'undefined'
-                && playButton.className == "stopButton") {
-                abcPlayer.stopABCplayer();
-                playButton.className = "";
-                playButton.className = "playButton";
-            }
+            // Gross hack to get the ABC to draw after file is loaded
+            // The option 'drawABChack' doesn't exist and is silently ignored
+            // but the page is redrawn
+            abcEditor.paramChanged({drawABChack: 1});
         };
         reader.readAsText(f);
     }
