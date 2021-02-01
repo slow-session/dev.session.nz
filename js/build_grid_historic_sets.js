@@ -64,7 +64,7 @@
         gridRow += '<a href="' + item.url + '">' + item.title + '</a>';
         gridRow += '&nbsp;(' + item.rhythm + ')';
         gridRow += '</span>';
-        gridRow += '<span class="setParent">';
+        gridRow += '<span class="setRow">';
         for (var i = 0; i < tuneIDs.length; i++) {
             var url = store[tuneIDs[i]].url;
             var title = store[tuneIDs[i]].title;
@@ -75,7 +75,7 @@
             gridRow += "</div>";
         }
         gridRow += "</span>";
-        gridRow += '<span class="setParent">';
+        gridRow += '<span class="setRow">';
         for (var i = 0; i < tuneIDs.length; i++) {
             var tuneID = tuneIDs[i];
 

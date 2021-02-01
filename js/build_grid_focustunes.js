@@ -15,11 +15,11 @@
 
 function displayFocusTunesGrid(divID, storeName, storeObject) {
   // create div for tunes grid
+  document.getElementById(divID).classList.add("tunes3columnLayout");
   if (wssTools.testForMobile()) {
-    var appendString = `<div id="${divID}" class="tunes3columnLayout mobileScrolling">`;
-  } else {
-    var appendString = `<div id="${divID}" class="tunes3columnLayout">`;
+    document.getElementById(divID).classList.add("mobileScrolling");
   }
+  let appendString = '';
 
   for (var key in storeObject) {
     // Iterate over the original data
