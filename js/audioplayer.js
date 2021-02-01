@@ -140,7 +140,7 @@ const audioPlayer = (function () {
             };
         });
         speedSlider.noUiSlider.on("change", function (value) {
-            myDebug("playbackRate: " + value / 100);
+            //myDebug("playbackRate: " + value / 100);
             OneAudioPlayer.playbackRate = value / 100;
         });
         //How to disable handles on audioslider.
@@ -260,7 +260,7 @@ const audioPlayer = (function () {
             OneAudioPlayer.onloadedmetadata = function () {
                 //myDebug("OneAudioPlayer.duration: " + OneAudioPlayer.duration);
                 if (item.repeats && item.parts) {
-                    myDebug('setupPresetLoops: ' + OneAudioPlayer.duration);
+                    //myDebug('setupPresetLoops: ' + OneAudioPlayer.duration);
                     buildSegments(item);
                     if (presetLoopSegments.length) {
                         document.getElementById(
@@ -365,7 +365,7 @@ const audioPlayer = (function () {
     }
 
     function LoadAudio(audioSource, playPosition) {
-        myDebug("Loading: " + audioSource)
+        //myDebug("Loading: " + audioSource)
         OneAudioPlayer.src = audioSource;
 
         playPosition.noUiSlider.updateOptions({
