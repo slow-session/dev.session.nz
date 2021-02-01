@@ -335,7 +335,7 @@ const audioPlayer = (function () {
                         displayRestart: true,
                         displayPlay: true,
                         displayProgress: true,
-                        displayWarp: false
+                        displayWarp: true
                     }
                 }
             });

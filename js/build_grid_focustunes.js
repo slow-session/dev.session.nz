@@ -19,8 +19,8 @@ function displayFocusTunesGrid(divID, storeName, storeObject) {
   if (wssTools.testForMobile()) {
     document.getElementById(divID).classList.add("mobileScrolling");
   }
-  let appendString = '';
 
+  let appendString = '';
   for (var key in storeObject) {
     // Iterate over the original data
     var item = storeObject[key];
