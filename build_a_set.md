@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 displayRestart: true,
                 displayPlay: true,
                 displayProgress: true,
-                displayWarp: false
+                displayWarp: true
             }
         }
     });

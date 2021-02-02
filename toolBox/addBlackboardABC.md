@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 displayRestart: true,
                 displayPlay: true,
                 displayProgress: true,
-                displayWarp: false
+                displayWarp: true
             }
         }
     });
@@ -114,7 +114,7 @@ function handleABCFileSelect(evt) {
                         displayRestart: true,
                         displayPlay: true,
                         displayProgress: true,
-                        displayWarp: false
+                        displayWarp: true
                     }
                 }
             });
@@ -145,7 +145,7 @@ function addBlackboardABC(abcText) {
                 displayRestart: true,
                 displayPlay: true,
                 displayProgress: true,
-                displayWarp: false
+                displayWarp: true
             }
         }
     });
