@@ -22,7 +22,6 @@ You can use this page to play an ABC file you've stored locally.
 <output id="fileInfo"></output>
 
 <script>
-let abcEditor = null;
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // Check for the various File API support.
@@ -32,22 +31,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     } else {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
-
-    // Display the ABC in the textbox as dots
-    abcEditor = new window.ABCJS.Editor("textAreaABC", {
-        paper_id: "abcPaper",
-        warnings_id:"abcWarnings",
-        render_options: {responsive: 'resize'},
-        indicate_changed: "true",
-        synth: { el: "#abcAudio", options: {
-                displayLoop: false,
-                displayRestart: true,
-                displayPlay: true,
-                displayProgress: true,
-                displayWarp: true,
-            }
-        }
-    });
 });
 
 function handleABCFileSelect(evt) {
@@ -68,13 +51,8 @@ function handleABCFileSelect(evt) {
                 return (1);
             }
 
-            // Show the dots
-            textAreaABC.value = this.result;
-
-            // Gross hack to get the ABC to draw after file is loaded
-            // The option 'drawABChack' doesn't exist and is silently ignored
-            // but the page is redrawn
-            abcEditor.paramChanged({drawABChack: 1});
+            audioPlayer.displayABC(this.result);
+            
         };
         reader.readAsText(f);
     }

@@ -40,10 +40,7 @@ function loadTextarea() {
     if (tuneIDs.length) {
         document.getElementById("paperHeader").style.display = "none";
     
-        // Gross hack to get the ABC to draw after file is loaded
-        // The option 'drawABChack' doesn't exist and is silently ignored
-        // but this forces a redraw
-        abcEditor.paramChanged({drawABChack: 1});
+        audioPlayer.displayABC(textAreaABC.value);
     }
 
 }
@@ -53,10 +50,6 @@ function Reset() {
     document.getElementById("setTuneTitles").innerHTML = "";
     
     textAreaABC.value = '';
-    // Gross hack to get the ABC to draw after file is loaded
-    // The option 'drawABChack' doesn't exist and is silently ignored
-    // but this forces a redraw
-    abcEditor.paramChanged({drawABChack: 1});
     
     document.getElementById("abcPaper").style.paddingBottom = "0px";
     document.getElementById("abcPaper").style.overflow = "auto";

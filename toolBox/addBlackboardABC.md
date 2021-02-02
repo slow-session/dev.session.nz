@@ -64,22 +64,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
     
-    // Display the ABC in the textbox as dots
-    let abcEditor = new window.ABCJS.Editor("textAreaABC", {
-        paper_id: "abcPaper", 
-        warnings_id:"abcWarnings", 
-        render_options: {responsive: 'resize'}, 
-        indicate_changed: "true", 
-        synth: { el: "#abcAudio", options: {
-                displayLoop: false,
-                displayRestart: true,
-                displayPlay: true,
-                displayProgress: true,
-                displayWarp: true
-            }
-        }
-    });
- 
+    audioPlayer.displayABC(textAreaABC.value);
 });
 
 function handleABCFileSelect(evt) {
@@ -103,21 +88,7 @@ function handleABCFileSelect(evt) {
             // Show the dots
             textAreaABC.value = this.result + "\n"; 
             
-            // Display the ABC in the textbox as dots
-            let abcEditor = new window.ABCJS.Editor("textAreaABC", {
-                paper_id: "abcPaper", 
-                warnings_id:"abcWarnings", 
-                render_options: {responsive: 'resize'}, 
-                indicate_changed: "true", 
-                synth: { el: "#abcAudio", options: {
-                        displayLoop: false,
-                        displayRestart: true,
-                        displayPlay: true,
-                        displayProgress: true,
-                        displayWarp: true
-                    }
-                }
-            });
+            audioPlayer.displayABC(textAreaABC.value);
         };
         reader.readAsText(f);
     }

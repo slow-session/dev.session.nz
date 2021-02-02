@@ -64,7 +64,6 @@ DED DFA|BAF d2e|faf ede|1 fdd d2 e :|2 fdd d2 D ||
 </div>
 
 <script>
-let abcEditor = null;
 
 document.addEventListener("DOMContentLoaded", function (event) {
     // Check for the various File API support.
@@ -75,21 +74,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
 
-    // Display the ABC in the textbox as dots
-     abcEditor = new window.ABCJS.Editor("textAreaABC", {
-                paper_id: "abcPaper",
-                warnings_id:"abcWarnings",
-                render_options: {responsive: 'resize'},
-                indicate_changed: "true",
-                synth: { el: "#abcAudio", options: {
-                        displayLoop: false,
-                        displayRestart: true,
-                        displayPlay: true,
-                        displayProgress: true,
-                        displayWarp: true
-                    }
-                }
-            });
+    audioPlayer.displayABC(textAreaABC.value);
 });
 
 function handleABCFileSelect(evt) {
@@ -113,10 +98,8 @@ function handleABCFileSelect(evt) {
             // Show the dots
             textAreaABC.value = this.result + "\n";
 
-            // Gross hack to get the ABC to draw after file is loaded
-            // The option 'drawABChack' doesn't exist and is silently ignored
-            // but the page is redrawn
-            abcEditor.paramChanged({drawABChack: 1});
+            audioPlayer.stopAudio();
+            audioPlayer.displayABC(textAreaABC.value);
         };
         reader.readAsText(f);
     }

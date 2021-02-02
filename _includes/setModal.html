@@ -43,14 +43,14 @@
 
     // When the user clicks on <span> (x), close the setModal
     span.onclick = function () {
-        wssTools.stopABCplayer();
+        audioPlayer.stopAudio();
         setModal.style.display = "none";
     }
 
     // When the user clicks anywhere outside of the setModal, close it
     window.onclick = function (event) {
         if (event.target == setModal) {
-            wssTools.stopABCplayer();
+            audioPlayer.stopAudio();
             setModal.style.display = "none";
         }
     }

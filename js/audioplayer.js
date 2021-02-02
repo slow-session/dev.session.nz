@@ -30,6 +30,7 @@ const audioPlayer = (function () {
     var currentAudioSlider = null;
     var presetLoopSegments = [];
     var isIOS = testForIOS();
+    var abcEditor = null;
     
     function createAudioPlayer() {
         let audioPlayer = `
@@ -299,21 +300,18 @@ const audioPlayer = (function () {
             }
         }
 
-        if (item.abc) {
-            let textAreaABC = document.getElementById("textAreaABC");
-            if (textAreaABC) {
-                textAreaABC.innerHTML = item.abc;
-            }
-            displayNotation(item.abc);
-        }
+        // show the dots and the abc player
+        displayABC(item.abc);
     }
 
-    function displayNotation(abcText) {
+    function displayABC(abcText) {
         if (abcText) {
             let textAreaABC = document.getElementById("textAreaABC");
             if (textAreaABC) {
                 textAreaABC.innerHTML = abcText;
             }
+
+            console.log(abcText);
 
             // Get the current paper state
             let currentPaperState = document.getElementById("abcPaper").style.display;
@@ -321,7 +319,7 @@ const audioPlayer = (function () {
             document.getElementById("abcPaper").style.display = "block";
 
             // Draw the dots
-            let abcEditor = new window.ABCJS.Editor("textAreaABC", {
+            abcEditor = new window.ABCJS.Editor("textAreaABC", {
                 paper_id: "abcPaper",
                 warnings_id: "warnings",
                 render_options: {
@@ -345,21 +343,13 @@ const audioPlayer = (function () {
         } else {
             document.getElementById("abcPaper").style.paddingBottom = "0px";
             document.getElementById("abcPaper").style.overflow = "auto";
-            let urlSessionSearch =
-                "https://thesession.org/tunes/search?type=" +
-                item.rhythm +
-                "&q=" +
-                item.title.replace(/\s+/g, "+");
+            let urlTheSession = "https://thesession.org/tunes/";
             document.getElementById("abcPaper").innerHTML =
                 "<fieldset><strong> \
     <p>We don't have dots for this tune. If you find a version of the tune that's a good match, send \
     us a copy of the ABC and we'll get it added to the site. You might find it on The Session \
     at this link:</p>\
-    <a href=\"" +
-                urlSessionSearch +
-                '">' +
-                urlSessionSearch +
-                "</a>\
+    <a href=\"" + urlTheSession + '">' + urlTheSession + "</a>\
     </strong></fieldset>";
         }
     }
@@ -384,6 +374,14 @@ const audioPlayer = (function () {
         currentAudioSlider = playPosition;
     }
 
+    function stopAudio(){
+       if (document.getElementById('OneAudioPlayer')) {
+            OneAudioPlayer.pause();
+        }
+        if (abcEditor) {
+            abcEditor.synth.synthControl.pause();
+        }
+    }
 
     function initialiseAudioSlider() {
         //myDebug('initialiseAudioSlider: ' + OneAudioPlayer.duration);
@@ -746,6 +744,7 @@ const audioPlayer = (function () {
         createMP3player: createMP3player,
         createSliders: createSliders,
         playAudio: playAudio,
+        stopAudio: stopAudio,
         selectTune: selectTune,
         setFromSlider: setFromSlider,
         setToSlider: setToSlider,
@@ -756,6 +755,7 @@ const audioPlayer = (function () {
         toggleABC: toggleABC,
         toggleTheDots: toggleTheDots,
         toggleLoops: toggleLoops,
+        displayABC: displayABC,
 
     };
 })();

@@ -103,27 +103,8 @@ page.
 <textarea id="textAreaABC" style="display:none;"></textarea>
 
 <script>
-let abcEditor = null;
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    // Draw the dots
-    abcEditor = new window.ABCJS.Editor("textAreaABC", {
-        paper_id: "abcPaper",
-        warnings_id: "abcWarnings",
-        render_options: {
-            responsive: 'resize'
-        },
-        indicate_changed: "true",
-        synth: {
-            el: "#abcAudio",
-            options: {
-                displayLoop: false,
-                displayRestart: true,
-                displayPlay: true,
-                displayProgress: true,
-                displayWarp: true
-            }
-        }
-    });
+    // no action needed here
 });
 </script>
