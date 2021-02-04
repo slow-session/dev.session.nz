@@ -443,6 +443,7 @@ const audioPlayer = (function () {
     function createLoopControlsContainer() {
         let loopControlsContainer = `
 <div class="loop3columnLayout">
+    <!-- loop titles -->
     <div class="loopTitleLeft"><strong>Preset Loops</strong></div>
     <div class="loopTitle"><strong>Start</strong></div>
     <div class="loopTitleRight"><strong>Finish</strong></div>`;
@@ -450,25 +451,27 @@ const audioPlayer = (function () {
         for (let segmentNumber = 0; segmentNumber < presetLoopSegments.length; segmentNumber++) {
             // build each row
             loopControlsContainer += `
-    <!-- select loop -->
+    <!-- select loop ${segmentNumber} -->
     <div class="loopLabel">
         <input class="loopClass" type="checkbox" onclick="audioPlayer.applySegments()" id="check${segmentNumber}">${presetLoopSegments[segmentNumber].name}
     </div>
 
-    <!-- adjust start of loop -->
+    <!-- adjust start of loop ${segmentNumber} -->
     <div class="loopControl">
-        <a href="javascript:void(0);" class = "downButton" type="button" id= "button${segmentNumber}dn" title=" - 1/5 second" onclick="audioPlayer.adjustDown(${segmentNumber}, 0)">&lt;&lt;</a>
+        <a href="javascript:void(0);" class = "downButton" type="button" id="button${segmentNumber}dn" title=" - 1/5 second" onclick="audioPlayer.adjustDown(${segmentNumber}, 0)">&lt;&lt;</a>
 
-        <input class="loopClass" type="text" onchange="audioPlayer.applySegments()" id="check${segmentNumber}from" size="4" style= "height: 18px;" value=${presetLoopSegments[segmentNumber].start}>
+        <input class="loopClass" type="number" onchange="audioPlayer.applySegments()" id="check${segmentNumber}from" size="4" step="0.2" min="0" style="height: 18px;" value=${presetLoopSegments[segmentNumber].start}>
 
-        <a href="javascript:void(0);" class = "upButton" type="button" id= "button${segmentNumber}up" title=" + 1/5 second" onclick="audioPlayer.adjustUp(${segmentNumber}, 0)">&gt;&gt;</a> 
+        <a href="javascript:void(0);" class = "upButton" type="button" id="button${segmentNumber}up" title=" + 1/5 second" onclick="audioPlayer.adjustUp(${segmentNumber}, 0)">&gt;&gt;</a> 
     </div>
 
-    <!-- adjust end of loop -->
+    <!-- adjust end of loop ${segmentNumber} -->
     <div class="loopControl">
-        <a href="javascript:void(0);" class = "downButton" type="button" id= "button${segmentNumber}dn" title=" - 1/5 second" onclick="audioPlayer.adjustDown(${segmentNumber}, 2)">&lt;&lt;</a> 
-        <input class="loopClass" type="text" onchange="audioPlayer.applySegments()" id="check${segmentNumber}to" size="4" style= "height: 18px;" value=${presetLoopSegments[segmentNumber].end}> 
-        <a href="javascript:void(0);" class = "upButton" type="button" id= "button${segmentNumber}up" title=" + 1/5 second" onclick="audioPlayer.adjustUp(${segmentNumber}, 2)"> &gt;&gt;</a> 
+        <a href="javascript:void(0);" class = "downButton" type="button" id="button${segmentNumber}dn" title=" - 1/5 second" onclick="audioPlayer.adjustDown(${segmentNumber}, 2)">&lt;&lt;</a> 
+
+        <input class="loopClass" type="number" onchange="audioPlayer.applySegments()" id="check${segmentNumber}to" size="4" step="0.2" min="0" style= "height: 18px;" value=${presetLoopSegments[segmentNumber].end}> 
+
+        <a href="javascript:void(0);" class = "upButton" type="button" id="button${segmentNumber}up" title=" + 1/5 second" onclick="audioPlayer.adjustUp(${segmentNumber}, 2)"> &gt;&gt;</a> 
     </div>`;
 
         }
@@ -561,9 +564,6 @@ const audioPlayer = (function () {
 
     function adjustUp(row, inputBox) {
         let elementName = "check" + row;
-        if (document.getElementById(elementName).checked == false) {
-            return;
-        }
         if (inputBox == 0) {
             elementName += "from";
         } else if (inputBox == 2) {
@@ -595,9 +595,6 @@ const audioPlayer = (function () {
 
     function adjustDown(row, inputBox) {
         let elementName = "check" + row;
-        if (document.getElementById(elementName).checked == false) {
-            return;
-        }
         if (inputBox == 0) {
             elementName += "from";
         } else if (inputBox == 2) {
