@@ -155,6 +155,14 @@ details > summary {
     width: fit-content;
 }
 
+details summary::before {
+    content: "Show ";
+}
+
+details[open] summary::before {
+    content: "Hide ";
+}
+
 h2 span {
     display: inline;
     font-size: 16px;
