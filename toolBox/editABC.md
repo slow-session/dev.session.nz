@@ -26,11 +26,24 @@ If you want to add a new tune to the archive you can use the
     <div id="pageABCplayer"></div>
 </div>
 <!-- Group the input and controls for ABC-->
-<div class="row">
-    <h3>Load an ABC file:</h3>
+<div class="row small-up-1 medium-up-2 large-up-2">
+        <h3>Load an ABC file:</h3>
+        <div class="small-9 columns">
+        
     <input type="file" id="files" class='filterButton' name="files[]" accept=".abc" />
     <output id="fileInfo"></output>
-    <p />
+    </div>
+        <div class="small-3 columns">
+
+    <details>
+        <summary class="filterButton">Help</summary>
+        <div>
+            <h3>Help</h3>
+            <p>Blah, blah....</p>
+        </div>
+    </details>
+    </div>
+
 </div>
 <div class="row">
     <h3>Or edit this sample ABC:</h3>
