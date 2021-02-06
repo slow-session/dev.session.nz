@@ -162,10 +162,12 @@ details > summary::-webkit-details-marker {
 
 details summary::before {
     content: "Show ";
+    width: max-content;
 }
 
 details[open] summary::before {
     content: "Hide ";
+    width: max-content;
 }
 
 h2 span {
