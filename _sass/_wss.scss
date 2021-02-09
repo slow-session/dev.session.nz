@@ -161,6 +161,10 @@ details > summary::-webkit-details-marker {
     display: none;
 }
 
+details > summary::marker {
+    display: block;
+}
+
 details summary::before {
     content: "Show ";
 }
@@ -231,38 +235,40 @@ input[type=number] {
 }
 
 // START: used for Preset Loops
+
 .upButton {
-    background-color: $brand-color;
-    color: darken($complimentary-color, 10%);
-    cursor: pointer;
-    padding: 1px;
-    text-align: center;
-    font-size: 90%;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    height: 1.2rem;
+    width: 1.2rem;
+    border: none;
+    background: url('/images/forward3.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    outline: none;
 }
 
 .downButton {
-    background-color: $brand-color;
-    color: darken($complimentary-color, 10%);
-    cursor: pointer;
-    padding: 1px;
-    text-align: center;
-    font-size: 90%;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    height: 1.2rem;
+    width: 1.2rem;
+    border: none;
+    background: url('/images/backward2.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    outline: none;
 }
 
 .loopClass {
     font-size: 14px;
     border-radius: 2px;
     width: 45px;
+    height: 18px;
 }
 
 .loop3columnLayout {
     display: grid;
     grid-template-columns: 2fr 3fr 3fr;
-    padding: 0.5rem;
+    border-color: $brand-color;
+    border-style: solid;
+    border-radius: 8px;
 }
 
 .loop3columnLayout > div:nth-child(6n + 1),
@@ -274,7 +280,6 @@ input[type=number] {
 .loopTitleLeft {
     background-color: $brand-color !important;
     color: darken($complimentary-color, 10%);
-    border-top-left-radius: 8px;
     padding: 5px 10px;
 }
 
@@ -285,21 +290,16 @@ input[type=number] {
     text-align: center;
 }
 
-.loopTitleRight {
-    background-color: $brand-color !important;
-    color: darken($complimentary-color, 10%);
-    border-top-right-radius: 8px;
-    padding: 5px 10px;
-    text-align: center;
-}
-
 .loopLabel {
-    padding: 5px 0;
+    padding: 5px 0 0 5px;
 }
 
 .loopControl {
     text-align: center;
     padding: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 // END: used for Preset Loops
