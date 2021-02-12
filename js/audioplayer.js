@@ -435,6 +435,7 @@ const audioPlayer = (function () {
         let loopControlsContainer = `
 <div class="loop3columnLayout">
     <div class="loopLabel"><strong>Adjust Loop</strong></div>
+    
     <!-- adjust start of loop  -->
     <div class="loopControl">
         <button id="buttonStartDown" class="downButton" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlStart', loopControlStart.value)"></button>
@@ -453,7 +454,6 @@ const audioPlayer = (function () {
         <button id="buttonEndUp" class="upButton" title=" + 1/5 second" onclick="audioPlayer.adjustUp('loopControlEnd', loopControlEnd.value)"></button> 
     </div>`;
 
-  
         for (let segmentNumber = 0; segmentNumber < presetLoopSegments.length; segmentNumber++) {
             // build each row
             loopControlsContainer += `
@@ -550,31 +550,29 @@ const audioPlayer = (function () {
         let numCheckedBoxes = 0;
         let tempbeginLoopTime = 0.0;
         let tempendLoopTime = 0.0;
-        let checkBox, fromId, toId;
+        let checkBox;
 
         for (let i = 0; i < presetLoopSegments.length; i++) {
             checkBox = document.getElementById("check" + i);
-            fromId = document.getElementById("check" + i + "from");
-            toId = document.getElementById("check" + i + "to");
-
+            
             if (checkBox.checked == true) {
                 numCheckedBoxes++;
-                tempbeginLoopTime = parseFloat(fromId.value);
-                tempendLoopTime = parseFloat(toId.value);
-                //myDebug("Is " + fullbeginLoopTime + " greater than " + tempbeginLoopTime);
+                tempbeginLoopTime = presetLoopSegments[i].start;
+                tempendLoopTime = presetLoopSegments[i].end;
+                myDebug("Is " + fullbeginLoopTime + " greater than " + tempbeginLoopTime);
                 if (fullbeginLoopTime > tempbeginLoopTime) {
-                    //myDebug("A, " + beginLoopTime + ", " + fullbeginLoopTime);
+                    myDebug("A, " + tempbeginLoopTime + ", " + fullbeginLoopTime);
                     fullbeginLoopTime = tempbeginLoopTime;
                 }
-                //myDebug("Is " + fullendLoopTime + " less than " + tempendLoopTime);
+                myDebug("Is " + fullendLoopTime + " less than " + tempendLoopTime);
                 if (fullendLoopTime < tempendLoopTime) {
-                    //myDebug("B, "+tempendLoopTime+", "+ fullendLoopTime);
+                    myDebug("B, " + tempendLoopTime + ", "+ fullendLoopTime);
                     fullendLoopTime = tempendLoopTime;
                 }
-                //myDebug(i + ", " + beginLoopTime + ", "+ endLoopTime + ", " + fullbeginLoopTime + ", " + fullendLoopTime);
+                myDebug(i + ", " + beginLoopTime + ", "+ endLoopTime + ", " + fullbeginLoopTime + ", " + fullendLoopTime);
             }
         }
-        //myDebug(fullbeginLoopTime + ", " + fullendLoopTime);
+        myDebug(fullbeginLoopTime + ", " + fullendLoopTime);
         // do nothing unless at least one box is checked
         if (numCheckedBoxes > 0) {
             // iOS audio player workaround for initial call to OneAudioPlayer.currentTime
@@ -594,7 +592,9 @@ const audioPlayer = (function () {
             currentAudioSlider.noUiSlider.setHandle(0, fullbeginLoopTime);
             currentAudioSlider.noUiSlider.setHandle(2, fullendLoopTime);
             beginLoopTime = fullbeginLoopTime;
+            saveLoopStart(beginLoopTime);
             endLoopTime = assignendLoopTime(fullendLoopTime);
+            saveLoopEnd(endLoopTime);
             if (OneAudioPlayer.paused == false) {
                 // audio was  playing when they fiddled with the checkboxes
                 let promise = OneAudioPlayer.play();
@@ -631,10 +631,9 @@ const audioPlayer = (function () {
         saveLoopEnd(OneAudioPlayer.duration);
 
         // Uncheck all the checkboxes in the Preset Loops
-        /*for (let i = 0; i < presetLoopSegments.length; i++) {
+        for (let i = 0; i < presetLoopSegments.length; i++) {
             document.getElementById("check" + i).checked = false;
         }
-        */
     }
 
     function assignendLoopTime(endLoopValue) {
