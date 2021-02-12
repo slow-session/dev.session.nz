@@ -400,21 +400,21 @@ const audioPlayer = (function () {
             let lastPart = "";
             let part_names = parts.split("");
             let repeatCount = 1;
-            for (let i = 0; i < part_names.length; i++) {
+            for (let segmentNumber = 0; segmentNumber < part_names.length; segmentNumber++) {
                 mySegment = {
                     name: 0,
                     repeat: 0,
                     start: 0.0,
                     end: 0.0,
                 };
-                mySegment.name = part_names[i];
-                if (lastPart == part_names[i]) {
+                mySegment.name = part_names[segmentNumber];
+                if (lastPart == part_names[segmentNumber]) {
                     mySegment.repeat = "Repeat 2";
                 } else {
                     mySegment.repeat = "Repeat 1";
                 }
                 presetLoopSegments.push(mySegment);
-                lastPart = part_names[i];
+                lastPart = part_names[segmentNumber];
             }
             // Insert the values
             let start = 0.0;
@@ -532,57 +532,47 @@ const audioPlayer = (function () {
     }
 
     function applySegments() {
-        let numCheckedBoxes = 0;
-        let fullbeginLoopTime = parseFloat(OneAudioPlayer.duration);
-        let fullendLoopTime = parseFloat(0.0);
-        let tempbeginLoopTime = parseFloat(0.0);
-        let tempendLoopTime = parseFloat(0.0);
         let checkBox;
+        let firstSegment = null;
+        let lastSegment = null;
 
-        for (let i = 0; i < presetLoopSegments.length; i++) {
-            checkBox = document.getElementById("segment" + i);
+        for (let segmentNumber = 0; segmentNumber < presetLoopSegments.length; segmentNumber++) {
+            checkBox = document.getElementById("segment" + segmentNumber);
             
             if (checkBox.checked == true) {
-                numCheckedBoxes++;
-                tempbeginLoopTime = parseFloat(presetLoopSegments[i].start);
-                tempendLoopTime = parseFloat(presetLoopSegments[i].end);
-                //myDebug("Is " + fullbeginLoopTime + " greater than " + tempbeginLoopTime);
-                if (fullbeginLoopTime > tempbeginLoopTime) {
-                    //myDebug("A, " + tempbeginLoopTime + ", " + fullbeginLoopTime);
-                    fullbeginLoopTime = tempbeginLoopTime;
+    
+                if (firstSegment == null) {
+                    firstSegment = segmentNumber;
                 }
-                //myDebug("Is " + fullendLoopTime + " less than " + tempendLoopTime);
-                if (fullendLoopTime < tempendLoopTime) {
-                    //myDebug("B, " + tempendLoopTime + ", " + fullendLoopTime);
-                    fullendLoopTime = tempendLoopTime;
-                }
-                //myDebug(i + ", " + beginLoopTime + ", "+ endLoopTime + ", " + fullbeginLoopTime + ", " + fullendLoopTime);
+                lastSegment = segmentNumber;
             }
         }
-        // We've found the checked boxes, now we apply what we learned
-       // myDebug(fullbeginLoopTime + ", " + fullendLoopTime);
+        if (firstSegment != null) {
+            beginLoopTime = parseFloat(presetLoopSegments[firstSegment].start);
+        }
+        if (lastSegment != null) {
+           endLoopTime = assignendLoopTime(parseFloat(presetLoopSegments[lastSegment].end));
+        }
+    
         // do nothing unless at least one box is checked
-        if (numCheckedBoxes > 0) {
+        if (firstSegment != null || lastSegment != null) {
             // iOS audio player workaround for initial call to OneAudioPlayer.currentTime
             if (isIOS) {
                 OneAudioPlayer.oncanplaythrough = function () {
-                    OneAudioPlayer.currentTime = fullbeginLoopTime;
+                    OneAudioPlayer.currentTime = beginLoopTime;
                 };
             } else {
-                OneAudioPlayer.currentTime = fullbeginLoopTime;
+                OneAudioPlayer.currentTime = beginLoopTime;
             }
-            // first reset to ends, then reposition
-            currentAudioSlider.noUiSlider.setHandle(0, 0);
-            currentAudioSlider.noUiSlider.setHandle(2, OneAudioPlayer.duration);
-            currentAudioSlider.noUiSlider.setHandle(1, 0);
-            // then set to positions in row
-            currentAudioSlider.noUiSlider.setHandle(1, fullbeginLoopTime);
-            currentAudioSlider.noUiSlider.setHandle(0, fullbeginLoopTime);
-            currentAudioSlider.noUiSlider.setHandle(2, fullendLoopTime);
-            beginLoopTime = fullbeginLoopTime;
+    
+            // set to positions in row
+            currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
+            currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
+            currentAudioSlider.noUiSlider.setHandle(2, endLoopTime);
+            
             document.getElementById("loopControlStart").value = beginLoopTime;
-            endLoopTime = assignendLoopTime(fullendLoopTime);
             document.getElementById("loopControlEnd").value = endLoopTime;
+
             if (OneAudioPlayer.paused == false) {
                 // audio was  playing when they fiddled with the checkboxes
                 let promise = OneAudioPlayer.play();
@@ -620,8 +610,8 @@ const audioPlayer = (function () {
         document.getElementById("loopControlEnd").value = endLoopTime;
 
         // Uncheck all the checkboxes in the Preset Loops
-        for (let i = 0; i < presetLoopSegments.length; i++) {
-            document.getElementById("segment" + i).checked = false;
+        for (let segmentNumber = 0; segmentNumber < presetLoopSegments.length; segmentNumber++) {
+            document.getElementById("segment" + segmentNumber).checked = false;
         }
     }
 
