@@ -566,12 +566,14 @@ const audioPlayer = (function () {
                 }
                 myDebug("Is " + fullendLoopTime + " less than " + tempendLoopTime);
                 if (fullendLoopTime < tempendLoopTime) {
-                    myDebug("B, " + tempendLoopTime + ", "+ fullendLoopTime);
+                    myDebug("B, " + tempendLoopTime + ", " + fullendLoopTime);
                     fullendLoopTime = tempendLoopTime;
+                    console.log("=> " + fullendLoopTime);
                 }
                 myDebug(i + ", " + beginLoopTime + ", "+ endLoopTime + ", " + fullbeginLoopTime + ", " + fullendLoopTime);
             }
         }
+        // We've found the checked boxes, now we apply what we learned
         myDebug(fullbeginLoopTime + ", " + fullendLoopTime);
         // do nothing unless at least one box is checked
         if (numCheckedBoxes > 0) {
