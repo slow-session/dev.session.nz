@@ -460,7 +460,7 @@ const audioPlayer = (function () {
         <strong>Part ${presetLoopSegments[segmentNumber].name}</strong>
     </div>
     <div class="loopLabel">
-        <input type="checkbox" onclick="audioPlayer.applySegments()" id="check${segmentNumber}">${presetLoopSegments[segmentNumber].repeat}</input>
+        <input type="checkbox" onclick="audioPlayer.applySegments()" id="segment${segmentNumber}">${presetLoopSegments[segmentNumber].repeat}</input>
     </div>`;
             let nextSegment = segmentNumber + 1;
             //nextSegment = Number(nextSegment) + 1;
@@ -470,7 +470,7 @@ const audioPlayer = (function () {
             if (presetLoopSegments[nextSegment].name == presetLoopSegments[segmentNumber].name) {
                 loopControlsContainer += `
     <div class="loopLabel">
-        <input type="checkbox" onclick="audioPlayer.applySegments()" id="check${nextSegment}">${presetLoopSegments[nextSegment].repeat}</input>
+        <input type="checkbox" onclick="audioPlayer.applySegments()" id="segment${nextSegment}">${presetLoopSegments[nextSegment].repeat}</input>
     </div>`;
                 segmentNumber = nextSegment;
             } else {
@@ -540,7 +540,7 @@ const audioPlayer = (function () {
         let checkBox;
 
         for (let i = 0; i < presetLoopSegments.length; i++) {
-            checkBox = document.getElementById("check" + i);
+            checkBox = document.getElementById("segment" + i);
             
             if (checkBox.checked == true) {
                 numCheckedBoxes++;
@@ -615,13 +615,13 @@ const audioPlayer = (function () {
         currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
         document.getElementById("loopControlStart").value = beginLoopTime;        
         
-        endLoopTime = OneAudioPlayer.duration;
+        endLoopTime = OneAudioPlayer.duration.toFixed(1);
         currentAudioSlider.noUiSlider.setHandle(2, endLoopTime);
         document.getElementById("loopControlEnd").value = endLoopTime;
 
         // Uncheck all the checkboxes in the Preset Loops
         for (let i = 0; i < presetLoopSegments.length; i++) {
-            document.getElementById("check" + i).checked = false;
+            document.getElementById("segment" + i).checked = false;
         }
     }
 
