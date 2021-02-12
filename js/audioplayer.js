@@ -434,7 +434,7 @@ const audioPlayer = (function () {
     function createLoopControlsContainer() {
         let loopControlsContainer = `
 <div class="loop3columnLayout">
-    <div class="loopLabel">Adjust Loop</div>
+    <div class="loopLabel"><strong>Adjust Loop</strong></div>
     <!-- adjust start of loop  -->
     <div class="loopControl">
         <button id="buttonStartDown" class="downButton" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlStart', loopControlStart.value)"></button>
@@ -456,11 +456,9 @@ const audioPlayer = (function () {
   
         for (let segmentNumber = 0; segmentNumber < presetLoopSegments.length; segmentNumber++) {
             // build each row
-        
-            let partName = '';
             loopControlsContainer += `
     <div class="loopLabel">
-        <div>Part ${presetLoopSegments[segmentNumber].name}</div>
+        <div><strong>Part ${presetLoopSegments[segmentNumber].name}</strong></div>
     </div>
     <div class="loopLabel">
         <input class="loopClass" type="checkbox" onclick="audioPlayer.applySegments()" id="check${segmentNumber}">${presetLoopSegments[segmentNumber].repeat}</input>
