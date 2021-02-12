@@ -457,10 +457,10 @@ const audioPlayer = (function () {
             // build each row
             loopControlsContainer += `
     <div class="loopLabel">
-        <div><strong>Part ${presetLoopSegments[segmentNumber].name}</strong></div>
+        <strong>Part ${presetLoopSegments[segmentNumber].name}</strong>
     </div>
     <div class="loopLabel">
-        <input class="loopClass" type="checkbox" onclick="audioPlayer.applySegments()" id="check${segmentNumber}">${presetLoopSegments[segmentNumber].repeat}</input>
+        <input type="checkbox" onclick="audioPlayer.applySegments()" id="check${segmentNumber}">${presetLoopSegments[segmentNumber].repeat}</input>
     </div>`;
             let nextSegment = segmentNumber + 1;
             //nextSegment = Number(nextSegment) + 1;
@@ -470,15 +470,15 @@ const audioPlayer = (function () {
             if (presetLoopSegments[nextSegment].name == presetLoopSegments[segmentNumber].name) {
                 loopControlsContainer += `
     <div class="loopLabel">
-        <input class="loopClass" type="checkbox" onclick="audioPlayer.applySegments()" id="check${nextSegment}">${presetLoopSegments[nextSegment].repeat}</input>
+        <input type="checkbox" onclick="audioPlayer.applySegments()" id="check${nextSegment}">${presetLoopSegments[nextSegment].repeat}</input>
     </div>`;
                 segmentNumber = nextSegment;
             } else {
-                loopControlsContainer += '<div class="loopLabel"></div>';
+                loopControlsContainer += `
+    <div class="loopLabel">
+    </div>`;
             }
         }
-        loopControlsContainer += "</div>";
-
         loopControlsContainer += "</div>";
 
         return loopControlsContainer;
@@ -519,13 +519,13 @@ const audioPlayer = (function () {
         if (inputTime >= 0.2) {
             let newTime = parseFloat(inputTime) - parseFloat(0.2);
             newTime = newTime.toFixed(1);
-
-            if (elementName == "loopControlEnd") {
-                currentAudioSlider.noUiSlider.setHandle(2, assignendLoopTime(newTime));
-                endLoopTime = newTime;    
-            } else {
+            
+            if (elementName == "loopControlStart") {
                 currentAudioSlider.noUiSlider.setHandle(0, newTime);
                 beginLoopTime = newTime;
+            } else {
+                currentAudioSlider.noUiSlider.setHandle(2, assignendLoopTime(newTime));
+                endLoopTime = newTime;    
             }
             loopInput.value = newTime;
         }
@@ -662,7 +662,6 @@ const audioPlayer = (function () {
         adjustUp: adjustUp,
         adjustDown: adjustDown,
         displayABC: displayABC,
-
     };
 })();
 
