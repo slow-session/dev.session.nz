@@ -241,9 +241,7 @@ const audioPlayer = (function () {
                     //console.log('setupPresetLoops: ' + OneAudioPlayer.duration);
                     buildSegments(item);
                     if (presetLoopSegments.length) {
-                        document.getElementById(
-                            "loopPresetControls"
-                        ).innerHTML = createLoopControlsContainer();
+                        document.getElementById("loopPresetControls").innerHTML = createLoopControlsContainer();
                     }
                 }
                 initialiseAudioSlider();
@@ -421,7 +419,6 @@ const audioPlayer = (function () {
 
     function createLoopControlsContainer() {
         let loopControlsContainer = `
-<div class="loop3columnLayout">
     <div class="loopLabel"><strong>Adjust Loop</strong></div>
     
     <!-- adjust start of loop  -->
@@ -470,7 +467,6 @@ const audioPlayer = (function () {
     </div>`;
             }
         }
-        loopControlsContainer += "</div>";
 
         return loopControlsContainer;
     }
