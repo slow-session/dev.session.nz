@@ -485,11 +485,17 @@ const audioPlayer = (function () {
     }
 
     function setStartSlider(startTime){
+        if (startTime >  OneAudioPlayer.currentTime) {
+            currentAudioSlider.noUiSlider.setHandle(1, startTime);
+        }
         currentAudioSlider.noUiSlider.setHandle(0, startTime);
         beginLoopTime = startTime;
     }
 
     function setEndSlider(endTime){
+        if (endTime <  OneAudioPlayer.currentTime) {
+            currentAudioSlider.noUiSlider.setHandle(1, endTime);
+        }
         currentAudioSlider.noUiSlider.setHandle(2, assignendLoopTime(endTime));
         endLoopTime = endTime;
     }
@@ -501,6 +507,9 @@ const audioPlayer = (function () {
             let newTime = parseFloat(inputTime) + parseFloat(0.2);
             newTime = newTime.toFixed(1);
         
+            if (newTime >  OneAudioPlayer.currentTime) {
+                currentAudioSlider.noUiSlider.setHandle(1, newTime);
+            }
             if (elementName == "loopControlStart") {
                 currentAudioSlider.noUiSlider.setHandle(0, newTime);
                 beginLoopTime = newTime;
@@ -519,6 +528,9 @@ const audioPlayer = (function () {
             let newTime = parseFloat(inputTime) - parseFloat(0.2);
             newTime = newTime.toFixed(1);
             
+            if (newTime <  OneAudioPlayer.currentTime) {
+                currentAudioSlider.noUiSlider.setHandle(1, newTime);
+            }
             if (elementName == "loopControlStart") {
                 currentAudioSlider.noUiSlider.setHandle(0, newTime);
                 beginLoopTime = newTime;
