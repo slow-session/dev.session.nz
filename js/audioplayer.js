@@ -122,7 +122,7 @@ const audioPlayer = (function () {
                 beginLoopTime = values[0];
                 document.getElementById("loopControlStart").value = beginLoopTime;
             } else if (handle === 2) {
-                endLoopTime = assignendLoopTime(values[2]);
+                endLoopTime = setEndLoopTime(values[2]);
                 document.getElementById("loopControlEnd").value = endLoopTime;
             } else if (handle === 1) {
                 OneAudioPlayer.currentTime = values[1];
@@ -496,7 +496,7 @@ const audioPlayer = (function () {
         if (endTime <  OneAudioPlayer.currentTime) {
             currentAudioSlider.noUiSlider.setHandle(1, endTime);
         }
-        currentAudioSlider.noUiSlider.setHandle(2, assignendLoopTime(endTime));
+        currentAudioSlider.noUiSlider.setHandle(2, setEndLoopTime(endTime));
         endLoopTime = endTime;
     }
 
@@ -514,7 +514,7 @@ const audioPlayer = (function () {
                 currentAudioSlider.noUiSlider.setHandle(0, newTime);
                 beginLoopTime = newTime;
             } else {
-                currentAudioSlider.noUiSlider.setHandle(2, assignendLoopTime(newTime));
+                currentAudioSlider.noUiSlider.setHandle(2, setEndLoopTime(newTime));
                 endLoopTime = newTime;    
             }
             loopInput.value = newTime;
@@ -535,7 +535,7 @@ const audioPlayer = (function () {
                 currentAudioSlider.noUiSlider.setHandle(0, newTime);
                 beginLoopTime = newTime;
             } else {
-                currentAudioSlider.noUiSlider.setHandle(2, assignendLoopTime(newTime));
+                currentAudioSlider.noUiSlider.setHandle(2, setEndLoopTime(newTime));
                 endLoopTime = newTime;    
             }
             loopInput.value = newTime;
@@ -562,7 +562,7 @@ const audioPlayer = (function () {
             beginLoopTime = parseFloat(presetLoopSegments[firstSegment].start);
         }
         if (lastSegment != null) {
-           endLoopTime = assignendLoopTime(parseFloat(presetLoopSegments[lastSegment].end));
+           endLoopTime = setEndLoopTime(parseFloat(presetLoopSegments[lastSegment].end));
         }
     
         // do nothing unless at least one box is checked
@@ -626,7 +626,7 @@ const audioPlayer = (function () {
         }
     }
 
-    function assignendLoopTime(endLoopValue) {
+    function setEndLoopTime(endLoopValue) {
         // Don't allow endLoopTime to be >= OneAudioPlayer.duration
         if (endLoopValue > OneAudioPlayer.duration) {
             endLoopValue = OneAudioPlayer.duration;
