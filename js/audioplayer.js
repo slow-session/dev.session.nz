@@ -13,24 +13,13 @@
 "use strict";
 
 const audioPlayer = (function () {
-    /*
-     ################################################################################
-     #
-     # Comment out the line with "console.log" to turn off console logging
-     #
-     ################################################################################
-    */
-    function myDebug(message) {
-        console.log(message);
-    }
-
-    var beginLoopTime = 0;
-    var endLoopTime = 0;
-    var previousPlayButton = null;
-    var currentAudioSlider = null;
-    var presetLoopSegments = [];
-    var isIOS = testForIOS();
-    var abcEditor = null;
+    let beginLoopTime = 0;
+    let endLoopTime = 0;
+    let previousPlayButton = null;
+    let currentAudioSlider = null;
+    let presetLoopSegments = [];
+    let isIOS = testForIOS();
+    let abcEditor = null;
     
     function createAudioPlayer() {
         let audioPlayer = `
@@ -139,7 +128,7 @@ const audioPlayer = (function () {
             };
         });
         speedSlider.noUiSlider.on("change", function (value) {
-            //myDebug("playbackRate: " + value / 100);
+            //console.log("playbackRate: " + value / 100);
             OneAudioPlayer.playbackRate = value / 100;
         });
         //How to disable handles on audioslider.
@@ -247,9 +236,9 @@ const audioPlayer = (function () {
 
             // calculate presetLoopSegments and set up preset loops
             OneAudioPlayer.onloadedmetadata = function () {
-                //myDebug("OneAudioPlayer.duration: " + OneAudioPlayer.duration);
+                //console.log("OneAudioPlayer.duration: " + OneAudioPlayer.duration);
                 if (item.repeats && item.parts) {
-                    //myDebug('setupPresetLoops: ' + OneAudioPlayer.duration);
+                    //console.log('setupPresetLoops: ' + OneAudioPlayer.duration);
                     buildSegments(item);
                     if (presetLoopSegments.length) {
                         document.getElementById(
@@ -334,7 +323,7 @@ const audioPlayer = (function () {
     }
 
     function LoadAudio(audioSource, playPosition) {
-        //myDebug("Loading: " + audioSource)
+        //console.log("Loading: " + audioSource)
         OneAudioPlayer.src = audioSource;
 
         playPosition.noUiSlider.updateOptions({
@@ -363,7 +352,7 @@ const audioPlayer = (function () {
     }
 
     function initialiseAudioSlider() {
-        //myDebug('initialiseAudioSlider: ' + OneAudioPlayer.duration);
+        //console.log('initialiseAudioSlider: ' + OneAudioPlayer.duration);
         currentAudioSlider.noUiSlider.updateOptions({
             range: {
                 min: 0,
@@ -375,16 +364,16 @@ const audioPlayer = (function () {
 
     function positionUpdate() {
         if (OneAudioPlayer.currentTime >= endLoopTime) {
-            //myDebug("Current time: " + OneAudioPlayer.currentTime);
+            //console.log("Current time: " + OneAudioPlayer.currentTime);
             OneAudioPlayer.currentTime = beginLoopTime;
-            //myDebug("Reset loop start to: " + OneAudioPlayer.currentTime);
+            //console.log("Reset loop start to: " + OneAudioPlayer.currentTime);
         }
         currentAudioSlider.noUiSlider.setHandle(1, OneAudioPlayer.currentTime);
     }
 
     function restartLoop() {
         OneAudioPlayer.currentTime = beginLoopTime;
-        //myDebug("Restarting loop at: " + OneAudioPlayer.currentTime);
+        //console.log("Restarting loop at: " + OneAudioPlayer.currentTime);
         OneAudioPlayer.play();
     }
 
@@ -463,8 +452,10 @@ const audioPlayer = (function () {
         <input type="checkbox" onclick="audioPlayer.applySegments()" id="segment${segmentNumber}">${presetLoopSegments[segmentNumber].repeat}</input>
     </div>`;
             let nextSegment = segmentNumber + 1;
-            //nextSegment = Number(nextSegment) + 1;
             if (nextSegment == presetLoopSegments.length) {
+                loopControlsContainer += `
+    <div class="loopLabel">
+    </div>`;
                 break;
             }
             if (presetLoopSegments[nextSegment].name == presetLoopSegments[segmentNumber].name) {
@@ -564,7 +555,6 @@ const audioPlayer = (function () {
         if (lastSegment != null) {
            endLoopTime = setEndLoopTime(parseFloat(presetLoopSegments[lastSegment].end));
         }
-        console.log(beginLoopTime, endLoopTime);
     
         // do nothing unless at least one box is checked
         if (firstSegment != null || lastSegment != null) {
@@ -619,6 +609,7 @@ const audioPlayer = (function () {
     function resetFromToSliders() {
         beginLoopTime = 0;
         currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
+        currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
         document.getElementById("loopControlStart").value = beginLoopTime;        
         
         endLoopTime = OneAudioPlayer.duration.toFixed(1);
