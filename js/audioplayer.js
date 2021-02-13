@@ -564,6 +564,7 @@ const audioPlayer = (function () {
         if (lastSegment != null) {
            endLoopTime = setEndLoopTime(parseFloat(presetLoopSegments[lastSegment].end));
         }
+        console.log(beginLoopTime, endLoopTime);
     
         // do nothing unless at least one box is checked
         if (firstSegment != null || lastSegment != null) {
@@ -575,10 +576,14 @@ const audioPlayer = (function () {
             } else {
                 OneAudioPlayer.currentTime = beginLoopTime;
             }
-    
+            
+            // first reset to ends, then reposition
+            currentAudioSlider.noUiSlider.setHandle(0, 0);
+            currentAudioSlider.noUiSlider.setHandle(2, OneAudioPlayer.duration);
+            currentAudioSlider.noUiSlider.setHandle(1, 0);
             // set to positions in row
-            currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
             currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
+            currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
             currentAudioSlider.noUiSlider.setHandle(2, endLoopTime);
             
             document.getElementById("loopControlStart").value = beginLoopTime;
