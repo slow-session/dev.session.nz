@@ -494,7 +494,6 @@ const audioPlayer = (function () {
         endLoopTime = endTime;
     }
 
-
     function adjustUp(elementName, inputTime) {
         let loopInput = document.getElementById(elementName);
 
