@@ -55,8 +55,8 @@ const audioPlayer = (function () {
                 </div>
                 <div class="mp3LoopControl">
                     <span title="Play the tune and then create a loop using the Loop Start and Loop End buttons">
-                        <input type="button" class="loopButton" id="LoopStart" value=" Loop Start " onclick="audioPlayer.setFromSlider()" />
-                        <input type="button" class="loopButton" id="LoopEnd" value=" Loop End " onclick="audioPlayer.setToSlider()" />
+                        <input type="button" class="loopButton" id="LoopStart" value=" Loop Start " onclick="audioPlayer.setSliderLoopStart()" />
+                        <input type="button" class="loopButton" id="LoopEnd" value=" Loop End " onclick="audioPlayer.setSliderLoopEnd()" />
                         <input type="button" class="loopButton" id="Reset" value=" Reset " onclick="audioPlayer.resetFromToSliders()" />
                     </span>
                 </div>
@@ -425,7 +425,7 @@ const audioPlayer = (function () {
     <div class="loopControl">
         <button class="loopDownButton" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlStart', loopControlStart.value)"></button>
 
-        <input id="loopControlStart" class="loopInput" type="number" size="4" min="0" step=0.1 value=0.0 onchange="audioPlayer.setStartSlider(loopControlStart.value)"> 
+        <input id="loopControlStart" class="loopInput" type="number" size="4" min="0" step=0.1 value=0.0 onchange="audioPlayer.setSliderStart(loopControlStart.value)"> 
 
         <button class="loopUpButton" title=" + 1/5 second" onclick="audioPlayer.adjustUp('loopControlStart', loopControlStart.value)"></button> 
     </div>
@@ -434,11 +434,12 @@ const audioPlayer = (function () {
     <div class="loopControl">
         <button class="loopDownButton" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlEnd', loopControlEnd.value)"></button>
         
-        <input id="loopControlEnd" class="loopInput" type="number" size="4" min="0" step=0.1 value=${OneAudioPlayer.duration.toFixed(1)} onchange="audioPlayer.setEndSlider(loopControlEnd.value)"> 
+        <input id="loopControlEnd" class="loopInput" type="number" size="4" min="0" step=0.1 value=${OneAudioPlayer.duration.toFixed(1)} onchange="audioPlayer.setSliderEnd(loopControlEnd.value)"> 
 
         <button class="loopUpButton" title=" + 1/5 second" onclick="audioPlayer.adjustUp('loopControlEnd', loopControlEnd.value)"></button> 
     </div>`;
 
+        // Add the details for each "part" with "repeats"
         for (let segmentNumber = 0; segmentNumber < presetLoopSegments.length; segmentNumber++) {
             // build each row
             loopControlsContainer += `
@@ -448,13 +449,15 @@ const audioPlayer = (function () {
     <div class="loopLabel">
         <input type="checkbox" onclick="audioPlayer.applySegments()" id="segment${segmentNumber}">${presetLoopSegments[segmentNumber].repeat}</input>
     </div>`;
+            // look ahead for a part repeat
             let nextSegment = segmentNumber + 1;
+            // last segment so no repeat
             if (nextSegment == presetLoopSegments.length) {
                 loopControlsContainer += `
-    <div class="loopLabel">
-    </div>`;
+    <div class="loopLabel"></div>`;
                 break;
             }
+            // add the second repeat
             if (presetLoopSegments[nextSegment].name == presetLoopSegments[segmentNumber].name) {
                 loopControlsContainer += `
     <div class="loopLabel">
@@ -463,15 +466,14 @@ const audioPlayer = (function () {
                 segmentNumber = nextSegment;
             } else {
                 loopControlsContainer += `
-    <div class="loopLabel">
-    </div>`;
+    <div class="loopLabel"></div>`;
             }
         }
 
         return loopControlsContainer;
     }
 
-    function setStartSlider(startTime){
+    function setSliderStart(startTime){
         if (startTime >  OneAudioPlayer.currentTime) {
             currentAudioSlider.noUiSlider.setHandle(1, startTime);
         }
@@ -479,7 +481,7 @@ const audioPlayer = (function () {
         beginLoopTime = startTime;
     }
 
-    function setEndSlider(endTime){
+    function setSliderEnd(endTime){
         if (endTime <  OneAudioPlayer.currentTime) {
             currentAudioSlider.noUiSlider.setHandle(1, endTime);
         }
@@ -591,13 +593,13 @@ const audioPlayer = (function () {
         }
     }
 
-    function setFromSlider() {
+    function setSliderLoopStart() {
         beginLoopTime = OneAudioPlayer.currentTime;
         currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
         document.getElementById("loopControlStart").value = beginLoopTime;        
     }
 
-    function setToSlider() {
+    function setSliderLoopEnd() {
         endLoopTime = OneAudioPlayer.currentTime;
         currentAudioSlider.noUiSlider.setHandle(2, endLoopTime);
         document.getElementById("loopControlEnd").value = endLoopTime;
@@ -647,10 +649,10 @@ const audioPlayer = (function () {
         playAudio: playAudio,
         stopAudio: stopAudio,
         selectTune: selectTune,
-        setStartSlider: setStartSlider,
-        setEndSlider: setEndSlider,
-        setFromSlider: setFromSlider,
-        setToSlider: setToSlider,
+        setSliderStart: setSliderStart,
+        setSliderEnd: setSliderEnd,
+        setSliderLoopStart: setSliderLoopStart,
+        setSliderLoopEnd: setSliderLoopEnd,
         resetFromToSliders: resetFromToSliders,
         applySegments: applySegments,
         adjustUp: adjustUp,
