@@ -238,13 +238,9 @@ const audioPlayer = (function () {
             OneAudioPlayer.onloadedmetadata = function () {
                 //console.log("OneAudioPlayer.duration: " + OneAudioPlayer.duration);             
                 // Add details button
-                document.getElementById("presetLoop").innerHTML = `
-            <details>
-                <summary class="filterButton">Preset Loops</summary>
-                <div id="loopPresetControls" class="loop3columnLayout"></div>
-            </details>`;
                 document.getElementById("loopPresetControls").innerHTML =
                     createLoopControlsContainer();
+                
                 if (item.repeats && item.parts) {
                     //console.log('setupPresetLoops: ' + OneAudioPlayer.duration);
                     buildSegments(item);
@@ -453,7 +449,7 @@ const audioPlayer = (function () {
     
     function createPresetLoops () {
         let loopControlsContainer = '';
-        
+
         // Add the details for each "part" with "repeats"
         for (let segmentNumber = 0; segmentNumber < presetLoopSegments.length; segmentNumber++) {
             // build each row
