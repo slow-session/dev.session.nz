@@ -18,7 +18,9 @@ layout: page
         <p class="tuneInfoPara">Slow Session:
         <time
             datetime="{{ page.slowtuneoftheweek | date_to_xmlschema }}">{{ page.slowtuneoftheweek | date: "%-d %B %Y" }}</time>
+        </p>
         {% elsif page.tags contains 'slowsession' %}
+        <p class="tuneInfoPara">
         Slow Session: before 2017
         </p>
         {% endif %}
