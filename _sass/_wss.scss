@@ -238,6 +238,34 @@ input[type=number] {
 }
 
 // START: used for Preset Loops
+.loop3columnLayout {
+    display: grid;
+    grid-template-columns: 2fr 3fr 3fr;
+    border-color: $brand-color;
+    border-style: solid;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+.loop3columnLayout > div:nth-child(6n + 1),
+.loop3columnLayout > div:nth-child(6n + 2),
+.loop3columnLayout > div:nth-child(6n + 3) {
+    background-color: darken($complimentary-color, 6%);
+}
+
+.loopLabel {
+    padding: 5px 0 0 5px;
+    text-align: center;
+}
+
+.loopControl {
+    text-align: center;
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .loopUpButton {
     height: 22px;
     width: 22px;
@@ -264,48 +292,6 @@ input[type=number] {
     width: 6ch;
     height: fit-content;
 }
-
-.loop3columnLayout {
-    display: grid;
-    grid-template-columns: 2fr 3fr 3fr;
-    border-color: $brand-color;
-    border-style: solid;
-    border-radius: 8px;
-    margin-bottom: 0.5rem;
-}
-
-.loop3columnLayout > div:nth-child(6n + 1),
-.loop3columnLayout > div:nth-child(6n + 2),
-.loop3columnLayout > div:nth-child(6n + 3) {
-    background-color: darken($complimentary-color, 6%);
-}
-
-.loopTitleLeft {
-    background-color: $brand-color !important;
-    color: darken($complimentary-color, 10%);
-    padding: 5px 10px;
-}
-
-.loopTitle {
-    background-color: $brand-color !important;
-    color: darken($complimentary-color, 10%);
-    padding: 5px 10px;
-    text-align: center;
-}
-
-.loopLabel {
-    padding: 5px 0 0 5px;
-    text-align: center;
-}
-
-.loopControl {
-    text-align: center;
-    padding: 5px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 // END: used for Preset Loops
 
 
