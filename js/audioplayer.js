@@ -423,20 +423,20 @@ const audioPlayer = (function () {
     
     <!-- adjust start of loop  -->
     <div class="loopControl">
-        <button id="buttonStartDown" class="downButton" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlStart', loopControlStart.value)"></button>
+        <button class="loopDownButton" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlStart', loopControlStart.value)"></button>
 
-        <input id="loopControlStart" class="loopClass" type="number" size="4" min="0" step=0.1 value=0.0 onchange="audioPlayer.setStartSlider(loopControlStart.value)"> 
+        <input id="loopControlStart" class="loopInput" type="number" size="4" min="0" step=0.1 value=0.0 onchange="audioPlayer.setStartSlider(loopControlStart.value)"> 
 
-        <button id="buttonStartUp" class="upButton" title=" + 1/5 second" onclick="audioPlayer.adjustUp('loopControlStart', loopControlStart.value)"></button> 
+        <button class="loopUpButton" title=" + 1/5 second" onclick="audioPlayer.adjustUp('loopControlStart', loopControlStart.value)"></button> 
     </div>
 
     <!-- adjust end of loop -->
     <div class="loopControl">
-        <button id="buttonEndDown" class="downButton" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlEnd', loopControlEnd.value)"></button>
+        <button class="loopDownButton" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlEnd', loopControlEnd.value)"></button>
         
-        <input id="loopControlEnd" class="loopClass" type="number" size="4" min="0" step=0.1 value=${OneAudioPlayer.duration.toFixed(1)} onchange="audioPlayer.setEndSlider(loopControlEnd.value)"> 
+        <input id="loopControlEnd" class="loopInput" type="number" size="4" min="0" step=0.1 value=${OneAudioPlayer.duration.toFixed(1)} onchange="audioPlayer.setEndSlider(loopControlEnd.value)"> 
 
-        <button id="buttonEndUp" class="upButton" title=" + 1/5 second" onclick="audioPlayer.adjustUp('loopControlEnd', loopControlEnd.value)"></button> 
+        <button class="loopUpButton" title=" + 1/5 second" onclick="audioPlayer.adjustUp('loopControlEnd', loopControlEnd.value)"></button> 
     </div>`;
 
         for (let segmentNumber = 0; segmentNumber < presetLoopSegments.length; segmentNumber++) {

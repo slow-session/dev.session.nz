@@ -238,8 +238,7 @@ input[type=number] {
 }
 
 // START: used for Preset Loops
-
-.upButton {
+.loopUpButton {
     height: 22px;
     width: 22px;
     border: none;
@@ -249,7 +248,7 @@ input[type=number] {
     outline: none
 }
 
-.downButton {
+.loopDownButton {
     height: 22px;
     width: 22px;
     border: none;
@@ -259,7 +258,7 @@ input[type=number] {
     outline: none;
 }
 
-.loopClass {
+.loopInput {
     font-size: 14px;
     border-radius: unset;
     width: 6ch;
