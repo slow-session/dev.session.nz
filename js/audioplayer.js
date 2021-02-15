@@ -316,12 +316,10 @@ const audioPlayer = (function () {
             document.getElementById("abcPaper").style.overflow = "auto";
             let urlTheSession = "https://thesession.org/tunes/";
             document.getElementById("abcPaper").innerHTML =
-                "<fieldset><strong> \
-    <p>We don't have dots for this tune. If you find a version of the tune that's a good match, send \
-    us a copy of the ABC and we'll get it added to the site. You might find it on The Session \
-    at this link:</p>\
-    <a href=\"" + urlTheSession + '">' + urlTheSession + "</a>\
-    </strong></fieldset>";
+    `<p>We don't have dots for this tune. If you find a version of the tune that's 
+    a good match, send us a copy of the ABC and we'll get it added to the site. 
+    You might find it on The Session at this link: 
+    <a href="${urlTheSession}">${urlTheSession}</a></p>`;
         }
     }
 
