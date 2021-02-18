@@ -29,7 +29,6 @@
             var appendString = '<div id="tunes" class="tunes3columnLayout">';
         }
 
-
         if (results.length) {
             // Are there any results?
             for (var i = 0; i < results.length; i++) {
