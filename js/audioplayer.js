@@ -37,7 +37,7 @@ const audioPlayer = (function () {
 
         // build the MP3 player for each tune
         let mp3player = `
-<form onsubmit="return false" oninput="level.value = flevel.valueAsNumber">
+<form onsubmit="return false">
     <div id="mp3Player-${tuneID}" class="audioParentOuter">
         <!-- Col 1 - play button -->
         <div class="playpauseButton">

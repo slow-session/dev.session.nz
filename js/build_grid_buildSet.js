@@ -127,6 +127,7 @@ function Reset() {
         let query = window.location.search.substring(1);
         let vars = query.split("&");
 
+        console.log(vars);
         for (let i = 0; i < vars.length; i++) {
             let pair = vars[i].split("=");
 
@@ -136,21 +137,27 @@ function Reset() {
         }
     }
 
+    function createSearchTerm(searchItem) {
+        let result = '';
+
+        let queryVariable = getQueryVariable(searchItem);
+        if (queryVariable) {
+            let e = document.getElementById(`${searchItem}-box`);
+            if (e) {
+                e.value = queryVariable;
+            }
+            result = `${queryVariable} `;
+        }
+
+        console.log(result);
+        return result;
+    }
+
     // create the searchTerm from the form data and reflect the values chosen in the form
     let searchTerm = "";
-    let title = getQueryVariable("title");
-    if (title) {
-        searchTerm = title + " ";
-        document.getElementById("title-box").setAttribute("value", title);
-    }
-    let rhythm = getQueryVariable("rhythm");
-    if (rhythm) {
-        searchTerm += rhythm + " ";
-        let e = document.getElementById("rhythm-box");
-        if (e) {
-            e.value = rhythm;
-        }
-    }
+    searchTerm += createSearchTerm("title");
+    searchTerm += createSearchTerm("rhythm");
+
 
     // Define the index terms for lunr search
     let tuneIndex = lunr(function () {

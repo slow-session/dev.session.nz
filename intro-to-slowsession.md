@@ -15,7 +15,7 @@ playing with others. The focus is on melody instruments, but there is some scope
 
 See our <a href="/slowguidelines/">Guidelines for the Slow Session</a> if you need more information. In particular, accompanists should read the <a href="/learn_by_ear/#accompanist-advice">Advice to accompanists</a> section on that page.
 
-<script src="/js/build_grid_focustunes.js"></script>
+<script src="/js/buildGrid.js"></script>
 
 ## Tunes to get started with
 
