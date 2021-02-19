@@ -14,54 +14,8 @@
  */
 "use strict";
 
-let tuneIDs = [];
-
-function addABCtune(tuneID) {
-    let item = store[tuneID];
-
-    document.getElementById("setTuneTitles").innerHTML += item.title + "<br />";
-    document.getElementById("gr" + tuneID).style.backgroundColor = "khaki";
-    
-    tuneIDs.push(tuneID);
-}
-
-function loadTextarea() {
-    let regex = new RegExp("X:.*\n");
-    
-    for (let i = 0; i < tuneIDs.length; i++) {
-        let item = store[tuneIDs[i]];
-
-        if (i == 0) {
-            textAreaABC.value = item.abc;
-        } else {
-            textAreaABC.value += item.abc.replace(regex, "");
-        }
-    }
-    if (tuneIDs.length) {
-        document.getElementById("paperHeader").style.display = "none";
-    
-        audioPlayer.displayABC(textAreaABC.value);
-    }
-
-}
-
-function Reset() {
-    document.getElementById("paperHeader").style.display = "inline";
-    document.getElementById("setTuneTitles").innerHTML = "";
-    
-    textAreaABC.value = '';
-    
-    document.getElementById("abcPaper").style.paddingBottom = "0px";
-    document.getElementById("abcPaper").style.overflow = "auto";
-
-    for (i = 0; i < tuneIDs.length; i++) {
-        document.getElementById("gr" + tuneIDs[i]).style.backgroundColor = "";
-    }
-    tuneIDs = [];
-}
-
-(function () {
-    function displayTunesGrid(results, store) {
+const buildSetGrid = (function () {
+    function displaySetGrid(results, store) {
         let tunesGrid = document.getElementById("tunesGrid");
         let tunesCount = document.getElementById("tunesCount");
         let tunesCounter = 0;
@@ -104,7 +58,7 @@ function Reset() {
 
     function createGridRow(item) {
         let gridRow = "";
-        
+
         // build the first three columns
         gridRow +=
             '<span id="gr' +
@@ -115,7 +69,7 @@ function Reset() {
             item.title +
             "</a></span>";
         gridRow +=
-            '<span><input type="button" class="filterButton" onclick="addABCtune(' +
+            '<span><input type="button" class="filterButton" onclick="buildSetGrid.addABCtune(' +
             item.tuneID +
             ')" value="Select"></span>';
         gridRow += "<span>" + item.key + " " + item.rhythm + "</span>";
@@ -123,76 +77,117 @@ function Reset() {
         return gridRow;
     }
 
-    function getQueryVariable(variable) {
-        let query = window.location.search.substring(1);
-        let vars = query.split("&");
+    let tuneIDs = [];
 
-        console.log(vars);
-        for (let i = 0; i < vars.length; i++) {
-            let pair = vars[i].split("=");
+    function addABCtune(tuneID) {
+        let item = store[tuneID];
 
-            if (pair[0] === variable) {
-                return decodeURIComponent(pair[1].replace(/\+/g, "%20"));
+        document.getElementById("setTuneTitles").innerHTML += item.title + "<br />";
+        document.getElementById("gr" + tuneID).style.backgroundColor = "khaki";
+
+        tuneIDs.push(tuneID);
+    }
+
+    function loadTextarea() {
+        let regex = new RegExp("X:.*\n");
+
+        for (let i = 0; i < tuneIDs.length; i++) {
+            let item = store[tuneIDs[i]];
+
+            if (i == 0) {
+                textAreaABC.value = item.abc;
+            } else {
+                textAreaABC.value += item.abc.replace(regex, "");
             }
+        }
+        if (tuneIDs.length) {
+            document.getElementById("paperHeader").style.display = "none";
+
+            audioPlayer.displayABC(textAreaABC.value);
+        }
+
+    }
+
+    function Reset() {
+        document.getElementById("paperHeader").style.display = "inline";
+        document.getElementById("setTuneTitles").innerHTML = "";
+
+        textAreaABC.value = '';
+
+        document.getElementById("abcPaper").style.paddingBottom = "0px";
+        document.getElementById("abcPaper").style.overflow = "auto";
+
+        for (let i = 0; i < tuneIDs.length; i++) {
+            document.getElementById("gr" + tuneIDs[i]).style.backgroundColor = "";
+        }
+        tuneIDs = [];
+    }
+
+    let tuneIndex = '';
+    
+    function initialiseLunrSearch() {
+        // create the searchTerm from the form data and reflect the values chosen in the form
+
+        // Define the index terms for lunr search
+        tuneIndex = lunr(function () {
+            this.field("id");
+            this.field("title", {
+                boost: 10,
+            });
+            this.field("rhythm");
+        });
+
+        // Add the search items to the search index
+        for (let key in window.store) {
+            // Add the data to lunr
+            tuneIndex.add({
+                id: key,
+                title: window.store[key].title,
+                rhythm: window.store[key].rhythm,
+            });
         }
     }
 
-    function createSearchTerm(searchItem) {
-        let result = '';
+    function formSearch(formInputs) {
+        const regex = /[A-Za-z]/g;
+        let searchTerm = "";
+        let searchResults = "";
 
-        let queryVariable = getQueryVariable(searchItem);
-        if (queryVariable) {
-            let e = document.getElementById(`${searchItem}-box`);
-            if (e) {
-                e.value = queryVariable;
+        for (const formInput of formInputs) {
+            if (formInput.match(regex)) {
+                searchTerm += `${formInput} `;
             }
-            result = `${queryVariable} `;
         }
 
-        console.log(result);
-        return result;
-    }
+        // Get results
+        if (searchTerm) {
+            searchResults = tuneIndex.search(searchTerm); // Get lunr to perform a search
 
-    // create the searchTerm from the form data and reflect the values chosen in the form
-    let searchTerm = "";
-    searchTerm += createSearchTerm("title");
-    searchTerm += createSearchTerm("rhythm");
-
-
-    // Define the index terms for lunr search
-    let tuneIndex = lunr(function () {
-        this.field("id");
-        this.field("title", {
-            boost: 10,
-        });
-        this.field("rhythm");
-    });
-
-    // Add the search items to the search index
-    for (let key in window.store) {
-        // Add the data to lunr
-        tuneIndex.add({
-            id: key,
-            title: window.store[key].title,
-            rhythm: window.store[key].rhythm,
-        });
-    }
-
-    // Get results
-    if (searchTerm) {
-        // Get lunr to perform a search
-        let results = tuneIndex.search(searchTerm);
-
-        // sort the results
-        results.sort((a, b) => a.ref - b.ref);
-
-        if (results.length) {
-            displayTunesGrid(results, window.store);
+            if (searchResults.length) {
+                // sort the results
+                searchResults.sort((a, b) => a.ref - b.ref);
+                displaySetGrid(searchResults, window.store);
+            } else {
+                document.getElementById("tunesGrid").innerHTML = '';
+                document.getElementById("tunesCount").innerHTML = 0;
+            }
         } else {
-            document.getElementById("tunesCount").innerHTML = 0;
+            displaySetGrid(searchResults, window.store);
         }
-    } else {
-        displayTunesGrid("", window.store);
+        wssTools.disableSearchButton()
     }
-    return false;
+
+    return {
+        displaySetGrid: displaySetGrid,
+        initialiseLunrSearch: initialiseLunrSearch,
+        formSearch: formSearch,
+        addABCtune: addABCtune,
+        loadTextarea: loadTextarea,
+        Reset: Reset,
+    };
+
 })();
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = buildSetGrid;
+}

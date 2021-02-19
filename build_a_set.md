@@ -85,7 +85,7 @@ page.
             </div>
             <div class="formChild">
                 <span title="Clear the music notation to start a new set">
-                    <input value='RESET' type='button' class="filterButton" onclick='Reset()' />
+                    <input value='RESET' type='button' class="filterButton" onclick='buildSetGrid.Reset()' />
                 </span>
             </div>
         </div>
@@ -103,8 +103,9 @@ page.
 <textarea id="textAreaABC" style="display:none;"></textarea>
 
 <script>
+buildSetGrid.initialiseLunrSearch();
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    // no action needed here
+    buildSetGrid.displaySetGrid("", window.store);
 });
 </script>

@@ -119,6 +119,7 @@ const buildGrid = (function () {
         var tunesCounter = 0;
         let appendString = '';
 
+        console.log(results);
         // create table headers
         if (wssTools.testForMobile()) {
             appendString =
@@ -253,7 +254,6 @@ const buildGrid = (function () {
         } else {
             displayGrid(tuneBook, searchResults, window.store);
         }
-
         wssTools.disableSearchButton()
     }
 
