@@ -232,7 +232,7 @@ const buildGrid = (function () {
                 searchResults.sort((a, b) => a.ref - b.ref);
                 displayGrid(tuneBook, searchResults, window.store);
             } else {
-                document.getElementById("tunesGrid").innerHTML = '';
+                document.getElementById("tunesGrid").innerHTML = '<strong>No tunes found</strong>';
                 document.getElementById("tunesCount").innerHTML = 0;
             }
         } else {
@@ -249,7 +249,6 @@ const buildGrid = (function () {
     };
 
 })();
-
 
 if (typeof module !== "undefined" && module.exports) {
     module.exports = buildGrid;
