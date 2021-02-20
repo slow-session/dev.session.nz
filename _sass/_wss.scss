@@ -381,21 +381,22 @@ input[type=number] {
     margin: 1em auto 1em;
 }
 
+// if the height is 320px we show ~10 tunes in the table
 .gridChild {
-    padding: 0rem;
-}
-
-// if the height is 320px we show 10 tunes in the table
-.tunes3columnLayout {
     display: grid;
     max-height: 320px;
-    grid-template-columns: minmax(100px, 350px) 3fr minmax(50px, 90px);
     grid-auto-rows: fit-content(1em);
     overflow-x: hidden;
     overflow-y: auto;
     border-color: $brand-color;
     border-style: solid;
     border-radius: 8px;
+    padding: 0rem;
+}
+
+// these column layout classes need to be embedded in a "gridChild" class
+.tunes3columnLayout {
+    grid-template-columns: minmax(100px, 350px) 3fr minmax(50px, 90px);
 }
 
 .tunes3columnLayout > span:nth-child(6n + 1),
@@ -404,17 +405,8 @@ input[type=number] {
     background-color: darken($complimentary-color, 6%);
 }
 
-// if the height is 320px we show 10 tunes in the table
 .tunes2columnLayout {
-    display: grid;
-    max-height: 320px;
     grid-template-columns: 6fr 1fr;
-    grid-auto-rows: fit-content(1em);
-    overflow-x: hidden;
-    overflow-y: auto;
-    border-color: $brand-color;
-    border-style: solid;
-    border-radius: 8px;
 }
 
 .tunes2columnLayout > span:nth-child(4n + 1),
@@ -422,17 +414,8 @@ input[type=number] {
     background-color: darken($complimentary-color, 6%);
 }
 
-// if the height is 320px we show 10 tunes in the table
 .tunes1columnLayout {
-    display: grid;
-    max-height: 320px;
     grid-template-columns: minmax(300px, 600px);
-    grid-auto-rows: fit-content(1em);
-    overflow-x: hidden;
-    overflow-y: auto;
-    border-color: $brand-color;
-    border-style: solid;
-    border-radius: 8px;
 }
 
 .tunes1columnLayout > span:nth-child(2n + 1) {
@@ -442,7 +425,6 @@ input[type=number] {
 .tunes3columnLayout > span,
 .tunes2columnLayout > span,
 .tunes1columnLayout > span {
-    //display: flex;
     padding: 4px 2px;
     text-align: center;
     justify-content: center;
