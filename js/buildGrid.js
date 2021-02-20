@@ -197,6 +197,7 @@ const buildGrid = (function () {
     }
 
     function displayGrid(tuneBook, searchResults, store) {
+
         switch (tuneBook) {
             case 'potts':
                 displayPottsTunes(searchResults, store);
@@ -232,7 +233,7 @@ const buildGrid = (function () {
                 searchResults.sort((a, b) => a.ref - b.ref);
                 displayGrid(tuneBook, searchResults, window.store);
             } else {
-                document.getElementById("tunesGrid").innerHTML = '<strong>No tunes found</strong>';
+                document.getElementById("tunesGrid").innerHTML = 'No results found!';
                 document.getElementById("tunesCount").innerHTML = 0;
             }
         } else {
