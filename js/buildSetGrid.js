@@ -21,12 +21,10 @@ const buildSetGrid = (function () {
         let tunesCounter = 0;
         let appendString = '';
 
-        // create table headers
+        // create div for tunes grid
+        tunesGrid.classList.add("tunes3columnLayout");
         if (wssTools.testForMobile()) {
-            appendString =
-                '<div id="tunes" class="tunes3columnLayout mobileScrolling">';
-        } else {
-            appendString = '<div id="tunes" class="tunes3columnLayout">';
+          tunesGrid.classList.add("mobileScrolling");
         }
 
         if (results.length) {
@@ -51,7 +49,6 @@ const buildSetGrid = (function () {
             }
         }
 
-        appendString += "</div>";
         tunesGrid.innerHTML = appendString;
         tunesCount.innerHTML = tunesCounter;
     }
