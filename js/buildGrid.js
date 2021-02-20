@@ -20,12 +20,10 @@ const buildGrid = (function () {
         let tunesGrid = document.getElementById("tunesGrid");
         let appendString = '';
 
-        // create table headers
+        // create div for tunes grid
+        tunesGrid.classList.add("tunes1columnLayout");
         if (wssTools.testForMobile()) {
-            appendString =
-                '<div id="tunes" class="tunes1columnLayout mobileScrolling">';
-        } else {
-            appendString = '<div id="tunes" class="tunes1columnLayout">';
+          tunesGrid.classList.add("mobileScrolling");
         }
 
         for (var key in store) {
@@ -33,7 +31,6 @@ const buildGrid = (function () {
             var item = store[key];
             appendString += '<span><a href="' + item.url + '">' + item.title + "</a></span>";
         }
-        appendString += "</div";
         tunesGrid.innerHTML = appendString;
     }
 
@@ -43,14 +40,11 @@ const buildGrid = (function () {
         let tunesCounter = 0;
         let appendString = '';
 
-        // create table headers
+        // create div for tunes grid
+        tunesGrid.classList.add("tunes2columnLayout");
         if (wssTools.testForMobile()) {
-            appendString =
-                '<div id="tunes" class="tunes2columnLayout mobileScrolling">';
-        } else {
-            appendString = '<div id="tunes" class="tunes2columnLayout">';
+          tunesGrid.classList.add("mobileScrolling");
         }
-
         if (results.length) {
             // Are there any results?
             for (let i = 0; i < results.length; i++) {
@@ -69,7 +63,6 @@ const buildGrid = (function () {
                 tunesCounter++;
             }
         }
-        appendString += "</div";
         tunesGrid.innerHTML = appendString;
         tunesCount.innerHTML = tunesCounter;
     }
@@ -80,14 +73,11 @@ const buildGrid = (function () {
         let tunesCounter = 0;
         let appendString = '';
 
-        // create table headers
+        // create div for tunes grid
+        tunesGrid.classList.add("tunes3columnLayout");
         if (wssTools.testForMobile()) {
-            appendString =
-                '<div id="tunes" class="tunes3columnLayout mobileScrolling">';
-        } else {
-            appendString = '<div id="tunes" class="tunes3columnLayout">';
+          tunesGrid.classList.add("mobileScrolling");
         }
-
         if (results.length) {
             // Are there any results?
             for (let i = 0; i < results.length; i++) {
@@ -108,7 +98,6 @@ const buildGrid = (function () {
                 tunesCounter++;
             }
         }
-        appendString += "</div";
         tunesGrid.innerHTML = appendString;
         tunesCount.innerHTML = tunesCounter;
     }
@@ -119,15 +108,12 @@ const buildGrid = (function () {
         var tunesCounter = 0;
         let appendString = '';
 
-        console.log(results);
-        // create table headers
+        // create div for tunes grid
+        tunesGrid.classList.add("tunes3columnLayout");
         if (wssTools.testForMobile()) {
-            appendString =
-                '<div id="tunes" class="tunes3columnLayout mobileScrolling">';
-        } else {
-            appendString = '<div id="tunes" class="tunes3columnLayout">';
+          tunesGrid.classList.add("mobileScrolling");
         }
-
+      
         if (results.length) {
             // Are there any results?
             for (var i = 0; i < results.length; i++) {
@@ -156,9 +142,7 @@ const buildGrid = (function () {
                 tunesCounter++;
             }
         }
-
-        appendString += "</div>";
-
+        
         tunesGrid.innerHTML = appendString;
         tunesCount.innerHTML = tunesCounter;
     }

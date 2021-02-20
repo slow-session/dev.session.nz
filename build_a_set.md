@@ -36,17 +36,16 @@ page.
 <!-- Some boilerplate that's common to a number of pages -->
 
 {% include tunes-filter-variables.html %}
-
-<form id="wellington" method="get">
+<form>
     <fieldset>
         <legend>Select from the Tunes Archive:</legend>
         <div class="formParent">
         <div class="formChild">
-            <input type="text" id="title-box" name="title" placeholder='Search'
+            <input type="text" id="title-box" name="searchTitle" placeholder='Search'
             value='' onkeydown="wssTools.enableSearchButton()">
         </div>
         <div class="formChild">
-            <select id="rhythm-box" name="rhythm"  onChange="wssTools.enableSearchButton()">
+            <select id="rhythm-box" name="searchRhythm"  onChange="wssTools.enableSearchButton()">
             <option value="">All Rhythms</option>
             {% for rhythm in rhythms %}
             {% if rhythm != '' %}
@@ -59,7 +58,7 @@ page.
         <div class="formParent">
         <div class="formChild">
             <span title="Run the filter with the default settings to see the whole list">
-            <input class="filterButton filterDisabled" id="submitSearch" type="submit" name="submit" value="Select" disabled>
+            <input class="filterButton filterDisabled" id="submitSearch" type="button" name="submit" value="Select" onclick="buildSetGrid.formSearch([searchTitle.value, searchRhythm.value])" disabled>
             </span>
         </div>
         <div class="formChild">      
