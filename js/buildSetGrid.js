@@ -174,10 +174,20 @@ const buildSetGrid = (function () {
         wssTools.disableSearchButton()
     }
 
+    function formReset(formInputs) {
+        let searchResults = '';
+        
+        for (const formInput of formInputs) {
+            document.getElementById(formInput).value = '';
+        }
+        displaySetGrid(searchResults, window.store);
+    }
+
     return {
         displaySetGrid: displaySetGrid,
         initialiseLunrSearch: initialiseLunrSearch,
         formSearch: formSearch,
+        formReset: formReset,
         addABCtune: addABCtune,
         loadTextarea: loadTextarea,
         Reset: Reset,

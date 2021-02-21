@@ -116,7 +116,7 @@ p.speedLabel {
     background-color: $brand-color;
     padding: 4px;
     margin-bottom: 5px;
-    color: darken($complimentary-color, 10%);
+    color: $complimentary-color;
     cursor: pointer;
     border-radius: 8px;
     font-size: 75%;
@@ -131,7 +131,7 @@ p.speedLabel {
     margin-right: 5px;
     margin-left: 5px;
     margin-bottom: 5px;
-    color: darken($complimentary-color, 10%);
+    color: $complimentary-color;
     cursor: pointer;
     border-radius: 8px;
     font-size: 75%;
@@ -293,48 +293,6 @@ input[type=number] {
 }
 // END: used for Preset Loops
 
-
-// START: tooltip is used on the Help button in the Search box in Tunes Archive
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: #555;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.tooltip .tooltiptext::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
-}
-
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
-// END: tooltip is used on the Help button in the Search box in Tunes Archive
-
 .featurePicture {
     border: 1px solid black;
     border-radius: 8px;
@@ -425,6 +383,7 @@ input[type=number] {
 .tunes3columnLayout > span,
 .tunes2columnLayout > span,
 .tunes1columnLayout > span {
+    display: flex;
     padding: 4px 2px;
     text-align: center;
     justify-content: center;

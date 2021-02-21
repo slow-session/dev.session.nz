@@ -36,6 +36,11 @@ This collection was one of the very early uses of ABC to capture and transmit Ir
                     <input class="filterButton filterDisabled" id="submitSearch" type="submit" name="submit" value="Select" onclick="buildGrid.formSearch('obrien', [searchTitle.value, searchRhythm.value])" disabled>
                 </span>
             </div>
+            <div class="formChild">   
+                <span title="Reset to default">  
+                    <input class="filterButton" id="formReset" type="button" name="reset" value="Reset" onclick="buildGrid.formReset('obrien', ['title-box', 'rhythm-box'])">
+                </span>
+            </div>
         </div>     
         <p></p>
         Scroll &#8593;&#8595; to choose from <span id="tunesCount"></span> tunes

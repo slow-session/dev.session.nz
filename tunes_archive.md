@@ -55,14 +55,12 @@ window.store = {
         </div>
         <div class="formParent">
             <div class="formChild">
-                <span title="Run the filter with the default settings to see the whole list">
-                    <input class="filterButton filterDisabled" id="submitSearch" type="submit" name="submit" value="Select" onclick="buildGrid.formSearch('tunesarchive', [searchTitle.value, searchRhythm.value])" disabled>
-                </span>
+                <input class="filterButton filterDisabled" id="submitSearch" type="submit" name="submit" value="Select" onclick="buildGrid.formSearch('tunesarchive', [searchTitle.value, searchRhythm.value])" disabled>
             </div>
-            <div class="formChild">     
-                <div class="tooltip filterButton"><em>Help</em>
-                    <span class="tooltiptext">Run the filter with the default settings to see the whole list</span>
-                </div>
+            <div class="formChild">   
+                <span title="Reset to default">  
+                    <input class="filterButton" id="formReset" type="button" name="reset" value="Reset" onclick="buildGrid.formReset('tunesarchive', ['title-box', 'rhythm-box'])">
+                </span>
             </div>
         </div>     
         <p></p>

@@ -242,10 +242,20 @@ const buildGrid = (function () {
         wssTools.disableSearchButton()
     }
 
+    function formReset(tuneBook, formInputs) {
+        let searchResults = '';
+        
+        for (const formInput of formInputs) {
+            document.getElementById(formInput).value = '';
+        }
+        displayGrid(tuneBook, searchResults, window.store);
+    }
+
     return {
         displayGrid: displayGrid,
         initialiseLunrSearch: initialiseLunrSearch,
         formSearch: formSearch,
+        formReset: formReset,
         displayFocusTunes: displayFocusTunes,
     };
 

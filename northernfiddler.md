@@ -50,6 +50,11 @@ There's a PDF of the book on this site at <a href="/tunebooks/The_Northern_Fiddl
                     <input class="filterButton filterDisabled" id="submitSearch" type="submit" name="submit" value="Select" onclick="buildGrid.formSearch('northernfiddler', [searchTitle.value, searchRhythm.value, searchMusician.value])" disabled>
                 </span>
             </div>
+            <div class="formChild">   
+                <span title="Reset to default">  
+                    <input class="filterButton" id="formReset" type="button" name="reset" value="Reset" onclick="buildGrid.formReset('northernfiddler', ['title-box', 'rhythm-box', 'musician-box'])">
+                </span>
+            </div>
         </div>     
         <p></p>
         Displaying <span id="tunesCount"></span> tunes

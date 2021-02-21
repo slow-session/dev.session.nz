@@ -56,16 +56,16 @@ page.
         </div>
         </div>
         <div class="formParent">
-        <div class="formChild">
-            <span title="Run the filter with the default settings to see the whole list">
-            <input class="filterButton filterDisabled" id="submitSearch" type="button" name="submit" value="Select" onclick="buildSetGrid.formSearch([searchTitle.value, searchRhythm.value])" disabled>
-            </span>
-        </div>
-        <div class="formChild">      
-            <div class="tooltip filterButton"><em>Help</em>
-                <span class="tooltiptext">Run the filter with the default settings to see the whole list</span>
+            <div class="formChild">
+                <span title="Run the filter with the default settings to see the whole list">
+                    <input class="filterButton filterDisabled" id="submitSearch" type="button" name="submit" value="Select" onclick="buildSetGrid.formSearch([searchTitle.value, searchRhythm.value])" disabled>
+                </span>
             </div>
-        </div>
+            <div class="formChild">   
+                <span title="Reset to default">  
+                    <input class="filterButton" id="formReset" type="button" name="reset" value="Reset" onclick="buildSetGrid.formReset(['title-box', 'rhythm-box'])">
+                </span>
+            </div>
         </div>
         <p></p>
         Scroll &#8593;&#8595; to choose from <span id="tunesCount"></span> tunes
@@ -84,7 +84,7 @@ page.
             </div>
             <div class="formChild">
                 <span title="Clear the music notation to start a new set">
-                    <input value='RESET' type='button' class="filterButton" onclick='buildSetGrid.Reset()' />
+                    <input value='Start New Set' type='button' class="filterButton" onclick='buildSetGrid.Reset()' />
                 </span>
             </div>
         </div>
