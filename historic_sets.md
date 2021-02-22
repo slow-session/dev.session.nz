@@ -99,7 +99,6 @@ window.setStore = {
 </script>
 
 <!-- Build a Set Grid -->
-
 <div class="gridParent">
   <div class="gridChild" id="tunesGrid"></div>
 </div>
@@ -112,8 +111,6 @@ window.setStore = {
 buildSetGrid.initialiseLunrSearch(window.setStore);
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
-    
     buildSetGrid.displaySetGrid("historic", "", window.setStore);
 });
 </script>

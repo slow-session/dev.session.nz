@@ -36,7 +36,9 @@ const buildSetGrid = (function () {
                 let item = store[results[i].ref];
 
                 if (item.abc) {
-                    appendString += createBuildSetRow(item);
+                    appendString += `<span id="gr${item.tuneID}"><a href="${item.url}">${item.title}</a></span>
+                    <span><input type="button" class="filterButton" onclick="buildSetGrid.addABCtune(${item.tuneID})" value="Select"></span>
+                    <span>${item.key} ${item.rhythm}</span>`;
                     tunesCounter++;
                 }
             }
@@ -45,7 +47,9 @@ const buildSetGrid = (function () {
                 // Iterate over the original data
                 let item = store[key];
                 if (item.abc) {
-                    appendString += createBuildSetRow(item);
+                    appendString += `<span id="gr${item.tuneID}"><a href="${item.url}">${item.title}</a></span>
+                    <span><input type="button" class="filterButton" onclick="buildSetGrid.addABCtune(${item.tuneID})" value="Select"></span>
+                    <span>${item.key} ${item.rhythm}</span>`;
                     tunesCounter++;
                 }
             }
@@ -53,17 +57,6 @@ const buildSetGrid = (function () {
 
         tunesGrid.innerHTML = appendString;
         tunesCount.innerHTML = tunesCounter;
-    }
-
-    function createBuildSetRow(item) {
-        let gridRow = "";
-
-        // build the first three columns
-        gridRow += `<span id="gr${item.tuneID}"><a href="${item.url}">${item.title}</a></span>
-            <span><input type="button" class="filterButton" onclick="buildSetGrid.addABCtune(${item.tuneID})" value="Select"></span>
-            <span>${item.key} ${item.rhythm}</span>`;
-
-        return gridRow;
     }
 
     function displayHistoricSet(results, setStore) {
@@ -188,7 +181,7 @@ const buildSetGrid = (function () {
 
     }
 
-    function Reset() {
+    function newSet() {
         document.getElementById("paperHeader").style.display = "inline";
         document.getElementById("setTuneTitles").innerHTML = "";
 
@@ -285,7 +278,7 @@ const buildSetGrid = (function () {
         formReset: formReset,
         addABCtune: addABCtune,
         loadTextarea: loadTextarea,
-        Reset: Reset,
+        newSet: newSet,
     };
 
 })();

@@ -84,7 +84,7 @@ page.
             </div>
             <div class="formChild">
                 <span title="Clear the music notation to start a new set">
-                    <input value='Start New Set' type='button' class="filterButton" onclick='buildSetGrid.Reset()' />
+                    <input value='Start New Set' type='button' class="filterButton" onclick='buildSetGrid.newSet()' />
                 </span>
             </div>
         </div>
@@ -94,7 +94,6 @@ page.
 <div class="row"></div>
 
 <!-- Build a Set Grid -->
-
 <div class="gridParent">
   <div class="gridChild" id="tunesGrid"></div>
 </div>

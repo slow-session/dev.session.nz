@@ -13,7 +13,7 @@ or have already learnt with others in a supportive environment.
 We don't teach tunes in this session but it's a great chance to practice
 playing with others. The focus is on melody instruments, but there is some scope for accompaniment. Learning by ear, and playing tunes from memory is strongly encouraged. Please read the <a href="/learn_by_ear/"> Learn by Ear</a> page. 
 
-See our <a href="/slowguidelines/">Guidelines for the Slow Session</a> if you need more information. In particular, accompanists should read the <a href="/learn_by_ear/#accompanist-advice">Advice to accompanists</a> section on that page.
+See our <a href="/slowguidelines/">Guidelines for the Slow Session</a> if you need more information. In particular, accompanists should read the <a href="/accompaniment">Accompaniment in the Irish Session</a> page.
 
 <script src="/js/buildGrid.js"></script>
 
@@ -55,7 +55,8 @@ window.currentTunes = {
 {% include tuneModal.html%}
 
 <script>
+
 document.addEventListener("DOMContentLoaded", function (event) {
-    pageAudioPlayer.innerHTML = audioPlayer.createAudioPlayer();
+
 });
 </script>
