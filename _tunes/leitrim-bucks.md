@@ -11,7 +11,7 @@ tags:
 location: 
 mp3_file: /mp3/leitrim-bucks.mp3
 repeats: 2
-parts: AABC
+parts: ABCD
 mp3_source: <a href="https://www.facebook.com/ciarank1">Ciaran Kelly</a>
 mp3_licence: "© Ciaran Kelly. All Rights Reserved."
 mp3_url: https://www.facebook.com/ciarank1/videos/10157726132089125/

@@ -7,9 +7,9 @@ mode:
 date: 2015-11-1
 location: Arrowtown Wellington
 notes:
-tags: slow-favourite vicfolk slowsession ceol-aneas slow-popular
-repeats: 2
-parts: AABB
+tags: slow-popular slow-favourite vicfolk slowsession ceol-aneas
+repeats: 2 
+parts: AABB 
 regtuneoftheweek:
 slowtuneoftheweek:
 mp3_file: /mp3/connachtmans-rambles.mp3

@@ -6,9 +6,9 @@ rhythm: jig
 date: 2018-03-13
 location: Wellington
 notes:
-tags: slow-favourite vicfolk whistle-class slow-popular
-repeats: 2
-parts: AABB
+tags: slow-popular slow-favourite vicfolk whistle-class
+repeats: 2 
+parts: AABB 
 regtuneoftheweek:
 slowtuneoftheweek:
 mp3_file: /mp3/the-mad-piper.mp3
@@ -29,4 +29,6 @@ abc: |
     GED G3 | ABd B3 | ABd BAG | AGF G3 :|
     |: d3 B3 | ABd B3 | ABd BAG | AGE GED |
     d3 B3 | ABd B3 | ABd BAG | AGF G3 :|
+
+
 ---

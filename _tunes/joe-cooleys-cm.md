@@ -6,7 +6,7 @@ rhythm: reel
 notes:
 date: 2019-09-13
 location: Prebbleton Raglan Auckland Arrowtown Wellington
-tags: cm slow-favourite vicfolk slowsession wellyfest-learn slow-popular
+tags: slow-popular cm slow-favourite vicfolk slowsession wellyfest-learn
 repeats: 2
 parts: AABB
 regtuneoftheweek:
@@ -26,9 +26,10 @@ abc: |
     M: 4/4
     L: 1/8
     K: Edor
-    |:D|"Em"EB{=c}BA B2 EB|"Em"{=c}B2 AB dBAG|"D"F/E/D AD BDAD|"D"F/E/D AD {=c}BAGF|
-    "Em"EB{=c}BA B2 EB|"Em"{=c}B2 AB defg|"D"{b}afec dBAF|[1"D"DEFD "Em"E3:|[2"D"DEFD "Em"E2||
-    |:gf|"Em"eB {B/d/B/A/}B2 eBgf|"Em"eB {B/d/B/A/}B2 gedB|"D"A/A/A FA DAFA|"D"A/A/A FA defg|
-    "Em"eB {B/d/B/A/}B2 eBgf|"Em"eB {B/d/B/A/}B2 defg|"D"{b}afec dBAF|[1"D"DEFD "Em"E2:|[2"D"DEFD "Em"E3|]
+    |:"Em"EB{d}BA B2 EB|"Em"~B2 AB dBAG|"D" FDAD BDAD|"D"F/E/D FA dAFD|
+    "Em"EB{d}BA B2 EB|"Em"~B2 AB defg|"D"afef dBAF|[1"D"DEFD "Em"E2ED:|[2"D"DEFD "Em"E2gf||
+    |:"Em"eB ~B2 eBgB|"Em"eB ~B2 gedB|"D"A/A/A FA DAFA|"D"~A2 FA defg|
+    "Em"eB B/B/B eBgf|"Em"eB B/B/B defg|"D"{b}afef dBAF|[1"D"DEFD "Em"E2gf:|[2"D"DEFD "Em"E2ED|]
+
 
 ---

@@ -1,5 +1,5 @@
 ---
-title: Banshee
+title: The Banshee
 titleID: banshee.md
 key: G
 rhythm: reel
@@ -7,7 +7,7 @@ mode:
 date: 2016-01-26
 location: Raglan Auckland Arrowtown Wellington
 notes:
-tags: slow-favourite vicfolk slowsession slow-popular
+tags: slow-popular slow-favourite vicfolk slowsession
 repeats: 2
 parts: AABB
 regtuneoftheweek:
@@ -27,8 +27,8 @@ abc: |
     L: 1/8
     %Z: Modified by Megan Ward
     K: Gmaj
-    |:G2 GD EDB,D|GFGB d2 Bd|eged BAGA|BAGE EDDE|
+    |:G2 GD EDB,D|~G3B d2 Bd|eged BAGA|BAGE EDDE|
     G2 GD EDB,D|GFGB d2 Bd|eged BAGA|BAGE ED D2:|
-    |:ea a2 efge|dBBA B2 Bd|eB ~B2 egfg| eBBA B2 Bd|
-    ea a2 efge|dBBA B2 Bd|eged BAGA|BAGE EDD2:|
+    |:ea ag efge|dBBA B2 Bd|eB ~B2 egfg| eBBA B2 Bd|
+    ea ~a2 efge|dBBA B2 Bd|eged BAGA|BAGE EDD2:|
 ---

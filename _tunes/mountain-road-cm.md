@@ -8,7 +8,7 @@ date: 2019-09-13
 location:
 tags: cm
 repeats: 2
-parts: AB
+parts: AABB
 regtuneoftheweek:
 slowtuneoftheweek:
 mp3_file: /mp3/cm/mountain-road-cm.mp3

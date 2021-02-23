@@ -6,9 +6,9 @@ rhythm: jig
 date: 2016-01-26
 location: Arrowtown Wellington
 notes:
-tags: slow-favourite slowsession slow-popular
-repeats: 3
-parts: AABB
+tags: slow-popular slow-favourite slowsession
+repeats: 3 
+parts: AABB 
 regtuneoftheweek:
 slowtuneoftheweek:
 mp3_file: /mp3/gander-at-the-pratie-hole.mp3

@@ -6,7 +6,7 @@ rhythm: reel
 date: 2019-06-05
 location: Wellington
 notes:
-tags: slow-popular
+tags:
 repeats: 2
 parts: AABB
 regtuneoftheweek:
@@ -20,15 +20,16 @@ source: Wellington
 abc_source: The Session
 abc_url: https://thesession.org/tunes/615
 abc: |
-    X: 2
-    T: The Shaskeen
-    R: reel
-    M: 4/4
-    L: 1/8
-    K: G
-    DG~G2 ABcA|d2ed cA~Ad|B3G ~A3F|GBAG FGEF|
-    DG~G2 ABcA|d2ed cAA2|f2de fdcA|1AGFA ~G3E:|2AGFA ~G3B||
-    |:dggf g2fg|abag fddc|B3G A3F|GBAG FDD2|
-    |1dggf g2fg|abag fdde|f2eg fdcA|AGFA ~G3B:|
-    |2BG~G2 AF~F2|dBB2cAA2|f2eg fdcA|AGFA ~G3E|]
+  X: 2
+  T: The Shaskeen
+  R: reel
+  M: 4/4
+  L: 1/8
+  K: G
+  DG~G2 ABcA|d2ed cA~Ad|B3G ~A3F|GBAG FGEF|
+  DG~G2 ABcA|d2ed cAA2|f2de fdcA|1AGFA ~G3E:|2AGFA ~G3B||
+  |:dggf g2fg|abag fddc|B3G A3F|GBAG FDD2|
+  |1dggf g2fg|abag fdde|f2eg fdcA|AGFA ~G3B:|
+  |2BG~G2 AF~F2|dBB2cAA2|f2eg fdcA|AGFA ~G3E|]
+
 ---
