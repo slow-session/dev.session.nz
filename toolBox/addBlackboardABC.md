@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
     
+    console.log(ABCJS.signature);
     audioPlayer.displayABC(textAreaABC.value);
 });
 
