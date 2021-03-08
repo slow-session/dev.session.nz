@@ -9,7 +9,7 @@ check out the
 <a href="http://abcnotation.com/wiki/abc:standard:v2.2">ABC Notation</a>
 guide.
 
-You can also use the editABC Web App at <a href="https://editabc.session.nz">editabc.session.nz</a>.
+You can also use the editABC Web App at <a href="https://editabc.session.nz">editabc.session.nz</a>
 
 If you want to add a new tune to the archive you can use the
 [Create MD File](/createMD/) page to create the metadata needed.
