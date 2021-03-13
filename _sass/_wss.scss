@@ -61,26 +61,16 @@ p.tuneInfoPara {
     margin-top: 0.5rem;
 }
 
-.pauseButton {
-    height: 2.5rem;
-    width: 2.5rem;
-    border: none;
-    background: url('/images/pause.png');
+.playingMP3 {
+    background: url('/images/pause.png');    
     background-size: contain;
     background-repeat: no-repeat;
-    outline: none;
-    margin-top: 0.5rem;
 }
 
-.stopButton {
-    height: 2.5rem;
-    width: 2.5rem;
-    border: none;
+.playingABC {
     background: url('/images/stop.png');
     background-size: contain;
     background-repeat: no-repeat;
-    outline: none;
-    margin-top: 0.5rem;
 }
 
 p.speedLabel {
@@ -585,4 +575,3 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     display: flex;
     flex-wrap: wrap;
 }
-

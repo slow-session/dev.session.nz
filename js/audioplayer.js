@@ -38,7 +38,7 @@ const audioPlayer = (function () {
 <form onsubmit="return false">
     <div id="mp3Player-${tuneID}" class="audioParentOuter">
         <!-- Col 1 - play button -->
-        <div class="playpauseButton">
+        <div>
             <button id="playMP3-${tuneID}" class="playButton" 
             onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')"></button>
         </div>
@@ -147,12 +147,18 @@ const audioPlayer = (function () {
         let playPosition = document.getElementById(`positionMP3-${tuneID}`);
         let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
 
-        if (playButton.className == "playButton") {
+        
+        if (playButton.classList.contains("playingMP3")) {
+            // if we're playing the tune then we pause
+            OneAudioPlayer.pause();
+            playButton.classList.remove("playingMP3");
+        } else {
+            // time to play this tune
             if (!OneAudioPlayer.src.includes(audioSource)) {
                 if (OneAudioPlayer.src != null) {
                     //reset previous audio player
                     if (previousPlayButton != null) {
-                        previousPlayButton.className = "playButton";
+                        previousPlayButton.classList.remove("playingMP3");
                     }
                 }
                 previousPlayButton = playButton;
@@ -181,12 +187,7 @@ const audioPlayer = (function () {
                     console.error(error);
                 });
             }
-            playButton.className = "";
-            playButton.className = "pauseButton";
-        } else {
-            OneAudioPlayer.pause();
-            playButton.className = "";
-            playButton.className = "playButton";
+            playButton.classList.add("playingMP3");
         }
     }
 
