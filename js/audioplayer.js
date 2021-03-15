@@ -39,7 +39,8 @@ const audioPlayer = (function () {
     <div class="audioParentOuter">
         <!-- Col 1 - play button -->
         <div>
-            <button class="playButton" onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')">
+            <button class="playButton" aria-label="play/pause button"
+                onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')">
                 <span id="playIconMP3-${tuneID}" class="icon-play2"></span>
             </button>
         </div>
