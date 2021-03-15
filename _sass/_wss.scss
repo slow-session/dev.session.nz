@@ -1,7 +1,8 @@
 // Pad the header image in from the sides
 .header-image {
-    padding-left: 2rem;
-    padding-right: 2rem
+    padding-left: $spacing-unit;
+    padding-right: $spacing-unit;
+    width: 100%;
 }
 
 .tuneInfoRow {
