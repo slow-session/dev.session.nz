@@ -238,28 +238,12 @@ input[type=number] {
     align-items: center;
 }
 
-.loopUpButton {
-    height: 22px;
-    width: 22px;
-    border: none;
-    background: url('/images/circle-right.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    outline: none
-}
-
-.loopDownButton {
-    height: 22px;
-    width: 22px;
-    border: none;
-    background: url('/images/circle-left.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    outline: none;
+.loopNudgeButton {
+    font-size: 1.4rem;
 }
 
 .loopInput {
-    font-size: 14px;
+    font-size: 0.9rem;
     border-radius: unset;
     width: 6ch;
     height: fit-content;

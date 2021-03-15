@@ -15,7 +15,7 @@
 const audioPlayer = (function () {
     let beginLoopTime = 0;
     let endLoopTime = 0;
-    let previousPlayIcon = null;
+    let previousPlayButton = null;
     let currentAudioSlider = null;
     let presetLoopSegments = [];
     let isIOS = testForIOS();
@@ -39,10 +39,7 @@ const audioPlayer = (function () {
     <div class="audioParentOuter">
         <!-- Col 1 - play button -->
         <div>
-            <button class="playButton" aria-label="play/pause button"
-                onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')">
-                <span id="playIconMP3-${tuneID}" class="icon-play2"></span>
-            </button>
+            <button id="playButtonMP3-${tuneID}" class="playButton icon-play2" aria-label="play/pause button" onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')"></button>
         </div>
         <!-- Nested row in second column -->
         <div class="audioParentInner">
@@ -145,22 +142,22 @@ const audioPlayer = (function () {
     }
 
     function playAudio(tuneID, audioSource) {
-        let playIcon = document.getElementById(`playIconMP3-${tuneID}`);
+        let playButton = document.getElementById(`playButtonMP3-${tuneID}`);
         let playPosition = document.getElementById(`positionMP3-${tuneID}`);
         let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
         
-        if (playIcon.classList.contains("icon-play2")) {
+        if (playButton.classList.contains("icon-play2")) {
             // time to play this tune
             if (!OneAudioPlayer.src.includes(audioSource)) {
                 if (OneAudioPlayer.src != null) {
                     //reset previous audio player
                     // not sure we need this
-                    if (previousPlayIcon.classList.contains("icon-pause")) {
-                        previousPlayIcon.classList.remove("icon-pause");
-                        previousPlayIcon.classList.add("icon-play2");
+                    if (previousPlayButton.classList.contains("icon-pause")) {
+                        previousPlayButton.classList.remove("icon-pause");
+                        previousPlayButton.classList.add("icon-play2");
                     }
                 }
-                previousPlayIcon = playIcon;
+                previousPlayButton = playButton;
 
                 LoadAudio(audioSource, playPosition);
 
@@ -186,13 +183,13 @@ const audioPlayer = (function () {
                     console.error(error);
                 });
             }
-            playIcon.classList.remove("icon-play2");
-            playIcon.classList.add("icon-pause");
+            playButton.classList.remove("icon-play2");
+            playButton.classList.add("icon-pause");
         } else {
             // if we're playing the tune then we pause
             OneAudioPlayer.pause();
-            playIcon.classList.remove("icon-pause");
-            playIcon.classList.add("icon-play2");
+            playButton.classList.remove("icon-pause");
+            playButton.classList.add("icon-play2");
         }
     }
 
@@ -442,20 +439,20 @@ const audioPlayer = (function () {
     
     <!-- adjust start of loop  -->
     <div class="loopControl">
-        <button class="loopDownButton" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlStart', loopControlStart.value)"></button>
+        <button class="loopNudgeButton icon-circle-left" aria-label="nudge start of loop down" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlStart', loopControlStart.value)"></button>
 
         <input id="loopControlStart" class="loopInput" type="number" size="4" min="0" max="${OneAudioPlayer.duration}" step=0.1 value=0.0 onchange="audioPlayer.setSliderStart(loopControlStart.value)"> 
 
-        <button class="loopUpButton" title=" + 1/5 second" onclick="audioPlayer.adjustUp('loopControlStart', loopControlStart.value)"></button> 
+        <button class="loopNudgeButton icon-circle-right" title=" + 1/5 second" aria-label="nudge start of loop up" onclick="audioPlayer.adjustUp('loopControlStart', loopControlStart.value)"></button> 
     </div>
 
     <!-- adjust end of loop -->
     <div class="loopControl">
-        <button class="loopDownButton" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlEnd', loopControlEnd.value)"></button>
+        <button class="loopNudgeButton icon-circle-left" title=" - 1/5 second" aria-label="nudge end of loop down" onclick="audioPlayer.adjustDown('loopControlEnd', loopControlEnd.value)"></button>
         
         <input id="loopControlEnd" class="loopInput" type="number" size="4" min="0" max="${OneAudioPlayer.duration}" step=0.1 value=${OneAudioPlayer.duration.toFixed(1)} onchange="audioPlayer.setSliderEnd(loopControlEnd.value)"> 
 
-        <button class="loopUpButton" title=" + 1/5 second" onclick="audioPlayer.adjustUp('loopControlEnd', loopControlEnd.value)"></button> 
+        <button class="loopNudgeButton icon-circle-right" title=" + 1/5 second" aria-label="nudge end of loop up" onclick="audioPlayer.adjustUp('loopControlEnd', loopControlEnd.value)"></button> 
     </div>`;
         
         return loopControlsContainer;
