@@ -15,7 +15,7 @@
 const audioPlayer = (function () {
     let beginLoopTime = 0;
     let endLoopTime = 0;
-    let previousPlayButton = null;
+    let previousPlayIcon = null;
     let currentAudioSlider = null;
     let presetLoopSegments = [];
     let isIOS = testForIOS();
@@ -36,11 +36,12 @@ const audioPlayer = (function () {
         // build the MP3 player for each tune
         let mp3player = `
 <form onsubmit="return false">
-    <div id="mp3Player-${tuneID}" class="audioParentOuter">
+    <div class="audioParentOuter">
         <!-- Col 1 - play button -->
         <div>
-            <button id="playMP3-${tuneID}" class="playButton" 
-            onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')"></button>
+            <button class="playButton" onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')">
+                <span id="playIconMP3-${tuneID}" class="icon-play2"></span>
+            </button>
         </div>
         <!-- Nested row in second column -->
         <div class="audioParentInner">
@@ -143,25 +144,22 @@ const audioPlayer = (function () {
     }
 
     function playAudio(tuneID, audioSource) {
-        let playButton = document.getElementById(`playMP3-${tuneID}`);
+        let playIcon = document.getElementById(`playIconMP3-${tuneID}`);
         let playPosition = document.getElementById(`positionMP3-${tuneID}`);
         let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
-
         
-        if (playButton.classList.contains("playingMP3")) {
-            // if we're playing the tune then we pause
-            OneAudioPlayer.pause();
-            playButton.classList.remove("playingMP3");
-        } else {
+        if (playIcon.classList.contains("icon-play2")) {
             // time to play this tune
             if (!OneAudioPlayer.src.includes(audioSource)) {
                 if (OneAudioPlayer.src != null) {
                     //reset previous audio player
-                    if (previousPlayButton != null) {
-                        previousPlayButton.classList.remove("playingMP3");
+                    // not sure we need this
+                    if (previousPlayIcon.classList.contains("icon-pause")) {
+                        previousPlayIcon.classList.remove("icon-pause");
+                        previousPlayIcon.classList.add("icon-play2");
                     }
                 }
-                previousPlayButton = playButton;
+                previousPlayIcon = playIcon;
 
                 LoadAudio(audioSource, playPosition);
 
@@ -187,7 +185,13 @@ const audioPlayer = (function () {
                     console.error(error);
                 });
             }
-            playButton.classList.add("playingMP3");
+            playIcon.classList.remove("icon-play2");
+            playIcon.classList.add("icon-pause");
+        } else {
+            // if we're playing the tune then we pause
+            OneAudioPlayer.pause();
+            playIcon.classList.remove("icon-pause");
+            playIcon.classList.add("icon-play2");
         }
     }
 
