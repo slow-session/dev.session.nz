@@ -25,9 +25,9 @@ const buildSetGrid = (function () {
 
         // create div for tunes grid
         tunesGrid.classList.add("tunes3columnLayout");
-        if (wssTools.testForMobile()) {
-          tunesGrid.classList.add("mobileScrolling");
-        }
+        //if (wssTools.testForMobile()) {
+        //  tunesGrid.classList.add("mobileScrolling");
+        //}
 
         if (results.length) {
             // Are there any results?
@@ -70,9 +70,9 @@ const buildSetGrid = (function () {
 
         // create div for tunes grid
         tunesGrid.classList.add("tunes3columnLayout");
-        if (wssTools.testForMobile()) {
-            tunesGrid.classList.add("mobileScrolling");
-        }
+        //if (wssTools.testForMobile()) {
+        //    tunesGrid.classList.add("mobileScrolling");
+        //}
 
         if (results.length) {
             // Are there any results?

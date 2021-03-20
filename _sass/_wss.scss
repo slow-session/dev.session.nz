@@ -370,6 +370,19 @@ input[type=number] {
     height: 40px;
 }
 
+// if the device doesn't have a "mouse" then turn off the scrollbar on gridchild
+// this implies it's a phone or tablet
+@media (any-pointer: coarse) {
+    .gridChild {
+        scrollbar-width: none;
+        border-color: red;
+    }
+    .gridChild::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/*
 // mobileScrolling is enabled via a test in the javascript that draws the grid
 .mobileScrolling {
     scrollbar-width: none;
@@ -378,6 +391,7 @@ input[type=number] {
 .mobileScrolling::-webkit-scrollbar {
     display: none;
 }
+*/
 // END: CSS for managing the "tunes" grids that appear on a number of pages
 
 .setChoice {
@@ -435,16 +449,6 @@ input[type=number] {
     position: absolute;
 }
 // END: LongBow
-
-.editHelp {
-    display: none;
-    overflow: auto;
-    border: 2px solid $brand-color;
-    background-color: darken($complimentary-color, 6%);
-    border-radius: 8px;
-    margin: 10px;
-    padding: 10px;
-}
 
 // Local mods to noUi sliders
 

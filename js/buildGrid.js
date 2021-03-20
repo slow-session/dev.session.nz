@@ -22,9 +22,9 @@ const buildGrid = (function () {
 
         // create div for tunes grid
         tunesGrid.classList.add("tunes1columnLayout");
-        if (wssTools.testForMobile()) {
-          tunesGrid.classList.add("mobileScrolling");
-        }
+        //if (wssTools.testForMobile()) {
+        //  tunesGrid.classList.add("mobileScrolling");
+        //}
 
         for (var key in store) {
             // Iterate over the original data
@@ -42,9 +42,9 @@ const buildGrid = (function () {
 
         // create div for tunes grid
         tunesGrid.classList.add("tunes2columnLayout");
-        if (wssTools.testForMobile()) {
-          tunesGrid.classList.add("mobileScrolling");
-        }
+        //if (wssTools.testForMobile()) {
+        //  tunesGrid.classList.add("mobileScrolling");
+        //}
         if (results.length) {
             // Are there any results?
             for (let i = 0; i < results.length; i++) {
@@ -75,9 +75,9 @@ const buildGrid = (function () {
 
         // create div for tunes grid
         tunesGrid.classList.add("tunes3columnLayout");
-        if (wssTools.testForMobile()) {
-          tunesGrid.classList.add("mobileScrolling");
-        }
+        //if (wssTools.testForMobile()) {
+        //  tunesGrid.classList.add("mobileScrolling");
+        //}
         if (results.length) {
             // Are there any results?
             for (let i = 0; i < results.length; i++) {
@@ -110,9 +110,9 @@ const buildGrid = (function () {
 
         // create div for tunes grid
         tunesGrid.classList.add("tunes3columnLayout");
-        if (wssTools.testForMobile()) {
-          tunesGrid.classList.add("mobileScrolling");
-        }
+        //if (wssTools.testForMobile()) {
+        //  tunesGrid.classList.add("mobileScrolling");
+        //}
       
         if (results.length) {
             // Are there any results?
@@ -150,9 +150,9 @@ const buildGrid = (function () {
     function displayFocusTunes(divID, storeName, storeObject) {
         // create div for tunes grid
         document.getElementById(divID).classList.add("tunes3columnLayout");
-        if (wssTools.testForMobile()) {
-          document.getElementById(divID).classList.add("mobileScrolling");
-        }
+        //if (wssTools.testForMobile()) {
+        //  document.getElementById(divID).classList.add("mobileScrolling");
+        //}
       
         let appendString = '';
         for (var key in storeObject) {
