@@ -375,7 +375,6 @@ input[type=number] {
 @media (any-pointer: coarse) {
     .gridChild {
         scrollbar-width: none;
-        border-color: red;
     }
     .gridChild::-webkit-scrollbar {
         display: none;
