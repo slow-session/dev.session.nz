@@ -592,7 +592,7 @@ const audioPlayer = (function () {
             } else {
                 OneAudioPlayer.currentTime = beginLoopTime;
             }
-        
+
             // first reset to ends, then reposition
             currentAudioSlider.noUiSlider.setHandle(0, 0);
             currentAudioSlider.noUiSlider.setHandle(2, OneAudioPlayer.duration);
