@@ -7,7 +7,7 @@ date: 2021-03-17
 location: Wellington
 notes:
 tags:
-repeats: 2
+repeats: 3
 parts: AABB
 regtuneoftheweek:
 slowtuneoftheweek:
