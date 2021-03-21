@@ -98,20 +98,6 @@ const wssTools = (function () {
         }
     }
 
-    function testForMobile() {
-        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        if (
-            userAgent.match(/iPad/i) ||
-            userAgent.match(/iPhone/i) ||
-            userAgent.match(/iPod/i) ||
-            userAgent.match(/Android/i)
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     function getABCheaderValue(key, tuneABC) {
         // Extract the value of one of the ABC keywords e.g. T: Out on the Ocean
         const KEYWORD_PATTERN = new RegExp(`^\\s*${key}`);
@@ -134,7 +120,6 @@ const wssTools = (function () {
         enableSearchButton: enableSearchButton,
         disableSearchButton: disableSearchButton,
         show_iframe: show_iframe,
-        testForMobile: testForMobile,
         getABCheaderValue: getABCheaderValue,
     };
 })();
