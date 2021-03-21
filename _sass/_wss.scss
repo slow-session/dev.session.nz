@@ -302,6 +302,7 @@ input[type=number] {
 .gridChild {
     display: grid;
     max-height: 320px;
+    width: 100%;
     grid-auto-rows: fit-content(1em);
     overflow-x: hidden;
     overflow-y: auto;
@@ -371,12 +372,12 @@ input[type=number] {
 }
 
 // if the device doesn't have a "mouse" then turn off the scrollbar on gridchild
-// this implies it's a phone or tablet
+// 'coarse' implies it's a phone or tablet
 @media (any-pointer: coarse) {
     .gridChild {
         scrollbar-width: none;
     }
-    .gridChild::-webkit-scrollbar {
+    ::-webkit-scrollbar {
         display: none;
     }
 }
