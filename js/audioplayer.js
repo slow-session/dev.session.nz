@@ -22,7 +22,7 @@ const audioPlayer = (function () {
     let abcEditor = null;
 
     console.log("isIOS: ", isIOS);
-    
+
     /*
      ***************************************************************************
      * The function createABCPlayer() is no longer used and is replaced by using:
@@ -40,9 +40,9 @@ const audioPlayer = (function () {
 <form onsubmit="return false">
     <div class="audioParentOuter">
         <!-- Col 1 - play button -->
-        <div>
+        
             <button id="playButtonMP3-${tuneID}" class="playButton icon-play2" aria-label="play/pause button" onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')"></button>
-        </div>
+        
         <!-- Nested row in second column -->
         <div class="audioParentInner">
             <!-- Col 2 - audio slider -->
@@ -110,13 +110,13 @@ const audioPlayer = (function () {
                 beginLoopTime = values[0];
                 let loopControlStart = document.getElementById("loopControlStart");
                 if (loopControlStart) {
-                    loopControlStart.value = beginLoopTime;        
+                    loopControlStart.value = beginLoopTime;
                 }
             } else if (handle === 2) {
                 endLoopTime = Math.min(OneAudioPlayer.duration, values[2]);
                 let loopControlEnd = document.getElementById("loopControlEnd");
                 if (loopControlEnd) {
-                    loopControlEnd.value = endLoopTime;        
+                    loopControlEnd.value = endLoopTime;
                 }
             } else if (handle === 1) {
                 OneAudioPlayer.currentTime = values[1];
@@ -153,7 +153,7 @@ const audioPlayer = (function () {
         let playButton = document.getElementById(`playButtonMP3-${tuneID}`);
         let playPosition = document.getElementById(`positionMP3-${tuneID}`);
         let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
-        
+
         if (playButton.classList.contains("icon-play2")) {
             // time to play this tune
             if (!OneAudioPlayer.src.includes(audioSource)) {
@@ -268,7 +268,7 @@ const audioPlayer = (function () {
         displayABC(item.abc);
     }
 
-    function displayPresetLoops (item) {
+    function displayPresetLoops(item) {
         let presetLoops = document.getElementById("presetLoops");
         if (presetLoops && item.mp3) {
             presetLoops.innerHTML = `
@@ -276,13 +276,13 @@ const audioPlayer = (function () {
         <summary class="filterButton">Preset Loops</summary>
         <div id="loopPresetControls" class="loop3columnLayout"></div>
     </details>`;
-    
+
             //console.log("OneAudioPlayer.duration: " + OneAudioPlayer.duration);             
             // Add details button
-            let loopPresetControls  = document.getElementById("loopPresetControls");
+            let loopPresetControls = document.getElementById("loopPresetControls");
             if (loopPresetControls) {
                 loopPresetControls.innerHTML = createLoopControlsContainer();
-        
+
                 if (item.repeats && item.parts) {
                     //console.log('setupPresetLoops: ' + OneAudioPlayer.duration);
                     buildSegments(item);
@@ -336,7 +336,7 @@ const audioPlayer = (function () {
                 abcPaper.style.overflow = "auto";
                 let urlTheSession = "https://thesession.org/tunes/";
                 abcPaper.innerHTML =
-    `<p>We don't have dots for this tune. If you find a version of the tune that's 
+                    `<p>We don't have dots for this tune. If you find a version of the tune that's 
     a good match, send us a copy of the ABC and we'll get it added to the site. 
     You might find it on The Session at this link: 
     <a href="${urlTheSession}">${urlTheSession}</a></p>`;
@@ -364,8 +364,8 @@ const audioPlayer = (function () {
         currentAudioSlider = playPosition;
     }
 
-    function stopAudio(){
-       if (document.getElementById('OneAudioPlayer')) {
+    function stopAudio() {
+        if (document.getElementById('OneAudioPlayer')) {
             OneAudioPlayer.pause();
         }
         if (abcEditor) {
@@ -462,11 +462,11 @@ const audioPlayer = (function () {
 
         <button class="loopNudgeButton icon-circle-right" title=" + 1/5 second" aria-label="nudge end of loop up" onclick="audioPlayer.adjustUp('loopControlEnd', loopControlEnd.value)"></button> 
     </div>`;
-        
+
         return loopControlsContainer;
     }
-    
-    function createPresetLoops () {
+
+    function createPresetLoops() {
         let loopDetails = '';
 
         // Add the details for each "part" with "repeats"
@@ -503,16 +503,16 @@ const audioPlayer = (function () {
         return loopDetails;
     }
 
-    function setSliderStart(startTime){
-        if (startTime >  OneAudioPlayer.currentTime) {
+    function setSliderStart(startTime) {
+        if (startTime > OneAudioPlayer.currentTime) {
             currentAudioSlider.noUiSlider.setHandle(1, startTime);
         }
         currentAudioSlider.noUiSlider.setHandle(0, startTime);
         beginLoopTime = startTime;
     }
 
-    function setSliderEnd(endTime){
-        if (endTime <  OneAudioPlayer.currentTime) {
+    function setSliderEnd(endTime) {
+        if (endTime < OneAudioPlayer.currentTime) {
             currentAudioSlider.noUiSlider.setHandle(1, endTime);
         }
         currentAudioSlider.noUiSlider.setHandle(2, Math.min(OneAudioPlayer.duration, endTime));
@@ -525,8 +525,8 @@ const audioPlayer = (function () {
         if (inputTime <= OneAudioPlayer.duration - 0.2) {
             let newTime = parseFloat(inputTime) + parseFloat(0.2);
             newTime = newTime.toFixed(1);
-        
-            if (newTime >  OneAudioPlayer.currentTime) {
+
+            if (newTime > OneAudioPlayer.currentTime) {
                 currentAudioSlider.noUiSlider.setHandle(1, newTime);
             }
             if (elementName == "loopControlStart") {
@@ -534,7 +534,7 @@ const audioPlayer = (function () {
                 beginLoopTime = newTime;
             } else {
                 currentAudioSlider.noUiSlider.setHandle(2, Math.min(OneAudioPlayer.duration, newTime));
-                endLoopTime = newTime;    
+                endLoopTime = newTime;
             }
             loopInput.value = newTime;
         }
@@ -546,8 +546,8 @@ const audioPlayer = (function () {
         if (inputTime >= 0.2) {
             let newTime = parseFloat(inputTime) - parseFloat(0.2);
             newTime = newTime.toFixed(1);
-            
-            if (newTime <  OneAudioPlayer.currentTime) {
+
+            if (newTime < OneAudioPlayer.currentTime) {
                 currentAudioSlider.noUiSlider.setHandle(1, newTime);
             }
             if (elementName == "loopControlStart") {
@@ -555,7 +555,7 @@ const audioPlayer = (function () {
                 beginLoopTime = newTime;
             } else {
                 currentAudioSlider.noUiSlider.setHandle(2, Math.min(OneAudioPlayer.duration, newTime));
-                endLoopTime = newTime;    
+                endLoopTime = newTime;
             }
             loopInput.value = newTime;
         }
@@ -568,9 +568,9 @@ const audioPlayer = (function () {
 
         for (let segmentNumber = 0; segmentNumber < presetLoopSegments.length; segmentNumber++) {
             checkBox = document.getElementById("segment" + segmentNumber);
-            
+
             if (checkBox.checked == true) {
-    
+
                 if (firstSegment == null) {
                     firstSegment = segmentNumber;
                 }
@@ -581,9 +581,9 @@ const audioPlayer = (function () {
             beginLoopTime = parseFloat(presetLoopSegments[firstSegment].start);
         }
         if (lastSegment != null) {
-           endLoopTime = Math.min(OneAudioPlayer.duration, parseFloat(presetLoopSegments[lastSegment].end));
+            endLoopTime = Math.min(OneAudioPlayer.duration, parseFloat(presetLoopSegments[lastSegment].end));
         }
-    
+
         // do nothing unless at least one box is checked
         if (firstSegment != null || lastSegment != null) {
             // iOS audio player workaround for initial call to OneAudioPlayer.currentTime
@@ -603,7 +603,7 @@ const audioPlayer = (function () {
             currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
             currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
             currentAudioSlider.noUiSlider.setHandle(2, endLoopTime);
-            
+
             document.getElementById("loopControlStart").value = beginLoopTime;
             document.getElementById("loopControlEnd").value = endLoopTime;
 
@@ -628,15 +628,16 @@ const audioPlayer = (function () {
         currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
         let loopControlStart = document.getElementById("loopControlStart");
         if (loopControlStart) {
-            loopControlStart.value = beginLoopTime;        
-        }    }
+            loopControlStart.value = beginLoopTime;
+        }
+    }
 
     function setSliderLoopEnd() {
         endLoopTime = OneAudioPlayer.currentTime;
         currentAudioSlider.noUiSlider.setHandle(2, endLoopTime);
         let loopControlEnd = document.getElementById("loopControlEnd");
         if (loopControlEnd) {
-            loopControlEnd.value = endLoopTime;        
+            loopControlEnd.value = endLoopTime;
         }
     }
 
@@ -646,14 +647,14 @@ const audioPlayer = (function () {
         currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
         let loopControlStart = document.getElementById("loopControlStart");
         if (loopControlStart) {
-            loopControlStart.value = beginLoopTime;        
+            loopControlStart.value = beginLoopTime;
         }
 
         endLoopTime = OneAudioPlayer.duration.toFixed(1);
         currentAudioSlider.noUiSlider.setHandle(2, endLoopTime);
         let loopControlEnd = document.getElementById("loopControlEnd");
         if (loopControlEnd) {
-            loopControlEnd.value = endLoopTime;        
+            loopControlEnd.value = endLoopTime;
         }
 
         // Uncheck all the checkboxes in the Preset Loops
@@ -663,17 +664,10 @@ const audioPlayer = (function () {
     }
 
     function testForIOS() {
-        const iOS_1to12 = /iPad|iPhone|iPod/.test(navigator.platform);
+        const iOS_1to13 = /^iP/.test(navigator.platform) ||
+                            /^Mac/.test(navigator.platform) && navigator.maxTouchPoints > 4;
 
-        const iOS13_iPad = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-        const iOS1to12quirk = function() {
-            var audio = new Audio(); // temporary Audio object
-            audio.volume = 0.5; // has no effect on iOS <= 12
-            return audio.volume === 1;
-        };
-
-        return !window.MSStream && (iOS_1to12 || iOS13_iPad || iOS1to12quirk());
+        return !window.MSStream && iOS_1to13;
     }
 
     return {

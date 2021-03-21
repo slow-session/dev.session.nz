@@ -38,14 +38,13 @@ feed:
   path: atom.xml
 
 # Compress our Css
-#sass:
-#    style: :compressed
+sass:
+  style: :compressed
 
 permalink: /blog/:year/:title
 
 #### SEO Stuff
 # Google Analytics
-#google_universal_analytics: UA-77351761-1
 google_universal_analytics: G-G60Q8ZH6CT
 google_universal_analytics_cookiedomain: auto
 
