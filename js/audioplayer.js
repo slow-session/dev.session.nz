@@ -20,6 +20,8 @@ const audioPlayer = (function () {
     let presetLoopSegments = [];
     let isIOS = testForIOS();
     let abcEditor = null;
+
+    console.log("isIOS: ", isIOS);
     
     /*
      ***************************************************************************
@@ -661,16 +663,17 @@ const audioPlayer = (function () {
     }
 
     function testForIOS() {
-        let userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        if (
-            userAgent.match(/iPad/i) ||
-            userAgent.match(/iPhone/i) ||
-            userAgent.match(/iPod/i)
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        const iOS_1to12 = /iPad|iPhone|iPod/.test(navigator.platform);
+
+        const iOS13_iPad = (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+        const iOS1to12quirk = function() {
+            var audio = new Audio(); // temporary Audio object
+            audio.volume = 0.5; // has no effect on iOS <= 12
+            return audio.volume === 1;
+        };
+
+        return !window.MSStream && (iOS_1to12 || iOS13_iPad || iOS1to12quirk());
     }
 
     return {
