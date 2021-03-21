@@ -21,10 +21,8 @@ github:
   url: "https://dev.session.nz"
 
 header: yes
-header_sm: images/banner-small.jpg
-header_med: images/banner-med.jpg
-header_large: images/banner-large.jpg
-header_xl: images/banner-xl.jpg
+header_image: images/banner.jpg
+
 
 # Exclude our ruby stuff and other dirs
 exclude: [.bundle, bin, vendor, Gemfile, Gemfile.lock, Rakefile, s3_website.yml, .last_optimized, _scripts, documentation, archive]
