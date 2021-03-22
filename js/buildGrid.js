@@ -70,7 +70,7 @@ const buildGrid = (function () {
 
         // create div for tunes grid
         tunesGrid.classList.add("tunes3columnLayout");
-      
+
         if (results.length) {
             // Are there any results?
             for (let i = 0; i < results.length; i++) {
@@ -103,7 +103,7 @@ const buildGrid = (function () {
 
         // create div for tunes grid
         tunesGrid.classList.add("tunes3columnLayout");
-    
+
         if (results.length) {
             // Are there any results?
             for (var i = 0; i < results.length; i++) {
@@ -132,7 +132,7 @@ const buildGrid = (function () {
                 tunesCounter++;
             }
         }
-        
+
         tunesGrid.innerHTML = appendString;
         tunesCount.innerHTML = tunesCounter;
     }
@@ -143,10 +143,10 @@ const buildGrid = (function () {
 
         let appendString = '';
         for (var key in storeObject) {
-          // Iterate over the original data
-          var item = storeObject[key];
-      
-          appendString += `<span><a href="${item.url}">${item.title}</a></span>
+            // Iterate over the original data
+            var item = storeObject[key];
+
+            appendString += `<span><a href="${item.url}">${item.title}</a></span>
                   <span><input class="filterButton" type="button" 
                   onclick="audioPlayer.selectTune(${storeName}, ${item.tuneID});" value="Play Now">
                   </span>
@@ -231,7 +231,7 @@ const buildGrid = (function () {
 
     function formReset(tuneBook, formInputs) {
         let searchResults = '';
-        
+
         for (const formInput of formInputs) {
             document.getElementById(formInput).value = '';
         }

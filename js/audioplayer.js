@@ -665,7 +665,7 @@ const audioPlayer = (function () {
 
     function testForIOS() {
         const iOS_1to13 = /^iP/.test(navigator.platform) ||
-                            /^Mac/.test(navigator.platform) && navigator.maxTouchPoints > 4;
+            /^Mac/.test(navigator.platform) && navigator.maxTouchPoints > 4;
 
         return !window.MSStream && iOS_1to13;
     }
