@@ -40,9 +40,7 @@ const audioPlayer = (function () {
 <form onsubmit="return false">
     <div class="audioParentOuter">
         <!-- Col 1 - play button -->
-        
-            <button id="playButtonMP3-${tuneID}" class="playButton icon-play2" aria-label="play/pause button" onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')"></button>
-        
+        <button id="playButtonMP3-${tuneID}" class="playButton icon-play2" aria-label="play/pause button" onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')"></button>  
         <!-- Nested row in second column -->
         <div class="audioParentInner">
             <!-- Col 2 - audio slider -->

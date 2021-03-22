@@ -4,7 +4,7 @@
   <meta name=viewport content="width=device-width, initial-scale=1">
   
   {% if site.github.url contains "https://wellington.session.nz" %}
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*; script-src 'self' 'unsafe-inline' https://*; style-src 'self' 'unsafe-inline'; font-src 'self' data: ; media-src 'self' data: ;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*; script-src 'self' 'unsafe-inline' https://*; style-src 'self' 'unsafe-inline'; font-src 'self' data: ; media-src 'self' data: https://*;">
   {% endif %}
 
   <title>{% if page.title %}{{ page.title }} | {{ site.name }}{% else %}{{ site.name }}{% endif %}</title>
@@ -24,7 +24,7 @@
   <link rel="canonical" href="{{ site.github.url }}{{ page.url }}">
   <link href="{{ site.github.url }}/favicon.ico" rel="icon">
   <link rel="alternate" type="application/atom+xml" title="{{ site.name }}" href="{{ site.github.url }}/atom.xml"/>
-
+ 
   <link rel="apple-touch-icon" href="{{ site.github.url }}/images/apple-touch-icon-iphone-60x60.png">
   <link rel="apple-touch-icon" sizes="60x60" href="{{ site.github.url }}/images/apple-touch-icon-ipad-76x76.png">
   <link rel="apple-touch-icon" sizes="114x114" href="{{ site.github.url }}/images/apple-touch-icon-iphone-retina-120x120.png">
