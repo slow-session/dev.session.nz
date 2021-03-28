@@ -33,28 +33,28 @@ const audioPlayer = (function () {
      ***************************************************************************
      */
 
-    function createMP3player(tuneID, mp3URL) {
+    function createMP3player(playerdivID, tuneID, mp3URL) {
 
         // build the MP3 player for each tune
-        let mp3player = `
-<form onsubmit="return false">
+        playerdivID.innerHTML = `
     <div class="audioParentOuter">
         <!-- Col 1 - play button -->
-        <button id="playButtonMP3-${tuneID}" class="playButton icon-play2" aria-label="play/pause button" onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')"></button>  
-        <!-- Nested row in second column -->
+        <button id="playButtonMP3-${tuneID}" class="playButton icon-play2" aria-label="play/pause button" 
+            onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')"></button>  
         <div class="audioParentInner">
             <!-- Col 2 - audio slider -->
             <div class="audioChildInner">
-                <div class="audio">
-                    <span title="Play the tune and then create a loop using the Start and End sliders">
-                        <div id="positionMP3-${tuneID}"></div>
-                    </span>
-                </div>
+                <span title="Play the tune and then create a loop using the Start and End sliders">
+                    <div id="positionMP3-${tuneID}"></div>
+                </span>
                 <div class="mp3LoopControl">
                     <span title="Play the tune and then create a loop using the Loop Start and Loop End buttons">
-                        <input type="button" class="loopButton" id="LoopStart" value=" Loop Start " onclick="audioPlayer.setSliderLoopStart()" />
-                        <input type="button" class="loopButton" id="LoopEnd" value=" Loop End " onclick="audioPlayer.setSliderLoopEnd()" />
-                        <input type="button" class="loopButton" id="Reset" value=" Reset " onclick="audioPlayer.resetFromToSliders()" />
+                        <button id="LoopStart-${tuneID}" class="loopButton" aria-label="loop start" 
+                            onclick="audioPlayer.setSliderLoopStart()"> Loop Start </button>
+                        <button id="LoopEnd-${tuneID}" class="loopButton" aria-label="loop end" 
+                            onclick="audioPlayer.setSliderLoopEnd()"> Loop End </button>
+                        <button id="Reset-${tuneID}" class="loopButton"  aria-label="reset" 
+                            onclick="audioPlayer.resetFromToSliders()"> Reset </button>
                     </span>
                 </div>
             </div>
@@ -68,10 +68,12 @@ const audioPlayer = (function () {
                 </div>
             </div>
         </div>
-    </div>
-</form>`;
+    </div>`;
 
-        return mp3player;
+        // Add the sliders
+        createSliders(tuneID);
+
+        return true;
     }
 
     function createSliders(tuneID) {
@@ -235,8 +237,7 @@ const audioPlayer = (function () {
 
         // make the MP3 player
         if (item.mp3.includes("mp3") && pageMP3player) {
-            pageMP3player.innerHTML = audioPlayer.createMP3player(tuneID, item.mp3);
-            createSliders(tuneID);
+            createMP3player(pageMP3player, tuneID, item.mp3);
 
             let playPosition = document.getElementById(`positionMP3-${tuneID}`);
             LoadAudio(item.mp3, playPosition);
@@ -249,13 +250,7 @@ const audioPlayer = (function () {
             // no recording available
             if (pageMP3player) {
                 let recordingMessage =
-                    "<fieldset><strong> \
-            A recording for this tune is not available.";
-                if (modal) {
-                    recordingMessage +=
-                        `<br /><input class="filterButton" type="button" onclick="location.href='${item.url}';" value="Go to Tune Page" />`;
-                }
-                recordingMessage += "</strong></fieldset>";
+                    "<fieldset><strong>A recording for this tune is not available.</strong></fieldset>";
 
                 pageMP3player.style.overflow = "auto";
                 pageMP3player.innerHTML = recordingMessage;
@@ -670,7 +665,6 @@ const audioPlayer = (function () {
 
     return {
         createMP3player: createMP3player,
-        createSliders: createSliders,
         playAudio: playAudio,
         stopAudio: stopAudio,
         selectTune: selectTune,
