@@ -25,7 +25,7 @@ const audioPlayer = (function () {
 
     /*
      ***************************************************************************
-     * The function createABCPlayer() is no longer used and is replaced by using:
+     * The function createAudioPlayer() is no longer used and is replaced by using:
      *
      * {% include audioPlayerControls.html %}
      * 
@@ -204,8 +204,6 @@ const audioPlayer = (function () {
     function selectTune(storeID, tuneID) {
         let item = storeID[tuneID];
 
-        let pageMP3player = document.getElementById("pageMP3player");
-
         // Add info to page if needed
         let tuneTitle = document.getElementById("tuneTitle");
         if (tuneTitle) {
@@ -226,7 +224,6 @@ const audioPlayer = (function () {
         if (loopPresetControls) {
             loopPresetControls.innerHTML = "";
         }
-
         presetLoopSegments = [];
 
         // If we have a modal make it visible
@@ -235,6 +232,7 @@ const audioPlayer = (function () {
             modal.style.display = "block";
         }
 
+        let pageMP3player = document.getElementById("pageMP3player");
         // make the MP3 player
         if (item.mp3.includes("mp3") && pageMP3player) {
             createMP3player(pageMP3player, tuneID, item.mp3);
