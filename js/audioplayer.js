@@ -45,7 +45,7 @@ const audioPlayer = (function () {
             <!-- Col 2 - audio slider -->
             <div class="audioChildInner">
                 <span title="Play the tune and then create a loop using the Start and End sliders">
-                    <div id="positionMP3-${tuneID}"></div>
+                    <div id="audioSliderMP3-${tuneID}"></div>
                 </span>
                 <div class="mp3LoopControl">
                     <span title="Play the tune and then create a loop using the Loop Start and Loop End buttons">
@@ -60,12 +60,10 @@ const audioPlayer = (function () {
             </div>
             <!-- Col 3 - speed slider -->
             <div class="audioChildInner">
-                <div id="speedControl-${tuneID}">
-                    <span title="Adjust playback speed with slider">
-                        <div id="speedSliderMP3-${tuneID}"></div>
-                        <p class="speedLabel"><strong>Playback Speed</strong></p>
-                    </span>
-                </div>
+                <span title="Adjust playback speed with slider">
+                    <div id="speedSliderMP3-${tuneID}"></div>
+                    <p class="speedLabel"><strong>Playback Speed</strong></p>
+                </span>
             </div>
         </div>
     </div>`;
@@ -77,7 +75,7 @@ const audioPlayer = (function () {
     }
 
     function createSliders(tuneID) {
-        let audioSlider = document.getElementById(`positionMP3-${tuneID}`);
+        let audioSlider = document.getElementById(`audioSliderMP3-${tuneID}`);
         let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
 
         noUiSlider.create(audioSlider, {
@@ -151,7 +149,7 @@ const audioPlayer = (function () {
 
     function playAudio(tuneID, audioSource) {
         let playButton = document.getElementById(`playButtonMP3-${tuneID}`);
-        let playPosition = document.getElementById(`positionMP3-${tuneID}`);
+        let audioSlider = document.getElementById(`audioSliderMP3-${tuneID}`);
         let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
 
         if (playButton.classList.contains("icon-play2")) {
@@ -167,7 +165,7 @@ const audioPlayer = (function () {
                 }
                 previousPlayButton = playButton;
 
-                LoadAudio(audioSource, playPosition);
+                LoadAudio(audioSource, audioSlider);
 
                 OneAudioPlayer.onloadedmetadata = function () {
                     initialiseAudioSlider();
@@ -237,8 +235,8 @@ const audioPlayer = (function () {
         if (item.mp3.includes("mp3") && pageMP3player) {
             createMP3player(pageMP3player, tuneID, item.mp3);
 
-            let playPosition = document.getElementById(`positionMP3-${tuneID}`);
-            LoadAudio(item.mp3, playPosition);
+            let audioSlider = document.getElementById(`audioSliderMP3-${tuneID}`);
+            LoadAudio(item.mp3, audioSlider);
 
             // calculate presetLoopSegments and set up preset loops
             OneAudioPlayer.onloadedmetadata = function () {
@@ -335,11 +333,11 @@ const audioPlayer = (function () {
         }
     }
 
-    function LoadAudio(audioSource, playPosition) {
+    function LoadAudio(audioSource, audioSlider) {
         //console.log("Loading: " + audioSource)
         OneAudioPlayer.src = audioSource;
 
-        playPosition.noUiSlider.updateOptions({
+        audioSlider.noUiSlider.updateOptions({
             tooltips: [
                 wNumb({
                     decimals: 1,
@@ -352,7 +350,7 @@ const audioPlayer = (function () {
                 }),
             ],
         });
-        currentAudioSlider = playPosition;
+        currentAudioSlider = audioSlider;
     }
 
     function stopAudio() {
