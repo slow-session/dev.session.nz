@@ -576,6 +576,15 @@ const audioPlayer = (function () {
 
         // do nothing unless at least one box is checked
         if (firstSegment != null || lastSegment != null) {
+            // iOS audio player workaround for initial call to OneAudioPlayer.currentTime
+            if (isIOS) {
+                OneAudioPlayer.oncanplaythrough = function () {
+                    OneAudioPlayer.currentTime = beginLoopTime; 
+                };
+            } else {
+                OneAudioPlayer.currentTime = beginLoopTime;
+            }
+
             // first reset to ends, then reposition
             currentAudioSlider.noUiSlider.setHandle(0, 0);
             currentAudioSlider.noUiSlider.setHandle(2, OneAudioPlayer.duration);
@@ -602,15 +611,7 @@ const audioPlayer = (function () {
             }
         } else {
             resetFromToSliders();
-        }
-
-        // iOS audio player workaround for initial call to OneAudioPlayer.currentTime
-        if (isIOS) {
-            OneAudioPlayer.oncanplaythrough = function () {
-                OneAudioPlayer.currentTime = beginLoopTime; 
-            };
-        } else {
-            OneAudioPlayer.currentTime = beginLoopTime;
+            //OneAudioPlayer.currentTime = beginLoopTime;
         }
     }
 
