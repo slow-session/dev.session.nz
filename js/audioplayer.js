@@ -495,7 +495,6 @@ const audioPlayer = (function () {
     <div class="loopLabel"></div>`;
             }
         }
-
         return loopDetails;
     }
 
@@ -518,43 +517,58 @@ const audioPlayer = (function () {
     function adjustUp(elementName, inputTime) {
         let loopInput = document.getElementById(elementName);
 
-        if (inputTime <= OneAudioPlayer.duration - 0.2) {
-            let newTime = parseFloat(inputTime) + parseFloat(0.2);
-            newTime = newTime.toFixed(1);
-
-            if (newTime > OneAudioPlayer.currentTime) {
-                currentAudioSlider.noUiSlider.setHandle(1, newTime);
-            }
-            if (elementName == "loopControlStart") {
+        let newTime = parseFloat(inputTime) + parseFloat(0.2);
+        newTime = newTime.toFixed(1);
+        console.log("up - newTime: ", newTime);
+        
+        if (elementName == "loopControlStart") {
+            // don't push the beginning of the loop past the current end of the loop
+            if (newTime < endLoopTime - 0.2) {
+                if (newTime > OneAudioPlayer.currentTime) {
+                    currentAudioSlider.noUiSlider.setHandle(1, newTime);
+                }
                 currentAudioSlider.noUiSlider.setHandle(0, newTime);
                 beginLoopTime = newTime;
-            } else {
-                currentAudioSlider.noUiSlider.setHandle(2, Math.min(OneAudioPlayer.duration, newTime));
-                endLoopTime = newTime;
+                loopInput.value = newTime;
             }
-            loopInput.value = newTime;
+        } else {
+            if (newTime > OneAudioPlayer.duration) {
+                // don't push the end of the loop past the end of the tune
+                currentAudioSlider.noUiSlider.setHandle(2, OneAudioPlayer.duration);
+                endLoopTime = OneAudioPlayer.duration;
+                loopInput.value = OneAudioPlayer.duration.toFixed(1);
+            } else {
+                // adjust the end of the loop
+                currentAudioSlider.noUiSlider.setHandle(2, newTime);
+                endLoopTime = newTime;
+                loopInput.value = newTime;
+            }
         }
     }
 
     function adjustDown(elementName, inputTime) {
         let loopInput = document.getElementById(elementName);
+        
+        let newTime = parseFloat(inputTime) - parseFloat(0.2);
+        newTime = newTime.toFixed(1);
+        console.log("down - newTime: ", newTime);
 
-        if (inputTime >= 0.2) {
-            let newTime = parseFloat(inputTime) - parseFloat(0.2);
-            newTime = newTime.toFixed(1);
-
-            if (newTime < OneAudioPlayer.currentTime) {
-                currentAudioSlider.noUiSlider.setHandle(1, newTime);
-            }
-            if (elementName == "loopControlStart") {
+        if (elementName == "loopControlStart") {
+            if (newTime >= 0) {
+                // don't push the beginning of the loop past the start of the tune
                 currentAudioSlider.noUiSlider.setHandle(0, newTime);
                 beginLoopTime = newTime;
-            } else {
-                currentAudioSlider.noUiSlider.setHandle(2, Math.min(OneAudioPlayer.duration, newTime));
-                endLoopTime = newTime;
+                loopInput.value = newTime;
             }
-            loopInput.value = newTime;
+        } else {
+            if (newTime >= beginLoopTime + 0.2) {
+                // don't push the end of the loop past the current begining of the loop
+                currentAudioSlider.noUiSlider.setHandle(2, newTime);
+                endLoopTime = newTime;
+                loopInput.value = newTime;
+            }
         }
+        
     }
 
     function applySegments() {
