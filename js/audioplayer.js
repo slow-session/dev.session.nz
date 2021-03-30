@@ -21,8 +21,6 @@ const audioPlayer = (function () {
     let isIOS = testForIOS();
     let abcEditor = null;
 
-    console.log("isIOS: ", isIOS);
-
     /*
      ***************************************************************************
      * The function createAudioPlayer() is no longer used and is replaced by using:
@@ -117,7 +115,13 @@ const audioPlayer = (function () {
                     loopControlEnd.value = endLoopTime;
                 }
             } else if (handle === 1) {
-                OneAudioPlayer.currentTime = values[1];
+                if (isIOS) {
+                    OneAudioPlayer.oncanplaythrough = function () {
+                        OneAudioPlayer.currentTime = values[1];
+                    };
+                } else {
+                    OneAudioPlayer.currentTime = values[1];
+                }
             }
         });
         audioSlider.noUiSlider.on("start", function (value) {
@@ -149,13 +153,15 @@ const audioPlayer = (function () {
 
     function playAudio(tuneID, audioSource) {
         let playButton = document.getElementById(`playButtonMP3-${tuneID}`);
-        let audioSlider = document.getElementById(`audioSliderMP3-${tuneID}`);
+        //let audioSlider = document.getElementById(`audioSliderMP3-${tuneID}`);
         let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
 
         if (playButton.classList.contains("icon-play2")) {
             // time to play this tune
             if (!OneAudioPlayer.src.includes(audioSource)) {
+                console.log(audioSource);
                 if (OneAudioPlayer.src != null) {
+                    console.log("reset previous player: ", previousPlayButton);
                     //reset previous audio player
                     // not sure we need this
                     if (previousPlayButton && previousPlayButton.classList.contains("icon-pause")) {
@@ -164,16 +170,11 @@ const audioPlayer = (function () {
                     }
                 }
                 previousPlayButton = playButton;
-
-                LoadAudio(audioSource, audioSlider);
-
-                OneAudioPlayer.onloadedmetadata = function () {
-                    initialiseAudioSlider();
-                };
             }
             // Initialise the loop and audioSlider
-            if (!endLoopTime) {
+            if (!endLoopTime) {    
                 endLoopTime = OneAudioPlayer.duration;
+                console.log(endLoopTime);
             }
 
             // This event listener keeps track of the cursor and restarts the loops
@@ -240,7 +241,8 @@ const audioPlayer = (function () {
 
             // calculate presetLoopSegments and set up preset loops
             OneAudioPlayer.onloadedmetadata = function () {
-                displayPresetLoops(item);
+                initialiseAudioSlider();
+                initialisePresetLoops(item);
             };
         } else {
             // no recording available
@@ -257,8 +259,8 @@ const audioPlayer = (function () {
         displayABC(item.abc);
     }
 
-    function displayPresetLoops(item) {
-        let presetLoops = document.getElementById("presetLoops");
+    function initialisePresetLoops(item) {
+        let presetLoops = document.getElementById("presetLoops");        
         if (presetLoops && item.mp3) {
             presetLoops.innerHTML = `
     <details>
@@ -281,7 +283,6 @@ const audioPlayer = (function () {
                 }
             }
         }
-        initialiseAudioSlider();
     }
 
     function displayABC(abcText) {
@@ -575,23 +576,16 @@ const audioPlayer = (function () {
 
         // do nothing unless at least one box is checked
         if (firstSegment != null || lastSegment != null) {
-            // iOS audio player workaround for initial call to OneAudioPlayer.currentTime
-            if (isIOS) {
-                OneAudioPlayer.oncanplaythrough = function () {
-                    OneAudioPlayer.currentTime = beginLoopTime;
-                };
-            } else {
-                OneAudioPlayer.currentTime = beginLoopTime;
-            }
-
             // first reset to ends, then reposition
             currentAudioSlider.noUiSlider.setHandle(0, 0);
             currentAudioSlider.noUiSlider.setHandle(2, OneAudioPlayer.duration);
-            currentAudioSlider.noUiSlider.setHandle(1, 0);
+            //currentAudioSlider.noUiSlider.setHandle(1, 0);
             // set to positions in row
             currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
             currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
             currentAudioSlider.noUiSlider.setHandle(2, endLoopTime);
+            // get current position handle on top
+            currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
 
             document.getElementById("loopControlStart").value = beginLoopTime;
             document.getElementById("loopControlEnd").value = endLoopTime;
@@ -608,6 +602,14 @@ const audioPlayer = (function () {
             }
         } else {
             resetFromToSliders();
+        }
+
+        // iOS audio player workaround for initial call to OneAudioPlayer.currentTime
+        if (isIOS) {
+            OneAudioPlayer.oncanplaythrough = function () {
+                OneAudioPlayer.currentTime = beginLoopTime; 
+            };
+        } else {
             OneAudioPlayer.currentTime = beginLoopTime;
         }
     }
