@@ -579,13 +579,13 @@ const audioPlayer = (function () {
             // first reset to ends, then reposition
             currentAudioSlider.noUiSlider.setHandle(0, 0);
             currentAudioSlider.noUiSlider.setHandle(2, OneAudioPlayer.duration);
-            //currentAudioSlider.noUiSlider.setHandle(1, 0);
+            currentAudioSlider.noUiSlider.setHandle(1, 0);
             // set to positions in row
             currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
             currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
             currentAudioSlider.noUiSlider.setHandle(2, endLoopTime);
             // get current position handle on top
-            currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
+            //currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
 
             document.getElementById("loopControlStart").value = beginLoopTime;
             document.getElementById("loopControlEnd").value = endLoopTime;
