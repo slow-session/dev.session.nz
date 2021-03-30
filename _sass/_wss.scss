@@ -12,7 +12,7 @@
 
 .tuneInfoColumn {
     flex: 1;
-    min-width: fit-content;
+    min-width: max-content;
 }
 
 p.tuneInfoPara {
@@ -120,7 +120,7 @@ p.speedLabel {
 }
 
 details > summary {
-    width: fit-content;
+    width: max-content;
     list-style-type: none;
     white-space: nowrap
 }
@@ -251,7 +251,7 @@ input[type=number] {
 .loopInput {
     font-size: 0.9rem;
     border-radius: unset;
-    width: 5ch;
+    width: 6ch;
     height: fit-content;
 }
 // END: used for Preset Loops
