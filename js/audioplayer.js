@@ -554,8 +554,13 @@ const audioPlayer = (function () {
         console.log("down - newTime: ", newTime);
 
         if (elementName == "loopControlStart") {
-            if (newTime >= 0) {
+            if (newTime < 0) {
                 // don't push the beginning of the loop past the start of the tune
+                currentAudioSlider.noUiSlider.setHandle(0, 0);
+                beginLoopTime = 0;
+                loopInput.value = 0;
+            } else {
+                // adjust the beginning of the loop
                 currentAudioSlider.noUiSlider.setHandle(0, newTime);
                 beginLoopTime = newTime;
                 loopInput.value = newTime;
