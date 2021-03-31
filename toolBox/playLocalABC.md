@@ -51,6 +51,7 @@ function handleABCFileSelect(evt) {
                 return (1);
             }
 
+            audioPlayer.stopAudio();
             audioPlayer.displayABC(this.result);
             
         };

@@ -15,7 +15,6 @@
 const audioPlayer = (function () {
     let beginLoopTime = 0;
     let endLoopTime = 0;
-    let previousPlayButton = null;
     let currentAudioSlider = null;
     let presetLoopSegments = [];
     let isIOS = testForIOS();
@@ -31,14 +30,136 @@ const audioPlayer = (function () {
      ***************************************************************************
      */
 
-    function createMP3player(playerdivID, tuneID, mp3URL) {
+    // Used on tune pages to create an MP3 player and display the ABC
+    function selectTune(storeID, tuneID) {
+        let item = storeID[tuneID];
+
+        // Add info to page if needed
+        let tuneTitle = document.getElementById("tuneTitle");
+        if (tuneTitle) {
+            tuneTitle.innerHTML =
+                `<h2>${item.title}<span> - ${item.key} ${item.rhythm}</span></h2>`;
+        }
+        let tuneInfo = document.getElementById("tuneInfo");
+        if (tuneInfo) {
+            if (item.mp3_source) {
+                tuneInfo.innerHTML = "Source: " + item.mp3_source;
+            } else {
+                tuneInfo.innerHTML = "";
+            }
+        }
+
+        // Clear the loop preset display
+        let loopPresetControls = document.getElementById("loopPresetControls");
+        if (loopPresetControls) {
+            loopPresetControls.innerHTML = "";
+        }
+        presetLoopSegments = [];
+
+        // If we have a modal make it visible
+        let modal = document.getElementById("tuneModal");
+        if (modal) {
+            modal.style.display = "block";
+        }
+
+        let pageMP3player = document.getElementById("pageMP3player");
+        // make the MP3 player
+        if (pageMP3player && item.mp3.includes("mp3")) {
+            displayMP3player(pageMP3player, tuneID, item.mp3, item);
+        } else {
+            // no recording available
+            if (pageMP3player) {
+                let recordingMessage = "<fieldset><strong>A recording for this tune is not available.</strong></fieldset>";
+
+                pageMP3player.style.overflow = "auto";
+                pageMP3player.innerHTML = recordingMessage;
+            }
+        }
+
+        // show the dots and the abc player
+        displayABC(item.abc);
+    }
+
+    // Used on playLocalAudio page directly
+    function displayMP3player(pageMP3player, tuneID, mp3, item) {
+
+        createMP3player(pageMP3player, tuneID);
+
+        let audioSlider = document.getElementById(`audioSliderMP3-${tuneID}`);
+        LoadAudio(mp3, audioSlider);
+
+        if (item) {
+            OneAudioPlayer.onloadedmetadata = function () {
+                initialiseAudioSlider();
+                initialisePresetLoops(item);
+            }
+        } else {
+            // calculate presetLoopSegments and set up preset loops
+            OneAudioPlayer.onloadedmetadata = function () {
+                initialiseAudioSlider();
+            };
+        }
+    }
+
+    // Used on pages that display ABC such as editABC, playLocalABC and the "sets" pages
+    function displayABC(abcText) {
+        if (abcText) {
+            let textAreaABC = document.getElementById("textAreaABC");
+            if (textAreaABC) {
+                textAreaABC.innerHTML = abcText;
+            }
+
+            // Get the current paper state
+            let currentPaperState = document.getElementById("abcPaper").style.display;
+            // Set the paper state to 'block'
+            document.getElementById("abcPaper").style.display = "block";
+
+            // Draw the dots
+            abcEditor = new window.ABCJS.Editor("textAreaABC", {
+                paper_id: "abcPaper",
+                warnings_id: "warnings",
+                render_options: {
+                    responsive: 'resize'
+                },
+                indicate_changed: "true",
+                synth: {
+                    el: "#abcAudio",
+                    options: {
+                        displayLoop: true,
+                        displayRestart: true,
+                        displayPlay: true,
+                        displayProgress: true,
+                        displayWarp: true
+                    }
+                }
+            });
+
+            // Reset paper state to original value
+            document.getElementById("abcPaper").style.display = currentPaperState;
+        } else {
+            let abcPaper = document.getElementById("abcPaper");
+            if (abcPaper) {
+                abcPaper.style.paddingBottom = "0px";
+                abcPaper.style.overflow = "auto";
+                let urlTheSession = "https://thesession.org/tunes/";
+                abcPaper.innerHTML =
+                    `<p>We don't have dots for this tune. If you find a version of the tune that's 
+    a good match, send us a copy of the ABC and we'll get it added to the site. 
+    You might find it on The Session at this link: 
+    <a href="${urlTheSession}">${urlTheSession}</a></p>`;
+            }
+        }
+    }
+
+    // creates an MP3 player - not called externally
+    function createMP3player(playerdivID, tuneID) {
 
         // build the MP3 player for each tune
         playerdivID.innerHTML = `
     <div class="audioParentOuter">
         <!-- Col 1 - play button -->
         <button id="playButtonMP3-${tuneID}" class="playButton icon-play2" aria-label="play/pause button" 
-            onclick="audioPlayer.playAudio(${tuneID}, '${mp3URL}')"></button>  
+            onclick="audioPlayer.playAudio(${tuneID})"></button>  
         <div class="audioParentInner">
             <!-- Col 2 - audio slider -->
             <div class="audioChildInner">
@@ -72,6 +193,7 @@ const audioPlayer = (function () {
         return true;
     }
 
+    // creates the control sliders - not called externally
     function createSliders(tuneID) {
         let audioSlider = document.getElementById(`audioSliderMP3-${tuneID}`);
         let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
@@ -143,7 +265,8 @@ const audioPlayer = (function () {
         });
     }
 
-    function playAudio(tuneID, audioSource) {
+    // plays the MP3 when the play button is pressed
+    function playAudio(tuneID) {
         let playButton = document.getElementById(`playButtonMP3-${tuneID}`);
         let audioSlider = document.getElementById(`audioSliderMP3-${tuneID}`);
         let speedSlider = document.getElementById(`speedSliderMP3-${tuneID}`);
@@ -181,124 +304,7 @@ const audioPlayer = (function () {
         }
     }
 
-    function selectTune(storeID, tuneID) {
-        let item = storeID[tuneID];
-
-        // Add info to page if needed
-        let tuneTitle = document.getElementById("tuneTitle");
-        if (tuneTitle) {
-            tuneTitle.innerHTML =
-                `<h2>${item.title}<span> - ${item.key} ${item.rhythm}</span></h2>`;
-        }
-        let tuneInfo = document.getElementById("tuneInfo");
-        if (tuneInfo) {
-            if (item.mp3_source) {
-                tuneInfo.innerHTML = "Source: " + item.mp3_source;
-            } else {
-                tuneInfo.innerHTML = "";
-            }
-        }
-
-        // Clear the loop preset display
-        let loopPresetControls = document.getElementById("loopPresetControls");
-        if (loopPresetControls) {
-            loopPresetControls.innerHTML = "";
-        }
-        presetLoopSegments = [];
-
-        // If we have a modal make it visible
-        let modal = document.getElementById("tuneModal");
-        if (modal) {
-            modal.style.display = "block";
-        }
-
-        let pageMP3player = document.getElementById("pageMP3player");
-        // make the MP3 player
-        if (pageMP3player && item.mp3.includes("mp3")) {
-            displayMP3player(pageMP3player, tuneID, item.mp3, item);
-        } else {
-            // no recording available
-            if (pageMP3player) {
-                let recordingMessage = "<fieldset><strong>A recording for this tune is not available.</strong></fieldset>";
-
-                pageMP3player.style.overflow = "auto";
-                pageMP3player.innerHTML = recordingMessage;
-            }
-        }
-   
-        // show the dots and the abc player
-        displayABC(item.abc);
-    }
-
-    function displayMP3player(pageMP3player, tuneID, mp3, item) {
-        
-        createMP3player(pageMP3player, tuneID, mp3);
-
-        let audioSlider = document.getElementById(`audioSliderMP3-${tuneID}`);
-        LoadAudio(mp3, audioSlider);
-
-        if (item) {
-            OneAudioPlayer.onloadedmetadata = function () {
-                initialiseAudioSlider();
-                initialisePresetLoops(item);
-            }
-        } else {
-            // calculate presetLoopSegments and set up preset loops
-            OneAudioPlayer.onloadedmetadata = function () {
-                initialiseAudioSlider();
-            };
-        }
-    }
-
-    function displayABC(abcText) {
-        if (abcText) {
-            let textAreaABC = document.getElementById("textAreaABC");
-            if (textAreaABC) {
-                textAreaABC.innerHTML = abcText;
-            }
-
-            // Get the current paper state
-            let currentPaperState = document.getElementById("abcPaper").style.display;
-            // Set the paper state to 'block'
-            document.getElementById("abcPaper").style.display = "block";
-
-            // Draw the dots
-            abcEditor = new window.ABCJS.Editor("textAreaABC", {
-                paper_id: "abcPaper",
-                warnings_id: "warnings",
-                render_options: {
-                    responsive: 'resize'
-                },
-                indicate_changed: "true",
-                synth: {
-                    el: "#abcAudio",
-                    options: {
-                        displayLoop: true,
-                        displayRestart: true,
-                        displayPlay: true,
-                        displayProgress: true,
-                        displayWarp: true
-                    }
-                }
-            });
-
-            // Reset paper state to original value
-            document.getElementById("abcPaper").style.display = currentPaperState;
-        } else {
-            let abcPaper = document.getElementById("abcPaper");
-            if (abcPaper) {
-                abcPaper.style.paddingBottom = "0px";
-                abcPaper.style.overflow = "auto";
-                let urlTheSession = "https://thesession.org/tunes/";
-                abcPaper.innerHTML =
-                    `<p>We don't have dots for this tune. If you find a version of the tune that's 
-    a good match, send us a copy of the ABC and we'll get it added to the site. 
-    You might find it on The Session at this link: 
-    <a href="${urlTheSession}">${urlTheSession}</a></p>`;
-            }
-        }
-    }
-
+    // loads the MP3 file and initialises the sliders - not called externally
     function LoadAudio(audioSource, audioSlider) {
         //console.log("Loading: " + audioSource)
         OneAudioPlayer.src = audioSource;
@@ -320,6 +326,19 @@ const audioPlayer = (function () {
         currentAudioSlider = audioSlider;
     }
 
+    // initialise the audio slider when the MP3 is loaded - not called externally
+    function initialiseAudioSlider() {
+        //console.log('initialiseAudioSlider: ' + OneAudioPlayer.duration);
+        currentAudioSlider.noUiSlider.updateOptions({
+            range: {
+                min: 0,
+                max: OneAudioPlayer.duration,
+            },
+        });
+        resetFromToSliders();
+    }
+
+    // initialise the preset loops when the MP3 is loaded - not called externally
     function initialisePresetLoops(item) {
         let presetLoops = document.getElementById("presetLoops");
         if (presetLoops && item.mp3) {
@@ -344,6 +363,8 @@ const audioPlayer = (function () {
         }
     }
 
+    // stop any audio playing when modals are closed 
+    // or new ABC is loaded in editABC and playLocalABC
     function stopAudio() {
         if (document.getElementById('OneAudioPlayer')) {
             OneAudioPlayer.pause();
@@ -353,17 +374,7 @@ const audioPlayer = (function () {
         }
     }
 
-    function initialiseAudioSlider() {
-        //console.log('initialiseAudioSlider: ' + OneAudioPlayer.duration);
-        currentAudioSlider.noUiSlider.updateOptions({
-            range: {
-                min: 0,
-                max: OneAudioPlayer.duration,
-            },
-        });
-        resetFromToSliders();
-    }
-
+    // redraws the current position slider as the tune is playing - not called externally
     function positionUpdate() {
         if (OneAudioPlayer.currentTime >= endLoopTime) {
             //console.log("Current time: " + OneAudioPlayer.currentTime);
@@ -373,12 +384,15 @@ const audioPlayer = (function () {
         currentAudioSlider.noUiSlider.setHandle(1, OneAudioPlayer.currentTime);
     }
 
+    // restarts the loop at the beginning of the currently defined loop - not called externally
     function restartLoop() {
         OneAudioPlayer.currentTime = beginLoopTime;
         //console.log("Restarting loop at: " + OneAudioPlayer.currentTime);
         OneAudioPlayer.play();
     }
 
+    // construct the tune part segments based on the parts and repeats 
+    // info in the tune "md" file - not called externally
     function buildSegments(item) {
         let parts = item.parts;
         let repeats = item.repeats;
@@ -421,6 +435,7 @@ const audioPlayer = (function () {
         }
     }
 
+    // create the container for the preset loops - not called externally
     function createLoopControlsContainer() {
         let loopControlsContainer = `
     <div class="loopLabel"><strong>Adjust Loop</strong></div>
@@ -446,6 +461,7 @@ const audioPlayer = (function () {
         return loopControlsContainer;
     }
 
+    // uses the info from buildSegments() to display the preset loops - not called externally
     function createPresetLoops() {
         let loopDetails = '';
 
@@ -482,6 +498,7 @@ const audioPlayer = (function () {
         return loopDetails;
     }
 
+    // called when the Start "input" box in the preset loops container changes
     function setSliderStart(startTime) {
         if (startTime > OneAudioPlayer.currentTime) {
             currentAudioSlider.noUiSlider.setHandle(1, startTime);
@@ -490,6 +507,7 @@ const audioPlayer = (function () {
         beginLoopTime = startTime;
     }
 
+    // called when the End "input" box in the preset loops container changes
     function setSliderEnd(endTime) {
         if (endTime < OneAudioPlayer.currentTime) {
             currentAudioSlider.noUiSlider.setHandle(1, endTime);
@@ -498,6 +516,7 @@ const audioPlayer = (function () {
         endLoopTime = endTime;
     }
 
+    // called by the "up" arrow keys in the preset loops containers
     function adjustUp(elementName, inputTime) {
         let loopInput = document.getElementById(elementName);
 
@@ -530,6 +549,7 @@ const audioPlayer = (function () {
         }
     }
 
+    // called by the "down" arrow keys in the preset loops containers
     function adjustDown(elementName, inputTime) {
         let loopInput = document.getElementById(elementName);
 
@@ -559,6 +579,7 @@ const audioPlayer = (function () {
         }
     }
 
+    // called when the preset loop tick boxes are selected/deselected
     function applySegments() {
         let checkBox;
         let firstSegment = null;
@@ -624,6 +645,7 @@ const audioPlayer = (function () {
         }
     }
 
+    // called when the "Loop Start" button is pressed
     function setSliderLoopStart() {
         beginLoopTime = OneAudioPlayer.currentTime;
         currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
@@ -633,6 +655,7 @@ const audioPlayer = (function () {
         }
     }
 
+    // called when the "Loop End" button is pressed
     function setSliderLoopEnd() {
         endLoopTime = OneAudioPlayer.currentTime;
         currentAudioSlider.noUiSlider.setHandle(2, endLoopTime);
@@ -642,6 +665,7 @@ const audioPlayer = (function () {
         }
     }
 
+    // called when the "Reset" button is pressed
     function resetFromToSliders() {
         beginLoopTime = 0;
         OneAudioPlayer.currentTime = 0;
@@ -665,6 +689,7 @@ const audioPlayer = (function () {
         }
     }
 
+    // test to see if we're on an iPad/iPhone - not called externally
     function testForIOS() {
         const iOS_1to13 = /^iP/.test(navigator.platform) ||
             /^Mac/.test(navigator.platform) && navigator.maxTouchPoints > 4;
@@ -684,7 +709,7 @@ const audioPlayer = (function () {
         resetFromToSliders: resetFromToSliders,
         applySegments: applySegments,
         adjustUp: adjustUp,
-        adjustDown: adjustDown,    
+        adjustDown: adjustDown,
         displayABC: displayABC,
     };
 })();
