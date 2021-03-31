@@ -47,7 +47,8 @@ function handleAudioFileSelect(evt) {
         }       
         let reader = new FileReader();
         reader.onload = function(e) {
-            audioPlayer.createMP3player(pageMP3player, '1', this.result);
+            // last parameter is null as we've no preset loop info in a window.store structure
+            audioPlayer.displayMP3player(pageMP3player, '1', this.result, null);
         };
         reader.readAsDataURL(f);
     }
