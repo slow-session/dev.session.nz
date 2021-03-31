@@ -663,6 +663,7 @@ const audioPlayer = (function () {
 
     function resetFromToSliders() {
         beginLoopTime = 0;
+        OneAudioPlayer.currentTime = 0;
         currentAudioSlider.noUiSlider.setHandle(0, beginLoopTime);
         currentAudioSlider.noUiSlider.setHandle(1, beginLoopTime);
         let loopControlStart = document.getElementById("loopControlStart");
