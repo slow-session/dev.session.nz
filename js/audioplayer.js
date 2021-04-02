@@ -228,7 +228,7 @@ const audioPlayer = (function () {
                 OneAudioPlayer.currentTime = values[1];
             }
         });
-        /* Not clear we need these!!
+        // Not clear we need these!!
         audioSlider.noUiSlider.on("start", function () {
             OneAudioPlayer.onplaying = function () {
                 console.log("pause");
@@ -241,7 +241,7 @@ const audioPlayer = (function () {
                 OneAudioPlayer.play();
             };
         });
-        */
+        
 
         // create the speed slider
         noUiSlider.create(speedSlider, {
