@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
     } else {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
-
     audioPlayer.displayABC(textAreaABC.value);
 });
 
@@ -89,18 +88,15 @@ function handleABCFileSelect(evt) {
         var reader = new FileReader();
 
         reader.onload = function(e) {
-            // Is ABC file valid?
-            if ((wssTools.getABCheaderValue("X:", this.result) == '')
-                || (wssTools.getABCheaderValue("T:", this.result) == '')
-                || (wssTools.getABCheaderValue("K:", this.result) == '')) { fileInfo.innerHTML = "Invalid ABC file";
-                return (1);
+            // the ABC file should have "X:", "T:", "K:" fields to be valid
+            if (this.result.match(/[XTK]:/g).length >= 3) {
+                // Show the dots
+                textAreaABC.value = this.result + "\n";
+                audioPlayer.stopAudio();
+                audioPlayer.displayABC(textAreaABC.value);
+            } else {
+                fileInfo.innerHTML = '<h2>Invalid ABC file - missing "X:", "T:", "K:" fields</h2>';
             }
-
-            // Show the dots
-            textAreaABC.value = this.result + "\n";
-
-            audioPlayer.stopAudio();
-            audioPlayer.displayABC(textAreaABC.value);
         };
         reader.readAsText(f);
     }
