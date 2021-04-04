@@ -7,18 +7,10 @@ You can use this page to play an ABC file you've stored locally.
 
 <textarea id="textAreaABC" style="display:none;"></textarea>
 
-<div class="output">
-    <div id="abcPaper" class="abcPaper"></div>
-    <div id="abcAudio"></div>
-</div>
-
-<div class="player">
-<!-- hide the player until we've loaded some dots -->
-<div id="pageABCplayer" style="display:none;"></div>
-</div>
+<div id="abcPaper" class="abcPaper"></div>
+<div id="abcAudio"></div>
 
 <input type="file" id="files" class='filterButton' name="files[]" accept="text/vnd.abc,.abc"/>
-
 <output id="fileInfo"></output>
 
 <script>
@@ -46,11 +38,15 @@ function handleABCFileSelect(evt) {
         reader.onload = function(e) {
             // the ABC file should have "X:", "T:", "K:" fields to be valid
             if (this.result.match(/[XTK]:/g).length >= 3) {
+                fileInfo.innerHTML = '';
                 audioPlayer.stopAudio();
                 audioPlayer.displayABC(this.result);
-                fileInfo.innerHTML = '';
             } else {
                 fileInfo.innerHTML = '<h2>Invalid ABC file - missing "X:", "T:", "K:" fields</h2>';
+                abcPaper.innerHTML = '';
+                abcPaper.style.paddingBottom = "0px";
+                abcPaper.style.overflow = "auto";
+                abcAudio.innerHTML = '';
             }
         };
         reader.readAsText(f);

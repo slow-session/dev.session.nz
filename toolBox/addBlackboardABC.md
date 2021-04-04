@@ -81,11 +81,15 @@ function handleABCFileSelect(evt) {
             // the ABC file should have "X:", "T:", "K:" fields to be valid
             if (this.result.match(/[XTK]:/g).length >= 3) {
                 // Show the dots
+                fileInfo.innerHTML = '';
                 audioPlayer.stopAudio();
                 audioPlayer.displayABC(this.result);
-                fileInfo.innerHTML = '';
             } else {
                 fileInfo.innerHTML = '<h2>Invalid ABC file - missing "X:", "T:", "K:" fields</h2>';
+                abcPaper.innerHTML = '';
+                abcPaper.style.paddingBottom = "0px";
+                abcPaper.style.overflow = "auto";
+                abcAudio.innerHTML = '';
             }
         };
         reader.readAsText(f);
