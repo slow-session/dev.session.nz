@@ -94,6 +94,7 @@ function handleABCFileSelect(evt) {
                 textAreaABC.value = this.result + "\n";
                 audioPlayer.stopAudio();
                 audioPlayer.displayABC(textAreaABC.value);
+                fileInfo.innerHTML = '';
             } else {
                 fileInfo.innerHTML = '<h2>Invalid ABC file - missing "X:", "T:", "K:" fields</h2>';
             }

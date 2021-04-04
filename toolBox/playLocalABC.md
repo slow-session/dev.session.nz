@@ -48,6 +48,7 @@ function handleABCFileSelect(evt) {
             if (this.result.match(/[XTK]:/g).length >= 3) {
                 audioPlayer.stopAudio();
                 audioPlayer.displayABC(this.result);
+                fileInfo.innerHTML = '';
             } else {
                 fileInfo.innerHTML = '<h2>Invalid ABC file - missing "X:", "T:", "K:" fields</h2>';
             }
