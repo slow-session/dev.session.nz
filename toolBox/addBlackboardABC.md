@@ -82,7 +82,7 @@ function handleABCFileSelect(evt) {
             if (this.result.match(/[XTK]:/g).length >= 3) {
                 // Show the dots
                 fileInfo.innerHTML = '';
-                audioPlayer.stopAudio();
+                audioPlayer.stopABCplayer();
                 audioPlayer.displayABC(this.result);
             } else {
                 fileInfo.innerHTML = '<h2>Invalid ABC file - missing "X:", "T:", "K:" fields</h2>';
