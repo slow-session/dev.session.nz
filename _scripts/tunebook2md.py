@@ -90,7 +90,7 @@ mp3_licence:
 mp3_url:
 alt_mp3_url:
 source: Wellington
-abc_source: Wellington Tunebook Collection
+abc_source: Tune Sets Arranged by Paddy O’Brien, Co. Tipperary
 """)
             outfile.write('abc_url: /tunebooks/other/' + archiveStub + '.pdf')
 

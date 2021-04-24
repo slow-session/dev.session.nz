@@ -62,10 +62,12 @@ twitter_card: false
 twitter_image:                        #enter a default image (at least 200x200px) to use here for posts/pages that don't have one.
 
 #
-# Additions for session.nz
+# Additions for dev.session.nz
 #
 mp3_host: https://mp3.session.nz # leave blank if mp3 files are served from THIS SERVER
+tunebooks_host: https://mp3.session.nz # leave blank if mp3 files are served from THIS SERVER
 js_host:  # leave blank if js files are served from THIS SERVER
+
 
 collections:
   tunes:
