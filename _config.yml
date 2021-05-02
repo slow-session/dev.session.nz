@@ -10,7 +10,7 @@ slowsession_time: "7:30 to 8:30"
 #slowsession_time: "Please check back when the world is normal!"
 session_time: "8:45 to late"
 #session_time: "Please check back when the world is normal!"
-defaultABCplayer: 'piano'
+
 # no of tunes to show in latest.md etc
 latest_tunes_max: 20
 slow_tunes_max: 20
@@ -22,7 +22,6 @@ github:
 
 header: yes
 header_image: images/banner.jpg
-
 
 # Exclude our ruby stuff and other dirs
 exclude: [.bundle, bin, vendor, Gemfile, Gemfile.lock, Rakefile, s3_website.yml, .last_optimized, _scripts, documentation, archive]
@@ -44,9 +43,6 @@ sass:
 permalink: /blog/:year/:title
 
 #### SEO Stuff
-# Google Analytics
-google_universal_analytics: G-G60Q8ZH6CT
-google_universal_analytics_cookiedomain: auto
 
 # Facebook Opengraph
 facebook_user: WellingtonSession
