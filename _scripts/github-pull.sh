@@ -6,8 +6,6 @@
 
 SOURCEDIR="${HOME}/GitHub/${1}"
 
-echo ${SOURCEDIR}
-exit
 #
 # Get any updates from main respository
 #
