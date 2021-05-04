@@ -1,2 +1,4 @@
-github:
-  url: "http://localhost:4002"
+#
+# Override the value in _config.yml
+#
+http_host:
