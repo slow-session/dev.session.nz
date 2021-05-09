@@ -1,6 +1,6 @@
 ---
 title: Dunmore Lasses
-titleID: the-dunmore-lasses.md
+titleID: dunmore-lasses.md
 key: Edor
 rhythm: reel
 mode:

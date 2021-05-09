@@ -1,6 +1,6 @@
 ---
 title: The Knotted Cord
-titleID: the-knotted-cord.md
+titleID: knotted-cord.md
 key: Ador
 rhythm: reel
 notes: Doug says, Please attribute the version to Charlie Montgomery, I'm definitely trying to copy his style there - particularly the ABcd upward runs.

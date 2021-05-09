@@ -1,6 +1,6 @@
 ---
 title: The Clare
-titleID: the-clare.md
+titleID: clare.md
 key: G
 rhythm: reel
 date: 2018-11-08

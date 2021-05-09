@@ -1,6 +1,6 @@
 ---
 title: The Priest
-titleID: the-priest.md
+titleID: priest.md
 key: G
 rhythm: slide
 date: 2018-05-24

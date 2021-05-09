@@ -1,6 +1,6 @@
 ---
 title: The Mad Piper
-titleID: the-mad-piper.md
+titleID: mad-piper.md
 key: G
 rhythm: jig
 date: 2018-03-13

@@ -1,6 +1,6 @@
 ---
 title: The Shannon Jig
-titleID: the-shannon-jig.md
+titleID: shannon-jig.md
 key: A
 rhythm: jig
 date: 2016-01-01

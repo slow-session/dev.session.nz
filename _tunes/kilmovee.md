@@ -1,6 +1,6 @@
 ---
 title: The Kilmovee
-titleID: the-kilmovee.md
+titleID: kilmovee.md
 key: Gmaj
 rhythm: jig
 notes:

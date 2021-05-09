@@ -1,6 +1,6 @@
 ---
 title: The Old Favourite
-titleID: the-old-favourite.md
+titleID: old-favourite.md
 key: G
 rhythm: jig
 date: 2018-06-11

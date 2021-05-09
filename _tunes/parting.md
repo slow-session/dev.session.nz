@@ -1,6 +1,6 @@
 ---
 title: The Parting
-titleID: the-parting.md
+titleID: parting.md
 key: G
 rhythm: waltz
 date: 2018-04-27

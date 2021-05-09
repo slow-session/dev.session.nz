@@ -1,6 +1,6 @@
 ---
 title: The Holly Bush
-titleID: the-holly-bush.md
+titleID: holly-bush.md
 key: Gmaj
 rhythm: jig
 notes:

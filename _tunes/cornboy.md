@@ -1,6 +1,6 @@
 ---
 title: The Cornboy aka McGreevy's
-titleID: the-cornboy.md
+titleID: cornboy.md
 key: Dmix
 rhythm: reel
 date: 2018-11-07

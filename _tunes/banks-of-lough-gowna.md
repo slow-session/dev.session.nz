@@ -1,6 +1,6 @@
 ---
 title: The Banks Of Lough Gowna
-titleID: the-banks-of-lough-gowna.md
+titleID: banks-of-lough-gowna.md
 key: Bmin
 rhythm: jig
 date: 2019-10-16

@@ -1,6 +1,6 @@
 ---
 title: The Banshee's Wail
-titleID: the-banshees-wail.md
+titleID: banshees-wail.md
 key: Gmaj
 rhythm: jig
 notes: 

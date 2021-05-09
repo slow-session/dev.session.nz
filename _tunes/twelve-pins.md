@@ -1,6 +1,6 @@
 ---
 title: The Twelve Pins
-titleID: the-twelve-pins.md
+titleID: twelve-pins.md
 key: G
 rhythm: reel
 notes:

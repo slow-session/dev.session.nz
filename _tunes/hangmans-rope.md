@@ -1,6 +1,6 @@
 ---
 title: The Hangman's Rope
-titleID: the-hangmans-rope.md
+titleID: hangmans-rope.md
 key: G
 rhythm: hornpipe
 date: 2018-08-14

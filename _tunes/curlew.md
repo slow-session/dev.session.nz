@@ -1,6 +1,6 @@
 ---
 title: The Curlew
-titleID: the-curlew.md
+titleID: curlew.md
 key: Bdor
 rhythm: reel
 date: 2017-02-09

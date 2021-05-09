@@ -1,6 +1,6 @@
 ---
 title: The Warbling Robin
-titleID: the-warbling-robin.md
+titleID: warbling-robin.md
 key: Gmaj
 rhythm: barndance
 notes: 

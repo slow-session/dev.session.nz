@@ -1,6 +1,6 @@
 ---
 title: The Peelers Jacket, The Torn Jacket, Lucy Campbells
-titleID: the-peelers-jacket-the-torn-jacket-lucy-campbells-cm.md
+titleID: peelers-jacket-the-torn-jacket-lucy-campbells-cm.md
 key: G,D,D
 rhythm: reel
 notes: Sean Connolly, whistle

@@ -12,7 +12,7 @@ You can check those out in our <a href="/latest/"> Latest Tunes</a> page.
 <script>
 window.store = {
     {% assign tunes = site.tunes %}
-    {% assign sortedtunes = tunes | sort: 'title' %}
+    {% assign sortedtunes = tunes | sort: 'titleID' %}
     {% assign tuneID = 1 %}
     {% for tune in sortedtunes %}
         "{{ tuneID }}": {

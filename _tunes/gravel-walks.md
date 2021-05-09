@@ -1,6 +1,6 @@
 ---
-title: Gravel Walk
-titleID: the-gravel-walks.md
+title: The Gravel Walks
+titleID: gravel-walks.md
 key: Ador
 rhythm: reel
 date: 2016-1-26
