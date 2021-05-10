@@ -11,7 +11,7 @@ repeats: 2
 parts: AABB 
 regtuneoftheweek:
 slowtuneoftheweek:
-mp3_file: /mp3/the-hangmans-rope.mp3
+mp3_file: /mp3/hangmans-rope.mp3
 mp3_source: <a href="https://vimeo.com/dickglasgow">Dick Glasgow</a>
 mp3_licence: "© Dick Glasgow. All Rights Reserved."
 mp3_url: https://vimeo.com/35347746#t=1m33s

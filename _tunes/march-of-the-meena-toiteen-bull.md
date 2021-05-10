@@ -9,7 +9,7 @@ regtuneoftheweek:
 slowtuneoftheweek:
 tags:
 location: Wellington
-mp3_file: /mp3/the-march-of-the-meena-toiteen-bull.mp3
+mp3_file: /mp3/march-of-the-meena-toiteen-bull.mp3
 repeats: 1
 parts: AABBCCBBAABBCC
 mp3_source: John Doherty

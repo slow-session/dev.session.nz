@@ -16,7 +16,7 @@
 "use strict";
 
 const buildGrid = (function () {
-    function displayPottsTunes(results, store) {
+    function displayPottsTunes(store) {
         let tunesGrid = document.getElementById("tunesGrid");
         let appendString = '';
 
@@ -187,7 +187,7 @@ const buildGrid = (function () {
 
         switch (tuneBook) {
             case 'potts':
-                displayPottsTunes(searchResults, store);
+                displayPottsTunes(store);
                 break;
             case 'obrien':
                 displayObrienTunes(searchResults, store);
@@ -199,7 +199,7 @@ const buildGrid = (function () {
                 displayTunesArchive(searchResults, store);
         }
     }
-
+    
     function formSearch(tuneBook, formInputs) {
         const regex = /[A-Za-z]/g;
         let searchTerm = "";

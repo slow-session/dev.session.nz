@@ -9,7 +9,7 @@ regtuneoftheweek:
 slowtuneoftheweek:
 tags:
 location:
-mp3_file: /mp3/the-knotted-cord.mp3
+mp3_file: /mp3/knotted-cord.mp3
 repeats: 2
 parts: AABB
 mp3_source: Doug Makinson

@@ -9,7 +9,7 @@ regtuneoftheweek: 2020-02-24
 slowtuneoftheweek: 2021-02-21
 tags:
 location: Wellington
-mp3_file: /mp3/the-holly-bush.mp3
+mp3_file: /mp3/holly-bush.mp3
 repeats: 2
 parts: AABB
 mp3_source: Richard Tait

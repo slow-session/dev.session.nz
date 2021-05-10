@@ -9,7 +9,7 @@ regtuneoftheweek:
 slowtuneoftheweek: 
 tags: 
 location: 
-mp3_file: /mp3/the-warbling-robin.mp3
+mp3_file: /mp3/warbling-robin.mp3
 repeats: 2
 parts: AABB
 mp3_source: Richard Tait

@@ -9,7 +9,7 @@ regtuneoftheweek:
 slowtuneoftheweek:
 tags:
 location:
-mp3_file: /mp3/the-kilmovee.mp3
+mp3_file: /mp3/kilmovee.mp3
 repeats: 2
 parts: AABB
 mp3_source: Richard Tait

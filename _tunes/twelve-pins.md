@@ -9,7 +9,7 @@ regtuneoftheweek:
 slowtuneoftheweek: 2019-12-07
 tags:
 location: Wellington
-mp3_file: /mp3/the-twelve-pins.mp3
+mp3_file: /mp3/twelve-pins.mp3
 repeats: 2
 parts: AABB
 mp3_source: <a href="https://www.facebook.com/FergalScahillMusic/">Fergal Scahill</a>

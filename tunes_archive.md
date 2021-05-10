@@ -32,34 +32,21 @@ window.store = {
 };
 </script>
 
-{% include tunes-filter-variables.html %}
-
-<form onsubmit="return false">
+<form>
     <fieldset>
         <legend>Select from the Tunes Archive:</legend>    
         <div class="formParent">
             <div class="formChild">
-                <input type="text" id="title-box" name="searchTitle" placeholder='Search'
+                <input type="search" id="search-box" name="searchBox" 
+                placeholder='Search Titles, Rhythms'
                 value='' onkeydown="wssTools.enableSearchButton()">
             </div>
             <div class="formChild">
-                <select id="rhythm-box" name="searchRhythm"  onChange="wssTools.enableSearchButton()">
-                    <option value="">All Rhythms</option>
-                    {% for rhythm in rhythms %}
-                    {% if rhythm != '' %}
-                    <option value="{{ rhythm }}">{{ rhythm | capitalize }}</option>
-                    {% endif %}
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-        <div class="formParent">
-            <div class="formChild">
-                <input class="filterButton filterDisabled" id="submitSearch" type="submit" name="submit" value="Select" onclick="buildGrid.formSearch('tunesarchive', [searchTitle.value, searchRhythm.value])" disabled>
+                <input class="filterButton" id="submitSearch" type="submit" name="submit" value="Select" onclick="buildGrid.formSearch('tunesarchive', [searchBox.value])">
             </div>
             <div class="formChild">   
                 <span title="Reset to default">  
-                    <input class="filterButton" id="formReset" type="button" name="reset" value="Reset" onclick="buildGrid.formReset('tunesarchive', ['title-box', 'rhythm-box'])">
+                    <input class="filterButton" id="formReset" type="button" name="reset" value="Reset" onclick="buildGrid.formReset('tunesarchive', ['search-box'])">
                 </span>
             </div>
         </div>     
@@ -67,6 +54,7 @@ window.store = {
         Scroll &#8593;&#8595; to choose from <span id="tunesCount"></span> tunes
     </fieldset>
 </form>
+
 
 {% include tuneModal.html%}
 
@@ -80,8 +68,11 @@ window.store = {
 
 <script>
 buildGrid.initialiseLunrSearch();
-    
+
+document.getElementById("search-box").addEventListener("search", buildGrid.formSearch('tunesarchive', [document.getElementById("search-box").value]));
+
 document.addEventListener("DOMContentLoaded", function (event) {
     buildGrid.displayGrid("tunesarchive", "", window.store);
-});
+
+}, false);
 </script>
