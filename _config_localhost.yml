@@ -1,4 +1,4 @@
 #
 # Override the value in _config.yml
 #
-http_host:
+http_host: ''

@@ -32,29 +32,24 @@ window.store = {
 };
 </script>
 
-<form>
-    <fieldset>
-        <legend>Select from the Tunes Archive:</legend>    
-        <div class="formParent">
-            <div class="formChild">
-                <input type="search" id="search-box" name="searchBox" 
-                placeholder='Search Titles, Rhythms'
-                value='' onkeydown="wssTools.enableSearchButton()">
-            </div>
-            <div class="formChild">
-                <input class="filterButton" id="submitSearch" type="submit" name="submit" value="Select" onclick="buildGrid.formSearch('tunesarchive', [searchBox.value])">
-            </div>
-            <div class="formChild">   
-                <span title="Reset to default">  
-                    <input class="filterButton" id="formReset" type="button" name="reset" value="Reset" onclick="buildGrid.formReset('tunesarchive', ['search-box'])">
-                </span>
-            </div>
-        </div>     
-        <p></p>
-        Scroll &#8593;&#8595; to choose from <span id="tunesCount"></span> tunes
-    </fieldset>
-</form>
 
+<div class="gridParent">
+    <div class="gridChild tunes3columnLayout">
+        <span>
+            <input type="search" id="searchBox" class="searchBox" name="searchBox" placeholder='Search Titles, Rhythms, Musicians' value=''>
+        </span>
+        <span>
+            <input class="filterButton" id="submitSearch" type="submit" name="submit" value="Select" onclick="buildGrid.formSearch('tunesarchive', [searchBox.value])">
+        </span>
+        <span>   
+            <span title="Reset to default">  
+                <input class="filterButton" id="formReset" type="button" name="reset" value="Reset" onclick="buildGrid.formReset('tunesarchive', ['searchBox'])">
+            </span>
+        </span>
+    </div>
+</div>     
+
+<h3>Scroll &#8593;&#8595; to choose from <span id="tunesCount"></span> tunes</h3>
 
 {% include tuneModal.html%}
 
@@ -68,8 +63,6 @@ window.store = {
 
 <script>
 buildGrid.initialiseLunrSearch();
-
-document.getElementById("search-box").addEventListener("search", buildGrid.formSearch('tunesarchive', [document.getElementById("search-box").value]));
 
 document.addEventListener("DOMContentLoaded", function (event) {
     buildGrid.displayGrid("tunesarchive", "", window.store);

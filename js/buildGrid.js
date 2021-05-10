@@ -226,7 +226,7 @@ const buildGrid = (function () {
         } else {
             displayGrid(tuneBook, searchResults, window.store);
         }
-        wssTools.disableSearchButton()
+        //wssTools.disableSearchButton()
     }
 
     function formReset(tuneBook, formInputs) {
