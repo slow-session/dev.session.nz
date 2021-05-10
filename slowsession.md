@@ -52,7 +52,7 @@ window.currentFocusTunes =  {
 Here are the tunes we've focussed on over the last few years.
 
 <script>
-window.currentTunes = {
+window.store = {
 {% assign sortedtunes = site.tunes | sort: 'slowtuneoftheweek' | reverse %}
 {% assign tuneID = 1 %}
 {% for tune in sortedtunes %}
@@ -77,9 +77,31 @@ window.currentTunes = {
 
 </script>
 
-{% include focustunes.html divID="gridCurrentTunes" storeName="window.currentTunes" %}
+<div class="gridParent">
+    <div class="gridChild tunes3columnLayout">
+        <span>
+            <input type="search" id="searchBox" class="searchBox" name="searchBox" placeholder='Search Titles, Rhythms, Musicians' value=''>
+        </span>
+        <span>
+            <input class="filterButton" id="submitSearch" type="submit" name="submit" value="Select" onclick="buildGrid.formSearch('tunesarchive', [searchBox.value])">
+        </span>
+        <span>   
+            <span title="Reset to default">  
+                <input class="filterButton" id="formReset" type="button" name="reset" value="Reset" onclick="buildGrid.formReset('tunesarchive', ['searchBox'])">
+            </span>
+        </span>
+    </div>
+</div>     
 
+<h3>Scroll &#8593;&#8595; to choose from <span id="tunesCount"></span> tunes</h3>
 {% include tuneModal.html%}
+
+
+
+<!-- START of Tunes Grid -->
+<div class="gridParent">
+  <div class="gridChild" id="tunesGrid"></div>
+</div>
 
 ## Latest Tunes
 
@@ -87,7 +109,10 @@ We add new tunes to the main Tunes Archive reasonably often.
 You can check those out in our <a href="/latest/">Latest Tunes</a> page.
 
 <script>
+buildGrid.initialiseLunrSearch();
+
 document.addEventListener("DOMContentLoaded", function (event) {
-    
+        buildGrid.displayGrid("tunesarchive", "", window.store);
+
 });
 </script>
