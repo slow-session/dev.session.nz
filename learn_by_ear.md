@@ -33,18 +33,15 @@ We've got some notes about <a href="/accompaniment/">Accompaniment in the Irish 
 You will probably have recordings of your own that you'd like to do this with and there are options for slowing down other recordings you have on your computer, tablet or phone.
 
 You can can use our [Play Local Audio](/playLocalAudio/) page to slow down a number of audio and video formats and play parts of them in a loop. If you've used the audio player on this site you'll find a familiar interface.
-
-You could also try this nice tool - [TimeStretch Player](https://29a.ch/timestretch/)
-
-## Want to learn a tune from YouTube?
+## Want to learn a tune from YouTube, Soundcloud, Bandcamp...?
 
 There are features built into the YouTube player that allow you to slow down the recording and also to play the complete recording in a loop.
 
-You can use tools like <a href="https://www.mediahuman.com/youtube-to-mp3-converter/">YouTube to MP3 Converter</a> to extract the audio from YouTube and Facebook videos and store MP3 files locally and then you can use our [Play Local Audio](/playLocalAudio/) page.
+You can use tools like the excellent <a href="https://www.mediahuman.com/youtube-to-mp3-converter/">YouTube to MP3 Converter</a> to extract the audio from YouTube and Facebook etc videos and store MP3 files locally and then you can use our [Play Local Audio](/playLocalAudio/) page.
 
 ## Other software
 
-There's a very comprehensive list of packages for around US$30 which work better at really slow speeds (50% or slower) and also have a number of other useful options such as picking out sections to loop and saving parts of a file for later at:
+There's a comprehensive list of modestly priced packages which work better at really slow speeds (50% or slower) and also have a number of other useful options such as picking out sections to loop and saving parts of a file for later at:
 
 <http://www.seventhstring.com/resources/transcription.html>
 
