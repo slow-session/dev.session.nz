@@ -33,11 +33,12 @@ We've got some notes about <a href="/accompaniment/">Accompaniment in the Irish 
 You will probably have recordings of your own that you'd like to do this with and there are options for slowing down other recordings you have on your computer, tablet or phone.
 
 You can can use our [Play Local Audio](/playLocalAudio/) page to slow down a number of audio and video formats and play parts of them in a loop. If you've used the audio player on this site you'll find a familiar interface.
+
 ## Want to learn a tune from YouTube, Soundcloud, Bandcamp...?
 
 There are features built into the YouTube player that allow you to slow down the recording and also to play the complete recording in a loop.
 
-You can use tools like the excellent <a href="https://www.mediahuman.com/youtube-to-mp3-converter/">YouTube to MP3 Converter</a> to extract the audio from YouTube and Facebook etc videos and store MP3 files locally and then you can use our [Play Local Audio](/playLocalAudio/) page.
+You can use tools like the excellent <a href="https://www.mediahuman.com/youtube-to-mp3-converter/">YouTube to MP3 Converter</a> to extract the audio from YouTube and Facebook videos and store MP3 files locally and then you can use our [Play Local Audio](/playLocalAudio/) page.
 
 ## Other software
 
@@ -49,8 +50,8 @@ You can try some of the packages for free for a limited period before you buy e.
 
 Members of the Wellington Slow session have experience with these packages:
 
-  * Ted  -> <a href="http://www.ronimusic.com/slowdown.htm">Amazing Slow Downer</a> (Windows, Mac and iOS)
-  * Andy -> <a href="https://play.google.com/store/apps/details?id=com.smp.musicspeed">Music Speed Changer</a> (Android - small fee to remove ads)
-  * Andy -> <a href="http://www.audacityteam.org/">Audacity</a> (Windows®, Mac®, GNU/Linux® and other operating systems - open source, yay!)
+* Ted  -> <a href="http://www.ronimusic.com/slowdown.htm">Amazing Slow Downer</a> (Windows, Mac and iOS)
+* Andy -> <a href="https://play.google.com/store/apps/details?id=com.smp.musicspeed">Music Speed Changer</a> (Android - small fee to remove ads)
+* Andy -> <a href="http://www.audacityteam.org/">Audacity</a> (Windows®, Mac®, GNU/Linux® and other operating systems - open source, yay!)
 
 If anyone else uses a different package and you're happy to answer questions about it, let us know.
