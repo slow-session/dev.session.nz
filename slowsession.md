@@ -77,26 +77,9 @@ window.store = {
 
 </script>
 
-<div class="gridParent">
-    <div class="gridChild tunes3columnLayout">
-        <span>
-            <input type="search" id="searchBox" class="searchBox" name="searchBox" placeholder='Search Titles, Rhythms, Musicians' value=''>
-        </span>
-        <span>
-            <input class="filterButton" id="submitSearch" type="submit" name="submit" value="Select" onclick="buildGrid.formSearch('tunesarchive', [searchBox.value])">
-        </span>
-        <span>   
-            <span title="Reset to default">  
-                <input class="filterButton" id="formReset" type="button" name="reset" value="Reset" onclick="buildGrid.formReset('tunesarchive', ['searchBox'])">
-            </span>
-        </span>
-    </div>
-</div>     
+{% include tunes-search.html tuneBook="tunesarchive" searchTerms="Titles, Rhythms, Musicians" %}
 
-<h3>Scroll &#8593;&#8595; to choose from <span id="tunesCount"></span> tunes</h3>
 {% include tuneModal.html%}
-
-
 
 <!-- START of Tunes Grid -->
 <div class="gridParent">
