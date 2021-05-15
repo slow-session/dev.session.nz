@@ -15,17 +15,19 @@
             <div id="abcAudio"></div>
         </div>
 
-        <!-- Allow the user to save their ABC-->
-        <form>
-            <div class="formParent">
-                <div class="formChild">
-                    <span title="Download the ABC file details. Don't lose your work!">
-                        <input value='Download ABC' type='button' class="filterButton"
-                            onclick='wssTools.downloadABCFile(document.getElementById("textAreaABC").value)' />
-                    </span>
-                </div>
+        <!-- Allow the user to save the notation and/or the ABC-->
+        <div class="formParent">
+            <div class="formChild">
+                <span title="Download the Music Notation">
+                    <input value='Download Music Notation' type='button' class="filterButton" onclick='wssTools.downloadFile("export-set.html", document.getElementById("abcPaper").innerHTML)' />
+                </span>
             </div>
-        </form>
+            <div class="formChild">
+                <span title="Download the ABC file details. Don't lose your work!">
+                    <input value='Download ABC' type='button' class="filterButton" onclick='wssTools.downloadABCFile(document.getElementById("textAreaABC").value)' />
+                </span>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -38,10 +40,6 @@
         setModal.style.display = "inline";
     }
 
-    //if (wssTools.Mobile()) {
-    //    setModal.classList.add("mobileScrolling");
-    //}
-    
     // Get the <span> element that closes the setModal
     let span = document.getElementsByClassName("close")[0];
 
