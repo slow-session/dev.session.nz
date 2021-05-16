@@ -18,6 +18,10 @@ X: 1
 <div id="abcPaper" class="abcPaper"></div>
 <div id="abcAudio"></div>
 
+<span title="Download the Music Notation">
+    <input value='Download Music Notation' type='button' class="filterButton" onclick='wssTools.downloadFile(wssTools.slugify("{{ page.title }}") + ".html", document.getElementById("abcPaper").innerHTML)' />
+</span>
+
 <script>
 var abcSource = '';
 var regex = new RegExp('X:.*\n');

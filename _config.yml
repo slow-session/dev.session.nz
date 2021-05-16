@@ -27,7 +27,7 @@ header_image: images/banner.jpg
 #
 http_host: https://dev.session.nz
 mp3_host: https://wellington.session.nz
-tunebooks_host: https://wellington.nz
+tunebooks_host: https://wellington.session.nz
 js_host: 
 
 

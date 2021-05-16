@@ -5,16 +5,21 @@ permalink: /playLocalABC/
 ---
 You can use this page to play an ABC file you've stored locally.
 
+<input type="file" id="files" class='filterButton' name="files[]" accept="text/vnd.abc,.abc"/>
+<output id="fileInfo"></output>
+
 <textarea id="textAreaABC" class="abcSource"></textarea>
 
 <div id="abcPaper" class="abcPaper"></div>
 <div id="abcAudio"></div>
 
-<input type="file" id="files" class='filterButton' name="files[]" accept="text/vnd.abc,.abc"/>
-<output id="fileInfo"></output>
+<div id="notationSave" class="notationSave">
+    <span title="Download the Music Notation">
+        <input value='Download Music Notation' type='button' class="filterButton" onclick='wssTools.downloadFile(abcFileName.replace("abc", "html"), document.getElementById("abcPaper").innerHTML)' />
+    </span>
+</div>
 
 <script>
-
 document.addEventListener("DOMContentLoaded", function (event) {
     // Check for the various File API support.
     var fileInfo = document.getElementById('fileInfo');
@@ -24,6 +29,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
         fileInfo.innerHTML = 'The File APIs are not fully supported in this browser.';
     }
 });
+
+let abcFileName = null;
 
 function handleABCFileSelect(evt) {
     evt.stopPropagation();
@@ -41,14 +48,17 @@ function handleABCFileSelect(evt) {
                 fileInfo.innerHTML = '';
                 audioPlayer.stopABCplayer();
                 audioPlayer.displayABC(this.result);
+                notationSave.style.display = "block";
             } else {
                 fileInfo.innerHTML = '<h2>Invalid ABC file - missing "X:", "T:", "K:" fields</h2>';
                 abcPaper.innerHTML = '';
                 abcPaper.style.paddingBottom = "0px";
                 abcPaper.style.overflow = "auto";
                 abcAudio.innerHTML = '';
+                notationSave.style.display = "none";
             }
         };
+        abcFileName = f.name;
         reader.readAsText(f);
     }
 }

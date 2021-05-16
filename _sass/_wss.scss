@@ -76,6 +76,10 @@ p.speedLabel {
     display: block;
 }
 
+.notationSave {
+    display: none;
+}
+
 .abcText {
     background-color: darken($complimentary-color, 6%);
     font-size: small;

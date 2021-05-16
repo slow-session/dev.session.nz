@@ -4,7 +4,7 @@ title: Wellington Slow Session
 permalink: /slowsession/
 ---
 
-{% include slowsession/details.html %}
+{% include session-details.html %}
 
 If you're new to session playing or want to know more about our slow session, please check out our <a href="/intro-to-slowsession/">Introduction to Wellington Slow Session</a> page.
 
