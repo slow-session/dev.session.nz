@@ -17,7 +17,6 @@ We'd like to thank Charlie very much for giving us the privilege of being able t
 <p>Go to the Tune Page by selecting the link in the first column or play a tune now using the <strong>Play Now</strong> button.</p>
 
 
-
 <script>
     window.store = {
       {% assign tunes = site.tunes %}
@@ -42,6 +41,10 @@ We'd like to thank Charlie very much for giving us the privilege of being able t
       {% endfor %}
     };
 </script>
+
+<p> Or pick a tune at random from this page: 
+    <input class="filterButton" type="button" onclick="audioPlayer.selectTune(store, wssTools.getRandomInt(1, {{ tuneID }}));" value="JukeBox">
+</p>
 
 {% include tunes-search.html tuneBook="tunesarchive" searchTerms="Titles, Rhythms" %}
 
