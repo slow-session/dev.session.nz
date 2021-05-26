@@ -4,18 +4,12 @@ title: Jukebox
 permalink: /jukebox/
 ---
 <script>
-const getRandomInt = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
 
 window.store = {
     {% assign tunes = site.tunes %}
     {% assign sortedtunes = tunes | sort: 'titleID' %}
     {% assign tuneID = 1 %}
     {% for tune in sortedtunes %}
-    {% assign tuneID = tuneID | plus: 1 %}
         "{{ tuneID }}": {
             "title": "{{ tune.title | xml_escape }}",
             "tuneID": "{{ tuneID }}",
@@ -27,6 +21,7 @@ window.store = {
             "repeats": "{{ tune.repeats }}",
             "parts": "{{ tune.parts }}",
             "abc": {{ tune.abc | jsonify }}
+            {% assign tuneID = tuneID | plus: 1 %}
             }{% unless forloop.last %},{% endunless %}
         {% endfor %}
     };
@@ -34,11 +29,11 @@ window.store = {
 
 {% include tuneModal.html %}
 
-Pick a random tune from the archive:
+{% assign tuneID = tuneID | minus: 1 %}
 
-<div>
-    <input class="filterButton" type="button" onclick="audioPlayer.selectTune(store, getRandomInt(1, {{ tuneID }}));" value="Play Now">
-</div>
+<p> Pick a tune at random from the archive: 
+<input class="filterButton" type="button" onclick="audioPlayer.selectTune(store, wssTools.getRandomInt(1, {{ tuneID }}));" value="JukeBox">
+</p>
 
 <script>
 document.addEventListener("DOMContentLoaded", function (event) {
