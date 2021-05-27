@@ -32,11 +32,7 @@ window.store = {
 };
 </script>
 
-{% assign tuneID = tuneID | minus: 1 %}
-
-<p>You can pick a tune at random from this page: 
-<input class="filterButton" type="button" onclick="audioPlayer.selectTune(store, wssTools.getRandomInt(1, {{ tuneID }}));" value="JukeBox">
-</p>
+{% include jukebox.html %}
 
 {% include tunes-search.html tuneBook="tunesarchive" searchTerms="Titles, Rhythms, Musicians" %}
 

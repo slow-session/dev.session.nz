@@ -44,9 +44,7 @@ We'd like to thank Charlie very much for giving us the privilege of being able t
 
 {% assign tuneID = tuneID | minus: 1 %}
 
-<p>You can pick a tune at random from this page: 
-<input class="filterButton" type="button" onclick="audioPlayer.selectTune(store, wssTools.getRandomInt(1, {{ tuneID }}));" value="JukeBox">
-</p>
+{% include jukebox.html %}
 
 {% include tunes-search.html tuneBook="tunesarchive" searchTerms="Titles, Rhythms" %}
 
