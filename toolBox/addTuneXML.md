@@ -31,7 +31,6 @@ Otherwise, you may not build the webpages for all the MP3 files</p>
     </div>
 </div>
 
-
 <script  src="{{ site.js_host }}/js/musicmetadata.js"></script>
 
 <script>
@@ -97,7 +96,6 @@ function addTuneData(data) {
         let title = null;
         if (result.title) {
             title = result.title;
-            console.log(title);
         } else {
             fileInfo.innerHTML += `<p>WARNING: ${data.name}: "Title" ID3 tag not found</p>`;
             infoFileUnix += `${data.name}: "Title" ID3 tag not found\n`;
@@ -107,7 +105,6 @@ function addTuneData(data) {
         let tutor = null;
         if (result.artist[0]) {
             tutor = result.artist[0];
-            console.log(tutor);
         } else {
             fileInfo.innerHTML += `<p>WARNING: ${data.name}: "Artist" ID3 tag not found</p>`;
             infoFileUnix +=`${data.name}: "Artist" ID3 tag not found\n`;
@@ -117,7 +114,6 @@ function addTuneData(data) {
         let year = null;
         if (result.year) {
             year = result.year;
-            console.log(year);
         } else {
             fileInfo.innerHTML += `<p>WARNING: ${data.name}: "Year" ID3 tag not found</p>`;
             infoFileUnix += `${data.name}: "Year" ID3 tag not found\n`;
@@ -127,7 +123,6 @@ function addTuneData(data) {
         let instrument = null;
         if (result.genre[0]) {
             instrument = result.genre[0];
-            console.log(instrument);
         } else {
             fileInfo.innerHTML += `<p>WARNING: ${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"</p>`;
             infoFileUnix += `${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"\n`;
@@ -157,7 +152,7 @@ function addTuneData(data) {
             <guid isPermaLink='false'></guid>
             <description></description>
             <content:encoded>
-            <![CDATA[ <!-- wp:columns --> <div class="wp-block-columns"><!-- wp:column {{"width":"25%"}} --> <div class="wp-block-column" style="flex-basis:25%"><!-- wp:list --> <ul><li>${tutor}</li><li>${instrument}</li><li>${year}</li></ul> <!-- /wp:list --></div> <!-- /wp:column --> <!-- wp:column {{"width":"50%"}} --> <div class="wp-block-column" style="flex-basis:50%"></div> <!-- /wp:column --> <!-- wp:column {{"width":"25%"}} --> <div class="wp-block-column" style="flex-basis:25%"><!-- wp:shortcode --> [download_mp3]/wp-content/uploads/ceol-aneas/${year}/${mp3FileName}[/download_mp3] <!-- /wp:shortcode --></div> <!-- /wp:column --></div> <!-- /wp:columns --> <!-- wp:shortcode --> [choon]/wp-content/uploads/ceol-aneas/${year}/${mp3FileName}[/choon] <!-- /wp:shortcode --> ]]>
+            <![CDATA[ <!-- wp:columns --> <div class="wp-block-columns"><!-- wp:column width: 25% --> <div class="wp-block-column" style="flex-basis:25%"><!-- wp:list --> <ul><li>${tutor}</li><li>${instrument}</li><li>${year}</li></ul> <!-- /wp:list --></div> <!-- /wp:column --> <!-- wp:column width: 50% --> <div class="wp-block-column" style="flex-basis:50%"></div> <!-- /wp:column --> <!-- wp:column width: 25% --> <div class="wp-block-column" style="flex-basis:25%"><!-- wp:shortcode --> [download_mp3]/wp-content/uploads/ceol-aneas/${year}/${mp3FileName}[/download_mp3] <!-- /wp:shortcode --></div> <!-- /wp:column --></div> <!-- /wp:columns --> <!-- wp:shortcode --> [choon]/wp-content/uploads/ceol-aneas/${year}/${mp3FileName}[/choon] <!-- /wp:shortcode --> ]]>
             </content:encoded>
             <wp:post_id></wp:post_id>
             <wp:post_date>${year}-${monthNumber}-${dayNumber} 00:00:01</wp:post_date>
