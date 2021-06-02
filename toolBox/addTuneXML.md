@@ -26,6 +26,9 @@ Otherwise, you may not build the webpages for all the MP3 files</p>
     <div class="formChild">
         <input value='Download XML Template' type='button' class="filterButton" onclick='downloadXML()' />
     </div>
+    <div class="formChild">
+        <input value='Reset Page' type='button' class="filterButton" onclick='resetPage()' />
+    </div>
 </div>
 
 
@@ -186,21 +189,22 @@ function addTuneData(data) {
 function downloadXML() {
     let XMLcontent = XMLheader + XMLbody + XMLfooter;
     wssTools.downloadFile("tunePagesTemplate.xml", XMLcontent);
-    // reset things
-    XMLbody = '';
-    document.getElementById("files").innerHTML = '';
-    fileInfo.innerHTML = 'Waiting for MP3 selection';
 }
 
 function downloadUnixInfo() {
     wssTools.downloadFile("tunePagesInfoUnix.txt", infoFileUnix);
-    // reset things
-    infoFileUnix = '';
+
 }
 
 function downloadWindowsInfo() {
     wssTools.downloadFile("tunePagesInfoWindows.txt", infoFileWindows);
-    // reset things
+}
+
+function resetPage () {
     infoFileWindows = '';
+    infoFileUnix = '';
+    XMLbody = '';
+    document.getElementById("files").innerHTML = '';
+    fileInfo.innerHTML = 'Waiting for MP3 selection';
 }
 </script>
