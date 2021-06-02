@@ -12,7 +12,10 @@ permalink: /addTunePagesXML/
         <input value='Download XML Template' type='button' class="filterButton" onclick='downloadXML()' />
     </div>
     <div class="formChild">
-        <input value='Download Info File' type='button' class="filterButton" onclick='downloadInfo()' />
+        <input value='Download Info File (Unix)' type='button' class="filterButton" onclick='downloadUnixInfo()' />
+    </div>
+    <div class="formChild">
+        <input value='Download Info File (Windows)' type='button' class="filterButton" onclick='downloadWindowsInfo()' />
     </div>
 </div>
 
@@ -41,7 +44,8 @@ let XMLfooter = `
 `;
 let fileInfo = document.getElementById('fileInfo');
 fileInfo.innerHTML = 'Waiting for MP3 selection';
-let infoFile = '';
+let infoFileUnix = '';
+let infoFileWindows = '';
 
 // Check for the various File API support.
 if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -83,7 +87,8 @@ function addTuneData(data) {
             console.log(title);
         } else {
             fileInfo.innerHTML += `<p>${data.name}: "Title" ID3 tag not found</p>`;
-            infoFile += `${data.name}: "Title" ID3 tag not found\n`;
+            infoFileUnix += `${data.name}: "Title" ID3 tag not found\n`;
+            infoFileWindows += `${data.name}: "Title" ID3 tag not found\n`;
         }
 
         let tutor = null;
@@ -92,7 +97,8 @@ function addTuneData(data) {
             console.log(tutor);
         } else {
             fileInfo.innerHTML += `<p>${data.name}: "Artist" ID3 tag not found</p>`;
-            infoFile +=`${data.name}: "Artist" ID3 tag not found\n`;
+            infoFileUnix +=`${data.name}: "Artist" ID3 tag not found\n`;
+            infoFileWindows +=`${data.name}: "Artist" ID3 tag not found\n`;
         }
 
         let year = null;
@@ -101,7 +107,8 @@ function addTuneData(data) {
             console.log(year);
         } else {
             fileInfo.innerHTML += `<p>${data.name}: "Year" ID3 tag not found</p>`;
-            infoFile += `${data.name}: "Year" ID3 tag not found\n`;
+            infoFileUnix += `${data.name}: "Year" ID3 tag not found\n`;
+            infoFileWindows += `${data.name}: "Year" ID3 tag not found\n`;
         }
 
         let instrument = null;
@@ -110,7 +117,8 @@ function addTuneData(data) {
             console.log(instrument);
         } else {
             fileInfo.innerHTML += `<p>${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"</p>`;
-            infoFile += `${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"\n`;
+            infoFileUnix += `${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"\n`;
+            infoFileWindows += `${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"\n`;
         }
 
         if (title && tutor && year && instrument) {
@@ -156,7 +164,8 @@ function addTuneData(data) {
             if (data.name != mp3FileName) {
                 fileInfo.innerHTML += `<h3>WARNING</h3>
                 <ul><li>Rename MP3 file '${data.name}' to '${mp3FileName}'</li></ul>`;
-                infoFile += `Rename MP3 file '${data.name}' to '${mp3FileName}'\n`;
+                infoFileUnix += `mv ${data.name} ${mp3FileName}'\n`;
+                infoFileWindows += `rename ${data.name} ${mp3FileName}'\n`;
             }
         } else {
             fileInfo.innerHTML += "<p>WARNING: Fix missing ID3 tags</p>";
@@ -173,9 +182,15 @@ function downloadXML() {
     fileInfo.innerHTML = 'Waiting for MP3 selection';
 }
 
-function downloadInfo() {
-    wssTools.downloadFile("tunePagesInfo.txt", infoFile);
+function downloadUnixInfo() {
+    wssTools.downloadFile("tunePagesInfoUnix.txt", infoFileUnix);
     // reset things
-    infoFile = '';
+    infoFileUnix = '';
+}
+
+function downloadWindowsInfo() {
+    wssTools.downloadFile("tunePagesInfoWindows.txt", infoFileWindows);
+    // reset things
+    infoFileWindows = '';
 }
 </script>
