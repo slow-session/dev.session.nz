@@ -7,17 +7,27 @@ permalink: /addTunePagesXML/
 
 <output id="fileInfo" class="showTextInfo"></output>
 
+<p>If there are <b>WARNING</b> messages above these Info files will provide information on how to fix things.The "Unix" version is for those running MacOS or Linux etc</p>
+
 <div class="formParent">
     <div class="formChild">
-        <input value='Download XML Template' type='button' class="filterButton" onclick='downloadXML()' />
+        <input value='Download Info File (Windows)' type='button' class="filterButton" onclick='downloadWindowsInfo()' />
     </div>
     <div class="formChild">
         <input value='Download Info File (Unix)' type='button' class="filterButton" onclick='downloadUnixInfo()' />
     </div>
+</div>
+
+<p></p>
+<p>Fix all the <b>WARNING</b> messages before downloading the XML Template. 
+Otherwise, you may not build the webpages for all the MP3 files</p>
+
+<div class="formParent">
     <div class="formChild">
-        <input value='Download Info File (Windows)' type='button' class="filterButton" onclick='downloadWindowsInfo()' />
+        <input value='Download XML Template' type='button' class="filterButton" onclick='downloadXML()' />
     </div>
 </div>
+
 
 <script  src="{{ site.js_host }}/js/musicmetadata.js"></script>
 
@@ -86,7 +96,7 @@ function addTuneData(data) {
             title = result.title;
             console.log(title);
         } else {
-            fileInfo.innerHTML += `<p>${data.name}: "Title" ID3 tag not found</p>`;
+            fileInfo.innerHTML += `<p>WARNING: ${data.name}: "Title" ID3 tag not found</p>`;
             infoFileUnix += `${data.name}: "Title" ID3 tag not found\n`;
             infoFileWindows += `${data.name}: "Title" ID3 tag not found\n`;
         }
@@ -96,7 +106,7 @@ function addTuneData(data) {
             tutor = result.artist[0];
             console.log(tutor);
         } else {
-            fileInfo.innerHTML += `<p>${data.name}: "Artist" ID3 tag not found</p>`;
+            fileInfo.innerHTML += `<p>WARNING: ${data.name}: "Artist" ID3 tag not found</p>`;
             infoFileUnix +=`${data.name}: "Artist" ID3 tag not found\n`;
             infoFileWindows +=`${data.name}: "Artist" ID3 tag not found\n`;
         }
@@ -106,7 +116,7 @@ function addTuneData(data) {
             year = result.year;
             console.log(year);
         } else {
-            fileInfo.innerHTML += `<p>${data.name}: "Year" ID3 tag not found</p>`;
+            fileInfo.innerHTML += `<p>WARNING: ${data.name}: "Year" ID3 tag not found</p>`;
             infoFileUnix += `${data.name}: "Year" ID3 tag not found\n`;
             infoFileWindows += `${data.name}: "Year" ID3 tag not found\n`;
         }
@@ -116,7 +126,7 @@ function addTuneData(data) {
             instrument = result.genre[0];
             console.log(instrument);
         } else {
-            fileInfo.innerHTML += `<p>${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"</p>`;
+            fileInfo.innerHTML += `<p>WARNING: ${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"</p>`;
             infoFileUnix += `${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"\n`;
             infoFileWindows += `${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"\n`;
         }
@@ -164,11 +174,11 @@ function addTuneData(data) {
             if (data.name != mp3FileName) {
                 fileInfo.innerHTML += `<h3>WARNING</h3>
                 <ul><li>Rename MP3 file '${data.name}' to '${mp3FileName}'</li></ul>`;
-                infoFileUnix += `mv ${data.name} ${mp3FileName}'\n`;
-                infoFileWindows += `rename ${data.name} ${mp3FileName}'\n`;
+                infoFileUnix += `mv ${data.name} ${mp3FileName}\n`;
+                infoFileWindows += `rename ${data.name} ${mp3FileName}\n`;
             }
         } else {
-            fileInfo.innerHTML += "<p>WARNING: Fix missing ID3 tags</p>";
+            fileInfo.innerHTML += "<p>WARNING: MP3 file not processed - fix missing ID3 tags</p>";
         }
     });
 }
