@@ -93,7 +93,7 @@ const addTuneXML = (function () {
                 dayNumber = dayNumber.toString().padStart(2, 0);
 
                 // Canonical names for the permalink and the MP3 file name
-                let postName = wssTools.slugify(title + '-' + year + '-' + instrument);
+                let postName = slugify(title + '-' + year + '-' + instrument);
                 let mp3FileName = postName + '.mp3';
 
                 // Notes about each file processed for user
@@ -140,17 +140,17 @@ const addTuneXML = (function () {
     function downloadXML() {
         // XML file has a header, body, footer structure
         let XMLcontent = XMLheader + XMLbody + XMLfooter;
-        wssTools.downloadFile("tunePagesTemplate.xml", XMLcontent);
+        downloadFile("tunePagesTemplate.xml", XMLcontent);
     }
 
     function downloadUnixInfo() {
         // This will contain details of files that need rename and ID3 tags that need fixed
-        wssTools.downloadFile("tunePagesInfoUnix.txt", infoFileUnix);
+        downloadFile("tunePagesInfoUnix.txt", infoFileUnix);
     }
 
     function downloadWindowsInfo() {
         // This will contain details of files that need rename and ID3 tags that need fixed
-        wssTools.downloadFile("tunePagesInfoWindows.txt", infoFileWindows);
+        downloadFile("tunePagesInfoWindows.txt", infoFileWindows);
     }
 
     function resetPage() {
@@ -160,6 +160,49 @@ const addTuneXML = (function () {
         XMLbody = '';
         document.getElementById("files").innerHTML = '';
         fileInfo.innerHTML = 'Waiting for MP3 selection';
+    }
+
+    function downloadFile(filename, text) {
+        let pom = document.createElement("a");
+        pom.setAttribute(
+            "href",
+            "data:application/download;charset=utf-8," +
+            encodeURIComponent(text)
+        );
+        pom.setAttribute("download", filename);
+
+        if (document.createEvent) {
+            let event = document.createEvent("MouseEvents");
+            event.initEvent("click", true, true);
+            pom.dispatchEvent(event);
+        } else {
+            pom.click();
+        }
+    }
+
+    // https://lucidar.me/en/web-dev/how-to-slugify-a-string-in-javascript/
+    function slugify(str)
+    {
+        str = str.replace(/^\s+|\s+$/g, '');
+    
+        // Make the string lowercase
+        str = str.toLowerCase();
+    
+        // Remove accents, swap ñ for n, etc
+        var from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;";
+        var to   = "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
+        for (var i=0, l=from.length ; i<l ; i++) {
+            str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+        }
+    
+        // Remove invalid chars
+        str = str.replace(/[^a-z0-9 -]/g, '') 
+        // Collapse whitespace and replace by -
+        .replace(/\s+/g, '-') 
+        // Collapse dashes
+        .replace(/-+/g, '-'); 
+    
+        return str;
     }
 
     return {
