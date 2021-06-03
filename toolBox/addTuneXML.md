@@ -34,6 +34,7 @@ Otherwise, you may not build the webpages for all the MP3 files</p>
 <script  src="{{ site.js_host }}/js/musicmetadata.js"></script>
 
 <script>
+// Parts of the XML file - the XMLbody is empty to start with
 let XMLheader = `<?xml version='1.0' encoding='UTF-8' ?>
 <rss version='2.0' xmlns:excerpt='http://wordpress.org/export/1.1/excerpt/'
     xmlns:content='http://purl.org/rss/1.0/modules/content/' xmlns:wfw='http://wellformedweb.org/CommentAPI/'
@@ -54,6 +55,8 @@ let XMLfooter = `
     </channel>
 </rss>
 `;
+
+// Initialise these
 let fileInfo = document.getElementById('fileInfo');
 fileInfo.innerHTML = 'Waiting for MP3 selection';
 let infoFileUnix = '';
@@ -92,7 +95,8 @@ function addTuneData(data) {
         if (err) {
             throw err;
         }
-        
+
+        // Get the four parameters from the MP3 ID3 tags: title, tutor, year, instrument
         let title = null;
         if (result.title) {
             title = result.title;
@@ -129,21 +133,30 @@ function addTuneData(data) {
             infoFileWindows += `${data.name}: "Genre" ID3 tag not found - this tag used for the "Instrument"\n`;
         }
 
+        // If we've got the "set", then we'll add this to the XML template
         if (title && tutor && year && instrument) {
+            // Get today's date
             let dateTime = new Date();
             let monthNumber = dateTime.getMonth() + 1;
             let dayNumber = dateTime.getDate();
+
+            // Get date for year of the MP3 file so we can can get the day of the week right
             dateTime = new Date(year, monthNumber - 1 , dayNumber);
-            monthNumber = monthNumber.toString().padStart(2,0);
-            dayNumber = dayNumber.toString().padStart(2,0);
             let monthName = dateTime.toLocaleString('default', { month: 'short' })
             let dayName = dateTime.toLocaleString('default', { weekday: 'short' })
+            
+            // Pad these with leading '0' if needed
+            monthNumber = monthNumber.toString().padStart(2,0);
+            dayNumber = dayNumber.toString().padStart(2,0);
 
+            // Canonical names for the permalink and the MP3 file name
             let postName = wssTools.slugify(title + '-' + year + '-' + instrument);
             let mp3FileName = postName + '.mp3';
 
+            // Notes about each file processed for user
             fileInfo.innerHTML += `<p>Tags found:</p><ul><li>${title}:${tutor}:${year}:${instrument}</li></ul>`;
 
+            // XML template details used to create the tune page on WordPress
             XMLbody += `
         <item>
             <title>${title} - ${instrument}</title>
@@ -168,7 +181,7 @@ function addTuneData(data) {
             <wp:is_sticky>0</wp:is_sticky>
         </item>
 `;
-
+            // We need the mp3FileName to match the details in the template
             if (data.name != mp3FileName) {
                 fileInfo.innerHTML += `<h3>WARNING</h3>
                 <ul><li>Rename MP3 file '${data.name}' to '${mp3FileName}'</li></ul>`;
@@ -182,20 +195,23 @@ function addTuneData(data) {
 }
 
 function downloadXML() {
+    // XML file has a header, body, footer structure
     let XMLcontent = XMLheader + XMLbody + XMLfooter;
     wssTools.downloadFile("tunePagesTemplate.xml", XMLcontent);
 }
 
 function downloadUnixInfo() {
+    // This will contain details of files that need rename and ID3 tags that need fixed
     wssTools.downloadFile("tunePagesInfoUnix.txt", infoFileUnix);
-
 }
 
 function downloadWindowsInfo() {
+    // This will contain details of files that need rename and ID3 tags that need fixed
     wssTools.downloadFile("tunePagesInfoWindows.txt", infoFileWindows);
 }
 
 function resetPage () {
+    // Get ready to start again
     infoFileWindows = '';
     infoFileUnix = '';
     XMLbody = '';
