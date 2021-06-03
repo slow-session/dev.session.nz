@@ -19,7 +19,7 @@ permalink: /addTunePagesXML/
 </div>
 
 <p></p>
-<p>Fix all the <b>WARNING</b> messages before downloading the XML Template. 
+<p>Fix all the <b>WARNING</b> messages and reload the MP3 files before downloading the XML Template. 
 Otherwise, you may not build the webpages for all the MP3 files</p>
 
 <div class="formParent">
