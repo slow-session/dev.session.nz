@@ -25,7 +25,6 @@ const addTuneXML = (function () {
 
     // Initialise these
     let fileInfo = document.getElementById('fileInfo');
-    fileInfo.innerHTML = 'Waiting for MP3 selection';
     let infoFileUnix = '';
     let infoFileWindows = '';
 
@@ -83,10 +82,10 @@ const addTuneXML = (function () {
                 dateTime = new Date(year, monthNumber - 1, dayNumber);
                 let monthName = dateTime.toLocaleString('default', {
                     month: 'short'
-                })
+                });
                 let dayName = dateTime.toLocaleString('default', {
                     weekday: 'short'
-                })
+                });
 
                 // Pad these with leading '0' if needed
                 monthNumber = monthNumber.toString().padStart(2, 0);
@@ -137,10 +136,83 @@ const addTuneXML = (function () {
         });
     }
 
-    function downloadXML() {
+    function addSelectYears(selectID) {
+        // Allow for years from 2004 up to now plus 3 more years
+        let selectBox = document.getElementById(selectID);
+        let chosenYear = '';
+
+        // Get today's date
+        let dateTime = new Date();
+        let currentYear = dateTime.getFullYear();
+        let earliestYear = 2004;
+        let latestYear = currentYear + 3;
+
+        document.getElementById("earliestYear").innerHTML = earliestYear;
+        document.getElementById("latestYear").innerHTML = latestYear;
+
+        // Populate the list of years
+        for (let year = latestYear; year >= earliestYear; year--) {
+            let newOption = new Option(year, year);
+            selectBox.add(newOption, undefined);
+        }
+    }
+
+    function downloadTopPage(chosenYear) {
+        if (chosenYear == '') {
+            alert("No year chosen!");
+            return;
+        }
+
+        // Get today's date 
+        let dateTime = new Date();
+        let monthNumber = dateTime.getMonth() + 1;
+        let dayNumber = dateTime.getDate();
+
+        // Get date for year selected so we can can get the day of the week right
+        dateTime = new Date(chosenYear, monthNumber - 1, dayNumber);
+        let monthName = dateTime.toLocaleString('default', {
+            month: 'short'
+        });
+        let dayName = dateTime.toLocaleString('default', {
+            weekday: 'short'
+        });
+
+        // Pad these with leading '0' if needed
+        monthNumber = monthNumber.toString().padStart(2, 0);
+        dayNumber = dayNumber.toString().padStart(2, 0);
+
+        XMLbody = `
+                <item>
+                    <title>${chosenYear}</title>
+                    <pubDate>${dayName}, ${dayNumber} ${monthName} ${chosenYear} 00:00:01 +0000</pubDate>
+                    <dc:creator>archive</dc:creator>
+                    <guid isPermaLink='false'></guid>
+                    <description></description>
+                    <content:encoded>
+                    <![CDATA[<!-- wp:paragraph --><p>You can listen to each tune here:</p><!-- /wp:paragraph --><!-- wp:shortcode -->[wpb_childpages]<!-- /wp:shortcode --><!-- wp:paragraph --><p>Or you can download a copy to listen to locally:</p><!-- /wp:paragraph --><!-- wp:shortcode -->[download_zip]/wp-content/uploads/ceol-aneas/${chosenYear}/Archive-${chosenYear}.zip[/download_zip]<!-- /wp:shortcode -->]]>
+                    </content:encoded>
+                    <wp:post_id></wp:post_id>
+                    <wp:post_date>${chosenYear}-${monthNumber}-${dayNumber} 00:00:01</wp:post_date>
+                    <wp:post_date_gmt>${chosenYear}-${monthNumber}-${dayNumber} 00:00:01</wp:post_date_gmt>
+                    <wp:comment_status>closed</wp:comment_status>
+                    <wp:ping_status>closed</wp:ping_status>
+                    <wp:post_name>${chosenYear}-2</wp:post_name>
+                    <wp:status>publish</wp:status>
+                    <wp:post_parent></wp:post_parent>
+                    <wp:menu_order>0</wp:menu_order>
+                    <wp:post_type>page</wp:post_type>
+                    <wp:post_password></wp:post_password>
+                    <wp:is_sticky>0</wp:is_sticky>
+                </item>
+        `;
+
+        downloadXML(`topLevel${chosenYear}.xml`);
+    }
+
+    function downloadXML(filename) {
         // XML file has a header, body, footer structure
         let XMLcontent = XMLheader + XMLbody + XMLfooter;
-        downloadFile("tunePagesTemplate.xml", XMLcontent);
+        downloadFile(filename, XMLcontent);
     }
 
     function downloadUnixInfo() {
@@ -181,32 +253,33 @@ const addTuneXML = (function () {
     }
 
     // https://lucidar.me/en/web-dev/how-to-slugify-a-string-in-javascript/
-    function slugify(str)
-    {
+    function slugify(str) {
         str = str.replace(/^\s+|\s+$/g, '');
-    
+
         // Make the string lowercase
         str = str.toLowerCase();
-    
+
         // Remove accents, swap ñ for n, etc
         var from = "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;";
-        var to   = "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
-        for (var i=0, l=from.length ; i<l ; i++) {
+        var to = "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
+        for (var i = 0, l = from.length; i < l; i++) {
             str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
         }
-    
+
         // Remove invalid chars
-        str = str.replace(/[^a-z0-9 -]/g, '') 
-        // Collapse whitespace and replace by -
-        .replace(/\s+/g, '-') 
-        // Collapse dashes
-        .replace(/-+/g, '-'); 
-    
+        str = str.replace(/[^a-z0-9 -]/g, '')
+            // Collapse whitespace and replace by -
+            .replace(/\s+/g, '-')
+            // Collapse dashes
+            .replace(/-+/g, '-');
+
         return str;
     }
 
     return {
         addTuneData: addTuneData,
+        addSelectYears: addSelectYears,
+        downloadTopPage: downloadTopPage,
         downloadXML: downloadXML,
         downloadWindowsInfo: downloadWindowsInfo,
         downloadUnixInfo: downloadUnixInfo,
