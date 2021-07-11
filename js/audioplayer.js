@@ -296,6 +296,7 @@ const audioPlayer = (function () {
             // These event listeners keep track of the cursor and restarts the loop
             // when needed - we don't need to set them elsewhere
             OneAudioPlayer.addEventListener("timeupdate", positionUpdate);
+            OneAudioPlayer.addEventListener("ended", restartLoop);
 
             OneAudioPlayer.playbackRate = speedSlider.noUiSlider.get() / 100;
 
@@ -413,6 +414,13 @@ const audioPlayer = (function () {
         }
         currentAudioSlider.noUiSlider.setHandle(1, OneAudioPlayer.currentTime);
     }
+
+    function restartLoop() {
+        OneAudioPlayer.currentTime = beginLoop.currentTime;
+        console.log("Restarting loop at: " + OneAudioPlayer.currentTime);
+        OneAudioPlayer.play();
+    }
+
 
     // construct the tune part segments based on the parts and repeats 
     // info in the tune "md" file - not called externally
