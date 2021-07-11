@@ -411,13 +411,15 @@ const audioPlayer = (function () {
             console.log("End of Loop: " + OneAudioPlayer.currentTime);
             OneAudioPlayer.currentTime = beginLoop.currentTime;
             console.log("Restart Loop at: " + OneAudioPlayer.currentTime);
+            // I just added this - andy
+            OneAudioPlayer.play();
         }
         currentAudioSlider.noUiSlider.setHandle(1, OneAudioPlayer.currentTime);
     }
 
     function restartLoop() {
         OneAudioPlayer.currentTime = beginLoop.currentTime;
-        console.log("Restarting loop at: " + OneAudioPlayer.currentTime);
+        console.log("Restart loop at: " + OneAudioPlayer.currentTime);
         OneAudioPlayer.play();
     }
 
