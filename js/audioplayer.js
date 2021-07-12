@@ -657,6 +657,7 @@ const audioPlayer = (function () {
     }
 
     // called when the Start "input" box in the preset loops container changes
+    // or when the Loop Start button is pressed
     function setSliderStart(startTime) {
         beginLoop.currentTime = startTime;
         // Move the current position cursor ahead of the new loop start
@@ -672,6 +673,7 @@ const audioPlayer = (function () {
     }
 
     // called when the End "input" box in the preset loops container changes
+    // or when the Loop End button is pressed
     function setSliderEnd(endTime) {
         endLoop.currentTime = endTime;
         // Move the current position cursor before the new loop end
