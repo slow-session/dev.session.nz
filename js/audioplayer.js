@@ -409,20 +409,19 @@ const audioPlayer = (function () {
     function positionUpdate() {
         if (OneAudioPlayer.currentTime >= endLoop.currentTime) {
             console.log("End of Loop: " + OneAudioPlayer.currentTime);
-            OneAudioPlayer.currentTime = beginLoop.currentTime;
-            console.log("Restart Loop at: " + OneAudioPlayer.currentTime);
-            // I just added this - andy
-            OneAudioPlayer.play();
+            restartLoop();
+        } else {
+            currentAudioSlider.noUiSlider.setHandle(1, OneAudioPlayer.currentTime);
         }
-        currentAudioSlider.noUiSlider.setHandle(1, OneAudioPlayer.currentTime);
+        
     }
 
     function restartLoop() {
         OneAudioPlayer.currentTime = beginLoop.currentTime;
+        currentAudioSlider.noUiSlider.setHandle(1, OneAudioPlayer.currentTime);
         console.log("Restart loop at: " + OneAudioPlayer.currentTime);
         OneAudioPlayer.play();
     }
-
 
     // construct the tune part segments based on the parts and repeats 
     // info in the tune "md" file - not called externally
