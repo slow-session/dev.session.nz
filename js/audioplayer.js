@@ -414,9 +414,12 @@ const audioPlayer = (function () {
     }
 
     function restartLoop() {
+        let tempPlaybackRate = OneAudioPlayer.playbackRate;
+        OneAudioPlayer.playbackRate = 1;
         OneAudioPlayer.currentTime = beginLoop.currentTime;
         currentAudioSlider.noUiSlider.setHandle(1, OneAudioPlayer.currentTime);
         console.log("Restart loop at: " + OneAudioPlayer.currentTime);
+        OneAudioPlayer.playbackRate = tempPlaybackRate;
         OneAudioPlayer.play();
     }
 
