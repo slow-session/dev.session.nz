@@ -546,7 +546,7 @@ const audioPlayer = (function () {
 
         let newTime = parseFloat(inputTime) + parseFloat(stepValue);
         newTime = newTime.toFixed(1);
-        console.log("up - newTime: ", newTime);
+        //console.log("up - newTime: ", newTime);
 
         if (elementName == "loopControlStart") {
             // don't push the beginning of the loop past the current end of the loop
@@ -579,7 +579,7 @@ const audioPlayer = (function () {
 
         let newTime = parseFloat(inputTime) - parseFloat(stepValue);
         newTime = newTime.toFixed(1);
-        console.log("down - newTime: ", newTime);
+        //console.log("down - newTime: ", newTime);
 
         if (elementName == "loopControlStart") {
             if (newTime < 0) {
@@ -682,7 +682,7 @@ const audioPlayer = (function () {
         if (loopControlStart) {
             loopControlStart.value = beginLoop.currentTime;
         }
-        console.log("setSliderStart: ", beginLoop.currentTime);
+        //console.log("setSliderStart: ", beginLoop.currentTime);
     }
 
     // called when the End "input" box in the preset loops container changes
@@ -698,7 +698,7 @@ const audioPlayer = (function () {
         if (loopControlEnd) {
             loopControlEnd.value = endLoop.currentTime;
         }
-        console.log("setSliderEnd: ", endLoop.currentTime);
+        //console.log("setSliderEnd: ", endLoop.currentTime);
     }
 
     // called when the "Reset" button is pressed
