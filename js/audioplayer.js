@@ -40,6 +40,8 @@ const audioPlayer = (function () {
     let presetLoopSegments = [];
     let abcEditor = null;
 
+    // the size of increments in the sliders and elsewhere in seconds
+    // there may be a way to compute the optimal value based on 'dt'
     const stepValue = 0.2;
 
     /*
