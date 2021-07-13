@@ -21,7 +21,7 @@ const audioPlayer = (function () {
         },
         set currentTime(val) {
             this.beginTime = Number(val).toFixed(1);
-            console.log("setting beginTime:", this.beginTime);
+            //console.log("setting beginTime:", this.beginTime);
         }
     };
 
@@ -32,13 +32,15 @@ const audioPlayer = (function () {
         },
         set currentTime(val){
             this.endTime = Number(val).toFixed(1);
-            console.log("setting endTime:", this.endTime);
+            //console.log("setting endTime:", this.endTime);
         }
     };
     
     let currentAudioSlider = null;
     let presetLoopSegments = [];
     let abcEditor = null;
+
+    const stepValue = 0.2;
 
     /*
      ***************************************************************************
@@ -223,7 +225,7 @@ const audioPlayer = (function () {
             start: [0, 0, 100],
             connect: [false, true, true, false],
             behaviour: "drag",
-            step: 0.1,
+            step: stepValue,
             range: {
                 min: 0,
                 max: 100,
@@ -250,13 +252,13 @@ const audioPlayer = (function () {
         });
         audioSlider.noUiSlider.on("start", function () {
             OneAudioPlayer.onplaying = function () {
-                console.log("pause");
+                //console.log("pause");
                 OneAudioPlayer.pause();
             };
         });
         audioSlider.noUiSlider.on("end", function () {
             OneAudioPlayer.onplaying = function () {
-                console.log("play");
+                //console.log("play");
                 OneAudioPlayer.play();
             };
         });
@@ -406,20 +408,27 @@ const audioPlayer = (function () {
     // redraws the current position slider as the tune is playing - not called externally
     function positionUpdate() {
         if (OneAudioPlayer.currentTime >= endLoop.currentTime) {
-            console.log("End of Loop: " + OneAudioPlayer.currentTime);
+            //console.log("End of Loop: " + OneAudioPlayer.currentTime);
             restartLoop();
         } else {
             currentAudioSlider.noUiSlider.setHandle(1, OneAudioPlayer.currentTime);
         }
     }
 
+    // restart the loop at beginLoop.currentTime
     function restartLoop() {
+        // save the current playbackRate
         let tempPlaybackRate = OneAudioPlayer.playbackRate;
+        // set the rate to 100%
         OneAudioPlayer.playbackRate = 1;
+
         OneAudioPlayer.currentTime = beginLoop.currentTime;
         currentAudioSlider.noUiSlider.setHandle(1, OneAudioPlayer.currentTime);
-        console.log("Restart loop at: " + OneAudioPlayer.currentTime);
+        //console.log("Restart loop at: " + OneAudioPlayer.currentTime);
+
+        // go back to current playbackRate
         OneAudioPlayer.playbackRate = tempPlaybackRate;
+        // make sure the player restarts
         OneAudioPlayer.play();
     }
 
@@ -436,7 +445,6 @@ const audioPlayer = (function () {
         if (parts.toString().includes("A")) {
             let lastPart = "";
             let part_names = parts.split("");
-            let repeatCount = 1;
             for (let segmentNumber = 0; segmentNumber < part_names.length; segmentNumber++) {
                 mySegment = {
                     name: 0,
@@ -476,7 +484,7 @@ const audioPlayer = (function () {
     <div class="loopControl">
         <button class="loopNudgeButton icon-circle-left" aria-label="nudge start of loop down" title=" - 1/5 second" onclick="audioPlayer.adjustDown('loopControlStart', loopControlStart.value)"></button>
 
-        <input id="loopControlStart" class="loopInput" type="number" size="4" min="0" max="${OneAudioPlayer.duration}" step=0.1 value=0.0 onchange="audioPlayer.setSliderStart(loopControlStart.value)"> 
+        <input id="loopControlStart" class="loopInput" type="number" size="4" min="0" max="${OneAudioPlayer.duration}" step=${stepValue} value=0.0 onchange="audioPlayer.setSliderStart(loopControlStart.value)"> 
 
         <button class="loopNudgeButton icon-circle-right" title=" + 1/5 second" aria-label="nudge start of loop up" onclick="audioPlayer.adjustUp('loopControlStart', loopControlStart.value)"></button> 
     </div>
@@ -485,7 +493,7 @@ const audioPlayer = (function () {
     <div class="loopControl">
         <button class="loopNudgeButton icon-circle-left" title=" - 1/5 second" aria-label="nudge end of loop down" onclick="audioPlayer.adjustDown('loopControlEnd', loopControlEnd.value)"></button>
         
-        <input id="loopControlEnd" class="loopInput" type="number" size="4" min="0" max="${OneAudioPlayer.duration}" step=0.1 value=${OneAudioPlayer.duration.toFixed(1)} onchange="audioPlayer.setSliderEnd(loopControlEnd.value)"> 
+        <input id="loopControlEnd" class="loopInput" type="number" size="4" min="0" max="${OneAudioPlayer.duration}" step=${stepValue} value=${OneAudioPlayer.duration.toFixed(1)} onchange="audioPlayer.setSliderEnd(loopControlEnd.value)"> 
 
         <button class="loopNudgeButton icon-circle-right" title=" + 1/5 second" aria-label="nudge end of loop up" onclick="audioPlayer.adjustUp('loopControlEnd', loopControlEnd.value)"></button> 
     </div>`;
@@ -534,13 +542,13 @@ const audioPlayer = (function () {
     function adjustUp(elementName, inputTime) {
         let loopInput = document.getElementById(elementName);
 
-        let newTime = parseFloat(inputTime) + parseFloat(0.1);
+        let newTime = parseFloat(inputTime) + parseFloat(stepValue);
         newTime = newTime.toFixed(1);
         console.log("up - newTime: ", newTime);
 
         if (elementName == "loopControlStart") {
             // don't push the beginning of the loop past the current end of the loop
-            if (newTime < endLoop.currentTime - 0.1) {
+            if (newTime < endLoop.currentTime - stepValue) {
                 if (newTime > OneAudioPlayer.currentTime) {
                     currentAudioSlider.noUiSlider.setHandle(1, newTime);
                 }
@@ -567,7 +575,7 @@ const audioPlayer = (function () {
     function adjustDown(elementName, inputTime) {
         let loopInput = document.getElementById(elementName);
 
-        let newTime = parseFloat(inputTime) - parseFloat(0.1);
+        let newTime = parseFloat(inputTime) - parseFloat(stepValue);
         newTime = newTime.toFixed(1);
         console.log("down - newTime: ", newTime);
 
@@ -584,7 +592,7 @@ const audioPlayer = (function () {
                 loopInput.value = newTime;
             }
         } else {
-            if (newTime >= beginLoop.currentTime + 0.1) {
+            if (newTime >= beginLoop.currentTime + stepValue) {
                 // don't push the end of the loop past the current begining of the loop
                 currentAudioSlider.noUiSlider.setHandle(2, newTime);
                 endLoop.currentTime = newTime;
