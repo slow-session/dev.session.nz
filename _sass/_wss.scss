@@ -59,6 +59,18 @@ p.tuneInfoPara {
     margin-left: 0.1rem;
 }
 
+.playIcon {
+    background-image: url("/images/play-button.svg") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat;
+}
+
+.pauseIcon {
+    background-image: url("/images/pause-button.svg") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat;
+}
+
 p.speedLabel {
     margin-top: 2.5rem;
     margin-bottom: 0;
@@ -256,6 +268,18 @@ input[type=number] {
     height: 1.5rem;
     width: 1.5rem;
     font-size: 1.4rem;
+}
+
+.loopDownIcon {
+    background-image: url("/images/down-button.svg") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat;
+}
+
+.loopUpIcon {
+    background-image: url("/images/up-button.svg") !important;
+    background-size: contain !important;
+    background-repeat: no-repeat;
 }
 
 .loopInput {
